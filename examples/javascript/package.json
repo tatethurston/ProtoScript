@@ -1,0 +1,8 @@
+{
+  "name": "js-example",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "protoscript": "*"
+  }
+}

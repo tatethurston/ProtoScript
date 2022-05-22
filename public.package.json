@@ -10,6 +10,9 @@
   },
   "main": "index.js",
   "module": "module",
+  "bin": {
+    "protoscript": "cli/index.js"
+  },
   "sideEffects": false,
   "types": "index.d.ts",
   "dependencies": {

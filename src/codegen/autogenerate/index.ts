@@ -1,6 +1,6 @@
 import { FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb";
 import { lowerCase, IdentifierTable, ProtoTypes, processTypes } from "../utils";
-import { UserConfig } from "../cli";
+import { UserConfig } from "../../cli";
 
 const DEFAULT_IMPORT_TRACKER = {
   hasBytes: false,
@@ -831,7 +831,10 @@ ${printIf(
   `import {
   ${printIf(hasSerializer, "BinaryReader,\nBinaryWriter,\n")}
   ${printIf(IMPORT_TRACKER.hasBytes, "encodeBase64Bytes,\n")}
-  ${printIf(IMPORT_TRACKER.hasBytes, "decodeBase64Bytes,\n")}`
+  ${printIf(
+    IMPORT_TRACKER.hasBytes,
+    "decodeBase64Bytes,\n"
+  )}} from 'protoscript';`
 )}
 
 ${imports
