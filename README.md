@@ -55,7 +55,7 @@ ProtoScript is a [protocol buffers](https://developers.google.com/protocol-buffe
    Or install from a [precompiled binary](https://github.com/protocolbuffers/protobuf/releases).
 
 1. Add this package to your project:
-   `yarn add twirpscript` or `npm install twirpscript`
+   `yarn add protoscript` or `npm install protoscript`
 
 ## Examples 🚀
 
@@ -69,7 +69,7 @@ yarn protoscript
 
 ```sh
 protoc \
-  --plugin=protoc-gen-twirpscript=./node_modules/protoscript/compiler.js
+  --plugin=protoc-gen-protoscript=./node_modules/protoscript/compiler.js
   --protoscript_out=. \
   --protoscript_opt=language=typescript \
 ```
@@ -157,7 +157,7 @@ ProtoScript aims to be zero config, but can be configured via the cli interface,
  
   Setting `root` to `src`:
 
-// twirp.json
+// .protoscript.json
 
 ```json
 {
@@ -192,7 +192,7 @@ TypeScript projects will generally want to set this value to match their `rootDi
   
    Setting `exclude` to `["/bar/"]`:
   
-   // twirp.json
+   // .protoscript.json
    ```json
    {
      "exclude": ["/bar/"]
@@ -230,7 +230,7 @@ TypeScript projects will generally want to set this value to match their `rootDi
  
   Setting `dest` to `out` will generate the following:
  
-  // twirp.json
+  // .protoscript.json
   ```json
   {
     "dest": "out",
@@ -251,7 +251,7 @@ TypeScript projects will generally want to set this value to match their `rootDi
   
   Setting `root` to `src` (in addition to setting `dest` to `out`) will generate the following:
  
-  // twirp.json
+  // .protoscript.json
   ```json
   {
     "root": "src",
