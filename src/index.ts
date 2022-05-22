@@ -1,2 +1,2 @@
-export { BinaryReader } from "./reader";
-export { BinaryWriter } from "./writer";
+export { BinaryReader } from "./runtime/reader";
+export { BinaryWriter } from "./runtime/writer";

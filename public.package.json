@@ -12,8 +12,11 @@
   "module": "module",
   "sideEffects": false,
   "types": "index.d.ts",
-  "dependencies": {},
-  "keywords": [],
+  "dependencies": {
+    "google-protobuf": "^3.20.1",
+    "prettier": "^2.6.0"
+  },
+  "keywords": ["protobuf", "protocol buffers", "typescript"],
   "exports": {
     "./package.json": "./package.json",
     ".": {
