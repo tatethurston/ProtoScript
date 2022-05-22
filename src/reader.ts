@@ -38,9 +38,9 @@ export class BinaryReader {
    * @return {!BinaryReader}
    */
   static alloc(
-    opt_bytes: ByteSource | undefined,
-    opt_start: number | undefined,
-    opt_length: number | undefined
+    opt_bytes?: ByteSource | undefined,
+    opt_start?: number | undefined,
+    opt_length?: number | undefined
   ): BinaryReader {
     const newReader = BinaryReader.instanceCache_.pop();
     if (newReader) {
@@ -62,9 +62,9 @@ export class BinaryReader {
   readCallbacks_: Record<string, (reader: BinaryReader) => any>;
 
   constructor(
-    opt_bytes: ByteSource | undefined,
-    opt_start: number | undefined,
-    opt_length: number | undefined
+    opt_bytes?: ByteSource | undefined,
+    opt_start?: number | undefined,
+    opt_length?: number | undefined
   ) {
     /**
      * Wire-format decoder.
