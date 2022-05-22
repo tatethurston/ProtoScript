@@ -1,0 +1,25 @@
+{
+  "name": "protoscript",
+  "version": "0.0.1",
+  "description": "A Protobuf runtime and code generation tool for JavaScript and TypeScript",
+  "license": "MIT",
+  "author": "Tate <tatethurston@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tatethurston/protoscript"
+  },
+  "main": "index.js",
+  "module": "module",
+  "sideEffects": false,
+  "types": "index.d.ts",
+  "dependencies": {},
+  "keywords": [],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./module/index.js",
+      "module": "./module/index.js",
+      "default": "./index.js"
+    }
+  }
+}

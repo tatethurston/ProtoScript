@@ -1,0 +1,6 @@
+!**/dist/index.html
+**/dist/*
+coverage
+node_modules
+package-lock.json
+todo.txt
