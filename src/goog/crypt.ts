@@ -11,7 +11,7 @@ export function byteArrayToString(bytes: Uint8Array | number[]): string {
 
   // Special-case the simple case for speed's sake.
   if (bytes.length <= CHUNK_SIZE) {
-    return String.fromCharCode.apply(null, bytes);
+    return String.fromCharCode.apply(null, bytes as number[]);
   }
 
   // The remaining logic splits conversion by chunks since
@@ -21,7 +21,7 @@ export function byteArrayToString(bytes: Uint8Array | number[]): string {
   let str = "";
   for (let i = 0; i < bytes.length; i += CHUNK_SIZE) {
     const chunk = Array.prototype.slice.call(bytes, i, i + CHUNK_SIZE);
-    str += String.fromCharCode.apply(null, chunk);
+    str += String.fromCharCode.apply(null, chunk as number[]);
   }
   return str;
 }

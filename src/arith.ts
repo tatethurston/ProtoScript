@@ -30,7 +30,7 @@ export class UInt64 {
    * @param {number} b The second integer: must be in [0, 2^32-1).
    * @return {!jspb.arith.UInt64}
    */
-  mul32x32 = function (a: number, b: number): UInt64 {
+  mul32x32(a: number, b: number): UInt64 {
     // Directly multiplying two 32-bit numbers may produce up to 64 bits of
     // precision, thus losing precision because of the 53-bit mantissa of
     // JavaScript numbers. So we multiply with 16-bit digits (radix 65536)
@@ -62,7 +62,7 @@ export class UInt64 {
     }
 
     return new UInt64(productLow >>> 0, productHigh >>> 0);
-  };
+  }
 
   /**
    * Multiply this number by a 32-bit number, producing a 96-bit number, then
@@ -70,7 +70,7 @@ export class UInt64 {
    * @param {number} a The multiplier.
    * @return {!jspb.arith.UInt64}
    */
-  mul = function (a: number): UInt64 {
+  mul(a: number): UInt64 {
     // Produce two parts: at bits 0-63, and 32-95.
     const lo = this.mul32x32(this.lo, a);
     const hi = this.mul32x32(this.hi, a);
@@ -79,7 +79,7 @@ export class UInt64 {
     hi.hi = hi.lo;
     hi.lo = 0;
     return lo.add(hi);
-  };
+  }
 
   /**
    * Parse a string into a 64-bit number. Returns `null` on a parse error.
@@ -92,7 +92,7 @@ export class UInt64 {
     const digit64 = new UInt64(0, 0);
     for (let i = 0; i < s.length; i++) {
       if (s[i] < "0" || s[i] > "9") {
-        return null;
+        return null as unknown as UInt64;
       }
       const digit = parseInt(s[i], 10);
       digit64.lo = digit;
@@ -106,26 +106,26 @@ export class UInt64 {
    * @param {!jspb.arith.UInt64} other
    * @return {!jspb.arith.UInt64}
    */
-  add = function (other: UInt64): UInt64 {
+  add(other: UInt64): UInt64 {
     const lo = ((this.lo + other.lo) & 0xffffffff) >>> 0;
     const hi =
       (((this.hi + other.hi) & 0xffffffff) >>> 0) +
       (this.lo + other.lo >= 0x100000000 ? 1 : 0);
     return new UInt64(lo >>> 0, hi >>> 0);
-  };
+  }
 
   /**
    * Subtract two 64-bit numbers to produce a 64-bit number.
    * @param {!jspb.arith.UInt64} other
    * @return {!jspb.arith.UInt64}
    */
-  sub = function (other: UInt64): UInt64 {
+  sub(other: UInt64): UInt64 {
     const lo = ((this.lo - other.lo) & 0xffffffff) >>> 0;
     const hi =
       (((this.hi - other.hi) & 0xffffffff) >>> 0) -
       (this.lo - other.lo < 0 ? 1 : 0);
     return new UInt64(lo >>> 0, hi >>> 0);
-  };
+  }
 }
 
 /**
@@ -169,8 +169,9 @@ export class Int64 {
       s = s.substring(1);
     }
     let num = UInt64.fromString(s);
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (num === null) {
-      return null;
+      return null as unknown as Int64;
     }
     if (hasNegative) {
       num = new UInt64(0, 0).sub(num);

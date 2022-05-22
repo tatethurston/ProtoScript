@@ -11,7 +11,7 @@ import {
   TWO_TO_52,
 } from "./constants";
 
-type ByteSource = ArrayBuffer | Uint8Array | number[] | string;
+export type ByteSource = ArrayBuffer | Uint8Array | number[] | string;
 
 /**
  * Converts any type defined in jspb.ByteSource into a Uint8Array.
@@ -45,6 +45,7 @@ export function byteSourceToUint8Array(data: ByteSource): Uint8Array {
 export function fromZigzag64<T>(
   bitsLow: number,
   bitsHigh: number,
+  // eslint-disable-next-line no-unused-vars
   convert: (a: number, b: number) => T
 ): T {
   // 64 bit math is:
@@ -74,6 +75,7 @@ export function fromZigzag64<T>(
 export function toZigzag64<T>(
   bitsLow: number,
   bitsHigh: number,
+  // eslint-disable-next-line no-unused-vars
   convert: (a: number, b: number) => T
 ): T {
   // See
@@ -153,14 +155,12 @@ export function decimalStringToHash64(dec: string): string {
  * integer, this temporary value will contain the low 32 bits of that integer.
  * If the original value was a double, this temporary value will contain the
  * low 32 bits of the binary representation of that double, etcetera.
- * @type {number}
  */
 export let split64Low = 0;
 
 /**
  * And correspondingly, this temporary variable will contain the high 32 bits
  * of whatever value was split.
- * @type {number}
  */
 export let split64High = 0;
 
@@ -362,8 +362,8 @@ export const splitFloat64 = function (value: number): void {
   // Handle denormals.
   if (value < FLOAT64_MIN) {
     // Number is a denormal.
-    var mant = value / Math.pow(2, -1074);
-    var mantHigh = mant / TWO_TO_32;
+    const mant = value / Math.pow(2, -1074);
+    const mantHigh = mant / TWO_TO_32;
     split64High = ((sign << 31) | mantHigh) >>> 0;
     split64Low = mant >>> 0;
     return;
@@ -388,9 +388,9 @@ export const splitFloat64 = function (value: number): void {
       exp--;
     }
   }
-  var mant = value * Math.pow(2, -exp);
+  const mant = value * Math.pow(2, -exp);
 
-  var mantHigh = (mant * TWO_TO_20) & 0xfffff;
+  const mantHigh = (mant * TWO_TO_20) & 0xfffff;
   const mantLow = (mant * TWO_TO_52) >>> 0;
 
   split64High = ((sign << 31) | ((exp + 1023) << 20) | mantHigh) >>> 0;
@@ -467,13 +467,9 @@ export const joinHash64 = function (bitsLow: number, bitsHigh: number): string {
  * Joins two 32-bit values into a 32-bit IEEE floating point number and
  * converts it back into a Javascript number.
  * @param {number} bitsLow The low 32 bits of the binary number;
- * @param {number} bitsHigh The high 32 bits of the binary number.
  * @return {number}
  */
-export const joinFloat32 = function (
-  bitsLow: number,
-  _bitsHigh: number
-): number {
+export function joinFloat32(bitsLow: number): number {
   const sign = (bitsLow >> 31) * 2 + 1;
   const exp = (bitsLow >>> 23) & 0xff;
   const mant = bitsLow & 0x7fffff;
@@ -492,7 +488,7 @@ export const joinFloat32 = function (
   } else {
     return sign * Math.pow(2, exp - 150) * (mant + Math.pow(2, 23));
   }
-};
+}
 
 /**
  * Joins two 32-bit values into a 64-bit IEEE floating point number and
@@ -539,7 +535,7 @@ export const joinUnsignedDecimalString = function (
   // Skip the expensive conversion if the number is small enough to use the
   // built-in conversions.
   if (bitsHigh <= 0x1fffff) {
-    return "" + joinUint64(bitsLow, bitsHigh);
+    return joinUint64(bitsLow, bitsHigh).toString();
   }
 
   // What this code is doing is essentially converting the input number from
