@@ -74,6 +74,8 @@ protoc \
   --protoscript_opt=language=typescript \
 ```
 
+Note: Windows users replace `./node_modules/protoscript/compiler.js` above with `./node_modules/protoscript/compiler.cmd`
+
 ### Buf
 
 ProtoScript can be used with [Buf](https://docs.buf.build/introduction).
