@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-explicit-any */
 import { FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb";
-import { lowerCase, IdentifierTable, ProtoTypes, processTypes } from "../utils";
+import { IdentifierTable, ProtoTypes, processTypes } from "../utils";
 import { UserConfig } from "../../cli";
 
 const DEFAULT_IMPORT_TRACKER = {
@@ -758,11 +759,6 @@ export function printHeading(heading: string): string {
   `;
 }
 
-// Foo.Bar.Baz => baz
-function formatParameterName(param: string): string {
-  return lowerCase(param.split(".").pop() ?? "");
-}
-
 let config = {
   isTS: false,
   json: {
@@ -789,13 +785,15 @@ export function generate(
 ): string {
   config = {
     isTS: options.language === "typescript",
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     json: options.json as any,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     typescript: options.typescript as any,
   };
 
   IMPORT_TRACKER = { ...DEFAULT_IMPORT_TRACKER };
 
-  const { imports, services, types, packageName } = processTypes(
+  const { imports, types } = processTypes(
     fileDescriptorProto,
     identifierTable,
     config.isTS

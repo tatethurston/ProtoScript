@@ -203,6 +203,7 @@ function getConfig(): Config {
     logger.info(`Using configuration file at '${configFilePath}'.`);
     const userConfigFile = readFileSync(configFilePath);
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       userConfig = JSON.parse(userConfigFile.toString());
     } catch {
       logger.error(`Failed to parse configuration file.`);
@@ -210,7 +211,7 @@ function getConfig(): Config {
     }
 
     const unknownKeys = Object.keys(userConfig).filter(
-      (key) => !defaultConfig.hasOwnProperty(key)
+      (key) => !(key in defaultConfig)
     );
     if (unknownKeys.length) {
       logger.warn(

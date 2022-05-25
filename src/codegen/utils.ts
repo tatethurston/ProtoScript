@@ -201,6 +201,7 @@ export function getDescriptor(
       // Hack until better option:
       // https://github.com/protocolbuffers/protobuf/issues/9369
       const isMap =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access , @typescript-eslint/no-unsafe-call
         _type.endsWith("Entry") && !field.toArray()[0].endsWith("Entry");
 
       if (isMap) {
@@ -660,6 +661,7 @@ export function processTypes(
   function getEnum(namespacing: string, node: EnumDescriptorProto): EnumOpts {
     const name = node.getName();
     if (!name) {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       throw new Error(`Expected name for ${node}`);
     }
     const opts: EnumOpts = {
@@ -679,6 +681,7 @@ export function processTypes(
   function getMessage(namespacing: string, node: DescriptorProto): MessageOpts {
     let name = node.getName();
     if (!name) {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       throw new Error(`Expected name for ${node}`);
     }
 
