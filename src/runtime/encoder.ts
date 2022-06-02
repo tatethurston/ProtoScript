@@ -19,6 +19,7 @@ import {
   FLOAT32_MAX,
   FLOAT64_MAX,
 } from "./constants";
+import { stringToUint8Array } from "./goog/crypt";
 
 /**
  * BinaryEncoder implements encoders for all the wire types specified in
@@ -405,38 +406,8 @@ export class BinaryEncoder {
    */
   writeString(value: string): number {
     const oldLength = this.buffer_.length;
-
-    for (let i = 0; i < value.length; i++) {
-      let c = value.charCodeAt(i);
-
-      if (c < 128) {
-        this.buffer_.push(c);
-      } else if (c < 2048) {
-        this.buffer_.push((c >> 6) | 192);
-        this.buffer_.push((c & 63) | 128);
-      } else if (c < 65536) {
-        // Look for surrogates
-        if (c >= 0xd800 && c <= 0xdbff && i + 1 < value.length) {
-          const second = value.charCodeAt(i + 1);
-          if (second >= 0xdc00 && second <= 0xdfff) {
-            // low surrogate
-            // http://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
-            c = (c - 0xd800) * 0x400 + second - 0xdc00 + 0x10000;
-
-            this.buffer_.push((c >> 18) | 240);
-            this.buffer_.push(((c >> 12) & 63) | 128);
-            this.buffer_.push(((c >> 6) & 63) | 128);
-            this.buffer_.push((c & 63) | 128);
-            i++;
-          }
-        } else {
-          this.buffer_.push((c >> 12) | 224);
-          this.buffer_.push(((c >> 6) & 63) | 128);
-          this.buffer_.push((c & 63) | 128);
-        }
-      }
-    }
-
+    const buffer = stringToUint8Array(value);
+    buffer.forEach((val) => this.buffer_.push(val));
     const length = this.buffer_.length - oldLength;
     return length;
   }
