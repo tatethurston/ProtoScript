@@ -31,7 +31,7 @@ ProtoScript consists of two parts:
 
 1. Runtime. This is nearly identical to [google-protobuf](https://www.npmjs.com/package/google-protobuf), but significantly smaller (9.6KB vs 46KB gzipped) and written in ESM to enable dead-code elimination.
 
-2. Code generation. This a replacement of `protoc`'s JavaScript generation that generates idiomatic JavaScript code, JSON serializers/deserializers, and includes TSDoc comments.
+2. Code generation. This is a replacement of `protoc`'s JavaScript generation that generates idiomatic JavaScript code, JSON serializers/deserializers, and includes TSDoc comments.
 
 If you're looking for an RPC framework, you may be interested in [TwirpScript](https://github.com/tatethurston/TwirpScript).
 
