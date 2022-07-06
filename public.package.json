@@ -1,6 +1,6 @@
 {
   "name": "protoscript",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A Protobuf runtime and code generation tool for JavaScript and TypeScript",
   "license": "MIT",
   "author": "Tate <tatethurston@gmail.com>",
@@ -8,13 +8,14 @@
     "type": "git",
     "url": "https://github.com/tatethurston/protoscript"
   },
-  "main": "index.js",
-  "module": "module",
+  "type": "module",
+  "main": "./cjs/index.cjs",
+  "module": "./index.js",
   "bin": {
-    "protoscript": "cli/index.js"
+    "protoscript": "./cli/index.js"
   },
   "sideEffects": false,
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "dependencies": {
     "google-protobuf": "^3.20.1",
     "prettier": "^2.6.0"
@@ -23,8 +24,9 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "import": "./module/index.js",
-      "module": "./module/index.js",
+      "import": "./index.js",
+      "module": "./index.js",
+      "require": "./cjs/index.cjs",
       "default": "./index.js"
     }
   }

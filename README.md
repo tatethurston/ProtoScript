@@ -29,20 +29,25 @@ ProtoScript is a [protocol buffers](https://developers.google.com/protocol-buffe
 
 ProtoScript consists of two parts:
 
-1. Runtime. This is a drop-in replacement for [google-protobuf](https://www.npmjs.com/package/google-protobuf), but significantly smaller and written in ESM to enable dead-code elimination. It can be used without ProtoScript's code generation if you want to continue using `protoc`'s generated JavaScript code.
-2. Code generation. This a replacement of `protoc`'s JavaScript generation that generates more idiomatic JavaScript code and includes TSDoc comments.
+1. Runtime. This is nearly identical to [google-protobuf](https://www.npmjs.com/package/google-protobuf), but significantly smaller (9.6KB vs 46KB gzipped) and written in ESM to enable dead-code elimination.
+
+2. Code generation. This a replacement of `protoc`'s JavaScript generation that generates idiomatic JavaScript code, JSON serializers/deserializers, and includes TSDoc comments.
+
+If you're looking for an RPC framework, you may be interested in [TwirpScript](https://github.com/tatethurston/TwirpScript).
 
 ## Highlights 🛠
 
-1. Isomorphic. ProtoScript's generated serializers/deserializers can be consumed in the browser or Node.js runtimes.
+1. Idiomatic JavaScript / TypeScript code. None of the Java idioms that `protoc --js_out` generates such as the `List` suffix naming for repeated fields, `Map` suffix for maps, or the various getter and setter methods. ProtoScript generates and consumes plain JavaScript objects over classes. Compare the [TypeScript example](https://github.com/tatethurston/ProtoScript/blob/main/examples/typescript/src/haberdasher.pb.ts) to the [protoc example](https://github.com/tatethurston/ProtoScript/blob/main/examples/protoc/src/haberdasher_pb.js).
 
-2. Small. ProtoScript's runtime and generated code are built with [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) to minimize bundle sizes. This results in a significantly smaller bundle size than [google-protobuf](https://www.npmjs.com/package/google-protobuf).
+2. In-editor API documentation. Comments in your `.proto` files become [TSDoc](https://github.com/microsoft/tsdoc) comments in the generated code and will show inline documentation in supported editors.
 
-3. In-editor API documentation. Comments in your `.proto` files become [TSDoc](https://github.com/microsoft/tsdoc) comments in the generated code and will show inline documentation in supported editors.
+3. JSON Serialization/Deserialization. Unlike `protoc`, ProtoScript's code generation generates JSON serialization and deserialization methods.
 
-4. Idiomatic JavaScript / TypeScript code. None of the Java idioms that `protoc --js_out` generates such as the `List` suffix naming for repeated fields, `Map` suffix for maps, or the various getter and setter methods. ProtoScript generates and consumes plain JavaScript objects over classes.
+4. Small. ProtoScript's runtime and generated code are built with [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) to minimize bundle sizes. This results in a significantly smaller bundle size than [google-protobuf](https://www.npmjs.com/package/google-protobuf). ProtoScript's runtime is 67KB (9.6KB gzipped) compared to google-protobuf's 231KB (46KB gzipped).
 
-5. No runtime dependencies.
+5. Isomorphic. ProtoScript's generated serializers/deserializers can be consumed in the browser or Node.js runtimes.
+
+6. No additional runtime dependencies.
 
 ## Installation 📦
 

@@ -1,12 +1,14 @@
 import { dirname, relative } from "path";
-import type { CodeGeneratorRequest } from "google-protobuf/google/protobuf/compiler/plugin_pb";
+import type { CodeGeneratorRequest } from "google-protobuf/google/protobuf/compiler/plugin_pb.js";
 import type {
   DescriptorProto,
   FileDescriptorProto,
   EnumDescriptorProto,
-} from "google-protobuf/google/protobuf/descriptor_pb";
-import { FieldDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb";
-import { BinaryReader, BinaryWriter } from "google-protobuf";
+  FieldDescriptorProto as FieldDescriptorProtoType,
+} from "google-protobuf/google/protobuf/descriptor_pb.js";
+import DescriptorPb from "google-protobuf/google/protobuf/descriptor_pb.js";
+import type { BinaryReader, BinaryWriter } from "google-protobuf";
+const { FieldDescriptorProto } = DescriptorPb;
 
 export function lowerCase(str: string): string {
   return str[0].toLowerCase() + str.slice(1);
@@ -56,7 +58,7 @@ interface Descriptor {
 }
 
 export function getDescriptor(
-  field: FieldDescriptorProto,
+  field: FieldDescriptorProtoType,
   identifierTable: IdentifierTable,
   fileDescriptorProto: FileDescriptorProto
 ): Descriptor | undefined {

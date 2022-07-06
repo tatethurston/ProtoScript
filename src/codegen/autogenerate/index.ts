@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-explicit-any */
-import { FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb";
-import { IdentifierTable, ProtoTypes, processTypes } from "../utils";
-import { UserConfig } from "../../cli";
+import type { FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb.js";
+import { IdentifierTable, ProtoTypes, processTypes } from "../utils.js";
+import { UserConfig } from "../../cli/index.js";
 
 const DEFAULT_IMPORT_TRACKER = {
   hasBytes: false,
@@ -824,6 +824,10 @@ export function generate(
 // Source: ${sourceFile}
 /* eslint-disable */
 
+${printIf(
+  config.isTS && hasSerializer,
+  `import type { ByteSource } from 'protoscript';`
+)}
 ${printIf(
   hasSerializer,
   `import {

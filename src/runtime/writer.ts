@@ -5,9 +5,9 @@ import {
   byteSourceToUint8Array,
   decimalStringToHash64,
   toZigzag64,
-} from "./utils";
-import { assert, fail } from "./goog/asserts";
-import { BinaryEncoder } from "./encoder";
+} from "./utils.js";
+import { assert, fail } from "./goog/asserts.js";
+import { BinaryEncoder } from "./encoder.js";
 import {
   WireType,
   FieldType,
@@ -15,8 +15,8 @@ import {
   TWO_TO_32,
   TWO_TO_63,
   TWO_TO_64,
-} from "./constants";
-import { UInt64, Int64 } from "./arith";
+} from "./constants.js";
+import { UInt64, Int64 } from "./arith.js";
 
 /**
  * BinaryWriter implements encoders for all the wire types specified in

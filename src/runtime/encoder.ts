@@ -1,4 +1,4 @@
-import { assert } from "./goog/asserts";
+import { assert } from "./goog/asserts.js";
 import {
   decimalStringToHash64,
   split64High,
@@ -10,7 +10,7 @@ import {
   splitUint64,
   splitZigzag64,
   toZigzag64,
-} from "./utils";
+} from "./utils.js";
 import {
   TWO_TO_31,
   TWO_TO_63,
@@ -18,8 +18,8 @@ import {
   TWO_TO_64,
   FLOAT32_MAX,
   FLOAT64_MAX,
-} from "./constants";
-import { stringToUint8Array } from "./goog/crypt";
+} from "./constants.js";
+import { stringToUint8Array } from "./goog/crypt.js";
 
 /**
  * BinaryEncoder implements encoders for all the wire types specified in

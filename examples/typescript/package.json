@@ -2,7 +2,14 @@
   "name": "ts-example",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "yarn tsc && node dist/index.js"
+  },
   "dependencies": {
     "protoscript": "*"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4"
   }
 }

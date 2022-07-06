@@ -1,5 +1,5 @@
-import { assert, fail } from "./goog/asserts";
-import { byteArrayToString } from "./goog/crypt";
+import { assert, fail } from "./goog/asserts.js";
+import { byteArrayToString } from "./goog/crypt.js";
 import {
   ByteSource,
   byteSourceToUint8Array,
@@ -12,7 +12,7 @@ import {
   joinUint64,
   joinUnsignedDecimalString,
   joinZigzag64,
-} from "./utils";
+} from "./utils.js";
 
 /**
  * BinaryDecoder implements the decoders for all the wire types specified in
