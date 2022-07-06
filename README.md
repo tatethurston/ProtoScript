@@ -27,6 +27,11 @@
 
 ProtoScript is a [protocol buffers](https://developers.google.com/protocol-buffers/) runtime and code generation tool for JavaScript, written in TypeScript.
 
+ProtoScript consists of two parts:
+
+1. Runtime. This is a drop-in replacement for [google-protobuf](https://www.npmjs.com/package/google-protobuf), but significantly smaller and written in ESM to enable dead-code elimination. It can be used without ProtoScript's code generation if you want to continue using `protoc`'s generated JavaScript code.
+2. Code generation. This a replacement of `protoc`'s JavaScript generation that generates more idiomatic JavaScript code and includes TSDoc comments.
+
 ## Highlights 🛠
 
 1. Isomorphic. ProtoScript's generated serializers/deserializers can be consumed in the browser or Node.js runtimes.
