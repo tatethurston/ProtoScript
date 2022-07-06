@@ -1,5 +1,5 @@
 import { describe, it } from "@jest/globals";
-import { printHeading } from ".";
+import { printHeading } from "./index.js";
 
 describe("printHeading", () => {
   it("short names", () => {

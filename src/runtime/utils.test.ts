@@ -1,4 +1,4 @@
-import { byteSourceToUint8Array } from "./utils";
+import { byteSourceToUint8Array } from "./utils.js";
 
 describe("byteSourceToUint8Array", () => {
   const bytes = [104, 101, 108, 108, 111, 32, 240, 159, 145, 139];

@@ -2,11 +2,12 @@
   "name": "js-example",
   "main": "index.js",
   "license": "MIT",
-  "type": "module",
   "scripts": {
+    "build": "protoc --js_out=import_style=commonjs,binary:. src/haberdasher.proto",
     "test": "node src/index.js"
   },
   "dependencies": {
+    "google-protobuf": "npm:protoscript",
     "protoscript": "*"
   }
 }

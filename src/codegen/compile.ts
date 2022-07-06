@@ -1,17 +1,16 @@
-import {
-  CodeGeneratorRequest,
-  CodeGeneratorResponse,
-} from "google-protobuf/google/protobuf/compiler/plugin_pb";
-import { generate } from "./autogenerate";
+import PluginPb from "google-protobuf/google/protobuf/compiler/plugin_pb.js";
+import type { CodeGeneratorResponse as CodeGeneratorResponseType } from "google-protobuf/google/protobuf/compiler/plugin_pb.js";
+import { generate } from "./autogenerate/index.js";
 import {
   getProtobufTSFileName,
   buildIdentifierTable,
   getProtobufJSFileName,
-} from "./utils";
+} from "./utils.js";
 import { format } from "prettier";
-import { deserializeConfig } from "../cli/utils";
+import { deserializeConfig } from "../cli/utils.js";
+const { CodeGeneratorRequest, CodeGeneratorResponse } = PluginPb;
 
-export function compile(input: Uint8Array): CodeGeneratorResponse {
+export function compile(input: Uint8Array): CodeGeneratorResponseType {
   const request = CodeGeneratorRequest.deserializeBinary(input);
   const options = deserializeConfig(request.getParameter() ?? "");
   const isTypescript = options.language === "typescript";

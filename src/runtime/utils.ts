@@ -1,5 +1,5 @@
-import { assert } from "./goog/asserts";
-import { byteArrayToString, stringToUint8Array } from "./goog/crypt";
+import { assert } from "./goog/asserts.js";
+import { byteArrayToString, stringToUint8Array } from "./goog/crypt.js";
 import {
   FLOAT32_MAX,
   FLOAT32_MIN,
@@ -9,7 +9,7 @@ import {
   TWO_TO_23,
   TWO_TO_32,
   TWO_TO_52,
-} from "./constants";
+} from "./constants.js";
 
 export type ByteSource = ArrayBuffer | Uint8Array | number[] | string;
 

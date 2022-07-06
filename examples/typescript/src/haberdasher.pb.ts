@@ -2,6 +2,7 @@
 // Source: src/haberdasher.proto
 /* eslint-disable */
 
+import type { ByteSource } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 //========================================//

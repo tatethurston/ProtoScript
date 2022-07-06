@@ -9,8 +9,8 @@
     "url": "https://github.com/tatethurston/protoscript"
   },
   "scripts": {
-    "build:commonjs": "yarn tsc",
-    "build:module": "yarn tsc --module esnext --outDir dist/module",
+    "build:commonjs": "yarn esbuild src/index.ts --bundle --platform=node --outfile=dist/cjs/index.cjs",
+    "build:module": "yarn tsc",
     "clean": "rm -rf dist",
     "lint": "yarn typecheck && prettier --check . && prettier-package-json --list-different '{,example/,}package.json' && eslint .",
     "lint:fix": "prettier --write . && prettier-package-json --write '{,example/}package.json' && eslint --fix .",
@@ -34,6 +34,7 @@
     "@typescript-eslint/parser": "^5.25.0",
     "babel-loader": "^8.2.5",
     "codecov": "^3.8.3",
+    "esbuild": "^0.14.48",
     "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.1.0",
     "husky": "^4.3.0",

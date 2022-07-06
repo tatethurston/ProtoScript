@@ -1,4 +1,4 @@
-import { byteArrayToString, stringToUint8Array } from "./goog/crypt";
+import { byteArrayToString, stringToUint8Array } from "./goog/crypt.js";
 
 export function encodeBase64Bytes(bytes: Uint8Array): string {
   return btoa(byteArrayToString(bytes));

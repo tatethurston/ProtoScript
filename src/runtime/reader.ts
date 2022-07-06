@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 
-import { assert, fail } from "./goog/asserts";
+import { assert, fail } from "./goog/asserts.js";
 import {
   WireType,
   FieldTypeToWireType,
   FieldType,
   INVALID_FIELD_NUMBER,
-} from "./constants";
-import { BinaryDecoder } from "./decoder";
-import { ByteSource } from "./utils";
+} from "./constants.js";
+import { BinaryDecoder } from "./decoder.js";
+import { ByteSource } from "./utils.js";
 
 /**
  * BinaryReader implements the decoders for all the wire types specified in

@@ -1,4 +1,4 @@
-import { UInt64, Int64 } from "./arith";
+import { UInt64, Int64 } from "./arith.js";
 
 describe("UInt64", () => {
   it.each([
