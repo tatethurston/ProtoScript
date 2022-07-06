@@ -325,14 +325,6 @@ function stripProtoExtension(protoFileName: string): string {
   return protoFileName.replace(".proto", "");
 }
 
-function stripTSExtension(filename: string): string {
-  return filename.replace(".ts", "");
-}
-
-function stripJSExtension(filename: string): string {
-  return filename.replace(".js", "");
-}
-
 export function getProtobufTSFileName(protoFileName: string): string {
   return stripProtoExtension(protoFileName) + ".pb.ts";
 }
@@ -557,8 +549,7 @@ function getIdentifierEntryFromTable(
 function getImportForIdentifier(
   identifier: string,
   identifiers: IdentifierTable,
-  fileDescriptorProto: FileDescriptorProto,
-  isTypescript: boolean
+  fileDescriptorProto: FileDescriptorProto
 ): Import {
   const dep = getIdentifierEntryFromTable(
     identifier,
@@ -568,19 +559,10 @@ function getImportForIdentifier(
   const sourceFile = fileDescriptorProto.getName() ?? "";
   const dependencyImportPath = dep.publicImport ?? dep.file;
 
-  const importPath = isTypescript
-    ? stripTSExtension(
-        relative(
-          dirname(sourceFile),
-          getProtobufTSFileName(dependencyImportPath)
-        )
-      )
-    : stripJSExtension(
-        relative(
-          dirname(sourceFile),
-          getProtobufJSFileName(dependencyImportPath)
-        )
-      );
+  const importPath = relative(
+    dirname(sourceFile),
+    getProtobufJSFileName(dependencyImportPath)
+  );
   const path = getImportPath(importPath);
 
   const dependencyIdentifier = identifier.split(".").pop() ?? "";
@@ -629,8 +611,7 @@ function isNotBlank<T>(x: T): x is NonNullable<T> {
 
 export function processTypes(
   fileDescriptorProto: FileDescriptorProto,
-  identifierTable: IdentifierTable,
-  isTypescript: boolean
+  identifierTable: IdentifierTable
 ): TypeFile {
   const typeFile: TypeFile = {
     packageName: fileDescriptorProto.getPackage(),
@@ -643,8 +624,7 @@ export function processTypes(
     const _import = getImportForIdentifier(
       identifier,
       identifierTable,
-      fileDescriptorProto,
-      isTypescript
+      fileDescriptorProto
     );
     const exisitingImport = typeFile.imports.find(
       ({ path }) => path === _import.path
