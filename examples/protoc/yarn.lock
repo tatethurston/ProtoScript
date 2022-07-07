@@ -2,27 +2,20 @@
 # yarn lockfile v1
 
 
-"google-protobuf@^3.20.1":
-  "integrity" "sha512-XMf1+O32FjYIV3CYu6Tuh5PNbfNEU5Xu22X+Xkdb/DUexFlCzhvv7d5Iirm4AOwn8lv4al1YvIhzGrg2j9Zfzw=="
-  "resolved" "https://registry.npmjs.org/google-protobuf/-/google-protobuf-3.20.1.tgz"
-  "version" "3.20.1"
+google-protobuf@*, google-protobuf@^3.20.1:
+  version "3.20.1"
+  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.20.1.tgz#1b255c2b59bcda7c399df46c65206aa3c7a0ce8b"
+  integrity sha512-XMf1+O32FjYIV3CYu6Tuh5PNbfNEU5Xu22X+Xkdb/DUexFlCzhvv7d5Iirm4AOwn8lv4al1YvIhzGrg2j9Zfzw==
 
-"google-protobufx@npm:protoscript":
-  "integrity" "sha512-Oy+WKvD07NKjWQ16bRGejG1zQPlwrR7qjizXHlTVfDCVef3qd1EDWEGiLPUdQ+31MLxpQk8tmzRnCVSUfLpkuw=="
-  "resolved" "https://registry.npmjs.org/protoscript/-/protoscript-0.0.5.tgz"
-  "version" "0.0.5"
+prettier@^2.6.0:
+  version "2.7.1"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-2.7.1.tgz"
+  integrity sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==
+
+protoscript@*:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/protoscript/-/protoscript-0.0.7.tgz#3ddf24044552e2de595c3848820dff74b39fb018"
+  integrity sha512-RLY34URoujxmMDu7mAGYIUBieWuVQz6KfbHLFXsXMbdCsG5PwPHIb3tLTJpdhBuLSsRQV0iHqEr6p+EFRZdXHA==
   dependencies:
-    "google-protobuf" "^3.20.1"
-    "prettier" "^2.6.0"
-
-"prettier@^2.6.0":
-  "integrity" "sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g=="
-  "resolved" "https://registry.npmjs.org/prettier/-/prettier-2.7.1.tgz"
-  "version" "2.7.1"
-
-"protoscript@file:../../dist":
-  "resolved" "file:../../dist"
-  "version" "0.0.6"
-  dependencies:
-    "google-protobuf" "^3.20.1"
-    "prettier" "^2.6.0"
+    google-protobuf "^3.20.1"
+    prettier "^2.6.0"
