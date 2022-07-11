@@ -14,7 +14,7 @@
     "sourceMap": false,
     "strict": true,
     "declaration": true,
-    "target": "ESNext"
+    "target": "ES2015"
   },
   "include": ["src/**/*"]
 }

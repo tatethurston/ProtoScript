@@ -17,29 +17,13 @@ import {
 /**
  * BinaryDecoder implements the decoders for all the wire types specified in
  * https://developers.google.com/protocol-buffers/docs/encoding.
- *
- * @param {ByteSource=} opt_bytes The bytes we're reading from.
- * @param {number=} opt_start The optional offset to start reading at.
- * @param {number=} opt_length The optional length of the block to read -
- *     we'll throw an assertion if we go off the end of the block.
- * @constructor
- * @struct
  */
 export class BinaryDecoder {
-  /**
-   * Global pool of BinaryDecoder instances.
-   * @private {!Array<!BinaryDecoder>}
-   */
   static instanceCache_: BinaryDecoder[] = [];
 
   /**
    * Pops an instance off the instance cache, or creates one if the cache is
    * empty.
-   * @param {ByteSource=} opt_bytes The bytes we're reading from.
-   * @param {number=} opt_start The optional offset to start reading at.
-   * @param {number=} opt_length The optional length of the block to read -
-   *     we'll throw an assertion if we go off the end of the block.
-   * @return {!BinaryDecoder}
    */
   static alloc(
     opt_bytes: ByteSource | undefined,
@@ -69,32 +53,27 @@ export class BinaryDecoder {
   ) {
     /**
      * Typed byte-wise view of the source buffer.
-     * @private {?Uint8Array}
      */
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
     this.bytes_ = undefined as any;
 
     /**
      * Start point of the block to read.
-     * @private {number}
      */
     this.start_ = 0;
 
     /**
      * End point of the block to read.
-     * @private {number}
      */
     this.end_ = 0;
 
     /**
      * Current read location in bytes_.
-     * @private {number}
      */
     this.cursor_ = 0;
 
     /**
      * Set to true if this decoder encountered an error due to corrupt data.
-     * @private {boolean}
      */
     this.error_ = false;
 
@@ -115,7 +94,6 @@ export class BinaryDecoder {
 
   /**
    * Makes a copy of this decoder.
-   * @return {!BinaryDecoder}
    */
   clone(): BinaryDecoder {
     return BinaryDecoder.alloc(
@@ -139,7 +117,6 @@ export class BinaryDecoder {
 
   /**
    * Returns the raw buffer.
-   * @return {?Uint8Array} The raw buffer.
    */
   getBuffer(): Uint8Array | undefined {
     return this.bytes_;
@@ -147,10 +124,6 @@ export class BinaryDecoder {
 
   /**
    * Changes the block of bytes we're decoding.
-   * @param {!ByteSource} data The bytes we're reading from.
-   * @param {number=} opt_start The optional offset to start reading at.
-   * @param {number=} opt_length The optional length of the block to read -
-   *     we'll throw an assertion if we go off the end of the block.
    */
   setBlock(
     data: ByteSource,
@@ -164,16 +137,10 @@ export class BinaryDecoder {
     this.cursor_ = this.start_;
   }
 
-  /**
-   * @return {number}
-   */
   getEnd(): number {
     return this.end_;
   }
 
-  /**
-   * @param {number} end
-   */
   setEnd(end: number) {
     this.end_ = end;
   }
@@ -187,7 +154,6 @@ export class BinaryDecoder {
 
   /**
    * Returns the internal read cursor.
-   * @return {number} The internal read cursor.
    */
   getCursor(): number {
     return this.cursor_;
@@ -195,7 +161,6 @@ export class BinaryDecoder {
 
   /**
    * Returns the internal read cursor.
-   * @param {number} cursor The new cursor.
    */
   setCursor(cursor: number) {
     this.cursor_ = cursor;
@@ -203,7 +168,6 @@ export class BinaryDecoder {
 
   /**
    * Advances the stream cursor by the given number of bytes.
-   * @param {number} count The number of bytes to advance by.
    */
   advance(count: number) {
     this.cursor_ += count;
@@ -212,7 +176,6 @@ export class BinaryDecoder {
 
   /**
    * Returns true if this decoder is at the end of the block.
-   * @return {boolean}
    */
   atEnd(): boolean {
     return this.cursor_ == this.end_;
@@ -220,7 +183,6 @@ export class BinaryDecoder {
 
   /**
    * Returns true if this decoder is at the end of the block.
-   * @return {boolean}
    */
   pastEnd(): boolean {
     return this.cursor_ > this.end_;
@@ -228,7 +190,6 @@ export class BinaryDecoder {
 
   /**
    * Returns true if this decoder encountered an error due to corrupt data.
-   * @return {boolean}
    */
   getError(): boolean {
     return this.error_ || this.cursor_ < 0 || this.cursor_ > this.end_;
@@ -246,11 +207,6 @@ export class BinaryDecoder {
    * Decoding varints requires doing some funny base-128 math - for more
    * details on the format, see
    * https://developers.google.com/protocol-buffers/docs/encoding
-   *
-   * @param {function(number, number): T} convert Conversion function to produce
-   *     the result value, takes parameters (lowBits, highBits).
-   * @return {T}
-   * @template T
    */
   readSplitVarint64<T>(convert: (a: number, b: number) => T): T {
     let temp = 128;
@@ -293,11 +249,6 @@ export class BinaryDecoder {
    * Reads a 64-bit fixed-width value from the stream and invokes the conversion
    * function with the value in two signed 32 bit integers to produce the result.
    * Since this does not convert the value to a number, no precision is lost.
-   *
-   * @param {function(number, number): T} convert Conversion function to produce
-   *     the result value, takes parameters (lowBits, highBits).
-   * @return {T}
-   * @template T
    */
   readSplitFixed64<T>(convert: (a: number, b: number) => T): T {
     const bytes = this.bytes_;
@@ -325,7 +276,6 @@ export class BinaryDecoder {
   /**
    * Skips backwards over a varint in the block - to do this correctly, we have
    * to know the value we're skipping backwards over or things are ambiguous.
-   * @param {number} value The varint value to unskip.
    */
   unskipVarint(value: number) {
     while (value > 128) {
@@ -351,7 +301,6 @@ export class BinaryDecoder {
    * details on the format, see
    * https://developers.google.com/protocol-buffers/docs/encoding
    *
-   * @return {number} The decoded unsigned 32-bit varint.
    */
   readUnsignedVarint32(): number {
     let temp;
@@ -420,8 +369,6 @@ export class BinaryDecoder {
   /**
    * The readUnsignedVarint32 above deals with signed 32-bit varints correctly,
    * so this is just an alias.
-   *
-   * @return {number} The decoded signed 32-bit varint.
    */
   readSignedVarint32(): number {
     return this.readUnsignedVarint32();
@@ -429,8 +376,6 @@ export class BinaryDecoder {
 
   /**
    * Reads a 32-bit unsigned variant and returns its value as a string.
-   *
-   * @return {string} The decoded unsigned 32-bit varint as a string.
    */
   readUnsignedVarint32String(): string {
     // 32-bit integers fit in JavaScript numbers without loss of precision, so
@@ -442,8 +387,6 @@ export class BinaryDecoder {
 
   /**
    * Reads a 32-bit signed variant and returns its value as a string.
-   *
-   * @return {string} The decoded signed 32-bit varint as a string.
    */
   readSignedVarint32String(): string {
     // 32-bit integers fit in JavaScript numbers without loss of precision, so
@@ -459,8 +402,6 @@ export class BinaryDecoder {
    * Zigzag encoding is a modification of varint encoding that reduces the
    * storage overhead for small negative integers - for more details on the
    * format, see https://developers.google.com/protocol-buffers/docs/encoding
-   *
-   * @return {number} The decoded signed, zigzag-encoded 32-bit varint.
    */
   readZigzagVarint32(): number {
     const result = this.readUnsignedVarint32();
@@ -471,9 +412,6 @@ export class BinaryDecoder {
    * Reads an unsigned 64-bit varint from the binary stream. Note that since
    * Javascript represents all numbers as double-precision floats, there will be
    * precision lost if the absolute value of the varint is larger than 2^53.
-   *
-   * @return {number} The decoded unsigned varint. Precision will be lost if the
-   *     integer exceeds 2^53.
    */
   readUnsignedVarint64(): number {
     return this.readSplitVarint64(joinUint64);
@@ -482,8 +420,6 @@ export class BinaryDecoder {
   /**
    * Reads an unsigned 64-bit varint from the binary stream and returns the value
    * as a decimal string.
-   *
-   * @return {string} The decoded unsigned varint as a decimal string.
    */
   readUnsignedVarint64String(): string {
     return this.readSplitVarint64(joinUnsignedDecimalString);
@@ -493,9 +429,6 @@ export class BinaryDecoder {
    * Reads a signed 64-bit varint from the binary stream. Note that since
    * Javascript represents all numbers as double-precision floats, there will be
    * precision lost if the absolute value of the varint is larger than 2^53.
-   *
-   * @return {number} The decoded signed varint. Precision will be lost if the
-   *     integer exceeds 2^53.
    */
   readSignedVarint64(): number {
     return this.readSplitVarint64(joinInt64);
@@ -504,8 +437,6 @@ export class BinaryDecoder {
   /**
    * Reads an signed 64-bit varint from the binary stream and returns the value
    * as a decimal string.
-   *
-   * @return {string} The decoded signed varint as a decimal string.
    */
   readSignedVarint64String(): string {
     return this.readSplitVarint64(joinSignedDecimalString);
@@ -520,9 +451,6 @@ export class BinaryDecoder {
    * Zigzag encoding is a modification of varint encoding that reduces the
    * storage overhead for small negative integers - for more details on the
    * format, see https://developers.google.com/protocol-buffers/docs/encoding
-   *
-   * @return {number} The decoded zigzag varint. Precision will be lost if the
-   *     integer exceeds 2^53.
    */
   readZigzagVarint64(): number {
     return this.readSplitVarint64(joinZigzag64);
@@ -540,11 +468,7 @@ export class BinaryDecoder {
    * Zigzag encoding is a modification of varint encoding that reduces the
    * storage overhead for small negative integers - for more details on the
    * format, see https://developers.google.com/protocol-buffers/docs/encoding
-   *
-   * @param {function(number, number): T} convert Conversion function to produce
    *     the result value, takes parameters (lowBits, highBits).
-   * @return {T}
-   * @template T
    */
   readSplitZigzagVarint64<T>(
     convert: (bitsLow: number, bitsHigh: number) => T
@@ -562,8 +486,6 @@ export class BinaryDecoder {
    * Zigzag encoding is a modification of varint encoding that reduces the
    * storage overhead for small negative integers - for more details on the
    * format, see https://developers.google.com/protocol-buffers/docs/encoding
-   *
-   * @return {string} The decoded zigzag varint in hash64 format.
    */
   readZigzagVarintHash64(): string {
     return this.readSplitZigzagVarint64(joinHash64);
@@ -576,9 +498,6 @@ export class BinaryDecoder {
    * Zigzag encoding is a modification of varint encoding that reduces the
    * storage overhead for small negative integers - for more details on the
    * format, see https://developers.google.com/protocol-buffers/docs/encoding
-   *
-   * @return {string} The decoded signed, zigzag-encoded 64-bit varint as a
-   * string.
    */
   readZigzagVarint64String(): string {
     return this.readSplitZigzagVarint64(joinSignedDecimalString);
@@ -586,8 +505,6 @@ export class BinaryDecoder {
 
   /**
    * Reads a raw unsigned 8-bit integer from the binary stream.
-   *
-   * @return {number} The unsigned 8-bit integer read from the binary stream.
    */
   readUint8(): number {
     const a = this.bytes_[this.cursor_ + 0];
@@ -598,8 +515,6 @@ export class BinaryDecoder {
 
   /**
    * Reads a raw unsigned 16-bit integer from the binary stream.
-   *
-   * @return {number} The unsigned 16-bit integer read from the binary stream.
    */
   readUint16(): number {
     const a = this.bytes_[this.cursor_ + 0];
@@ -611,8 +526,6 @@ export class BinaryDecoder {
 
   /**
    * Reads a raw unsigned 32-bit integer from the binary stream.
-   *
-   * @return {number} The unsigned 32-bit integer read from the binary stream.
    */
   readUint32(): number {
     const a = this.bytes_[this.cursor_ + 0];
@@ -628,9 +541,6 @@ export class BinaryDecoder {
    * Reads a raw unsigned 64-bit integer from the binary stream. Note that since
    * Javascript represents all numbers as double-precision floats, there will be
    * precision lost if the absolute value of the integer is larger than 2^53.
-   *
-   * @return {number} The unsigned 64-bit integer read from the binary stream.
-   *     Precision will be lost if the integer exceeds 2^53.
    */
   readUint64(): number {
     const bitsLow = this.readUint32();
@@ -642,8 +552,6 @@ export class BinaryDecoder {
    * Reads a raw unsigned 64-bit integer from the binary stream. Note that since
    * Javascript represents all numbers as double-precision floats, there will be
    * precision lost if the absolute value of the integer is larger than 2^53.
-   *
-   * @return {string} The unsigned 64-bit integer read from the binary stream.
    */
   readUint64String(): string {
     const bitsLow = this.readUint32();
@@ -653,8 +561,6 @@ export class BinaryDecoder {
 
   /**
    * Reads a raw signed 8-bit integer from the binary stream.
-   *
-   * @return {number} The signed 8-bit integer read from the binary stream.
    */
   readInt8(): number {
     const a = this.bytes_[this.cursor_ + 0];
@@ -665,8 +571,6 @@ export class BinaryDecoder {
 
   /**
    * Reads a raw signed 16-bit integer from the binary stream.
-   *
-   * @return {number} The signed 16-bit integer read from the binary stream.
    */
   readInt16(): number {
     const a = this.bytes_[this.cursor_ + 0];
@@ -678,8 +582,6 @@ export class BinaryDecoder {
 
   /**
    * Reads a raw signed 32-bit integer from the binary stream.
-   *
-   * @return {number} The signed 32-bit integer read from the binary stream.
    */
   readInt32(): number {
     const a = this.bytes_[this.cursor_ + 0];
@@ -695,9 +597,6 @@ export class BinaryDecoder {
    * Reads a raw signed 64-bit integer from the binary stream. Note that since
    * Javascript represents all numbers as double-precision floats, there will be
    * precision lost if the absolute value of the integer is larger than 2^53.
-   *
-   * @return {number} The signed 64-bit integer read from the binary stream.
-   *     Precision will be lost if the integer exceeds 2^53.
    */
   readInt64(): number {
     const bitsLow = this.readUint32();
@@ -708,9 +607,6 @@ export class BinaryDecoder {
   /**
    * Reads a raw signed 64-bit integer from the binary stream and returns it as a
    * string.
-   *
-   * @return {string} The signed 64-bit integer read from the binary stream.
-   *     Precision will be lost if the integer exceeds 2^53.
    */
   readInt64String(): string {
     const bitsLow = this.readUint32();
@@ -721,8 +617,6 @@ export class BinaryDecoder {
   /**
    * Reads a 32-bit floating-point number from the binary stream, using the
    * temporary buffer to realign the data.
-   *
-   * @return {number} The float read from the binary stream.
    */
   readFloat(): number {
     const bitsLow = this.readUint32();
@@ -732,8 +626,6 @@ export class BinaryDecoder {
   /**
    * Reads a 64-bit floating-point number from the binary stream, using the
    * temporary buffer to realign the data.
-   *
-   * @return {number} The double read from the binary stream.
    */
   readDouble(): number {
     const bitsLow = this.readUint32();
@@ -743,7 +635,6 @@ export class BinaryDecoder {
 
   /**
    * Reads a boolean value from the binary stream.
-   * @return {boolean} The boolean read from the binary stream.
    */
   readBool(): boolean {
     return !!this.bytes_[this.cursor_++];
@@ -752,7 +643,6 @@ export class BinaryDecoder {
   /**
    * Reads an enum value from the binary stream, which are always encoded as
    * signed varints.
-   * @return {number} The enum value read from the binary stream.
    */
   readEnum(): number {
     return this.readSignedVarint32();
@@ -760,8 +650,6 @@ export class BinaryDecoder {
 
   /**
    * Reads and parses a UTF-8 encoded unicode string from the stream.
-   * @param {number} length The length of the string to read.
-   * @return {string} The decoded string.
    */
   readString(length: number): string {
     return byteArrayToString(this.readBytes(length));
@@ -770,7 +658,6 @@ export class BinaryDecoder {
   /**
    * Reads and parses a UTF-8 encoded unicode string (with length prefix) from
    * the stream.
-   * @return {string} The decoded string.
    */
   readStringWithLength(): string {
     const length = this.readUnsignedVarint32();
@@ -779,10 +666,6 @@ export class BinaryDecoder {
 
   /**
    * Reads a block of raw bytes from the binary stream.
-   *
-   * @param {number} length The number of bytes to read.
-   * @return {!Uint8Array} The decoded block of bytes, or an empty block if the
-   *     length was invalid.
    */
   readBytes(length: number): Uint8Array {
     if (length < 0 || this.cursor_ + length > this.bytes_.length) {
@@ -801,8 +684,6 @@ export class BinaryDecoder {
   /**
    * Reads a 64-bit varint from the stream and returns it as an 8-character
    * Unicode string for use as a hash table key.
-   *
-   * @return {string} The hash value.
    */
   readVarintHash64(): string {
     return this.readSplitVarint64(joinHash64);
@@ -811,8 +692,6 @@ export class BinaryDecoder {
   /**
    * Reads a 64-bit fixed-width value from the stream and returns it as an
    * 8-character Unicode string for use as a hash table key.
-   *
-   * @return {string} The hash value.
    */
   readFixedHash64(): string {
     const bytes = this.bytes_;
