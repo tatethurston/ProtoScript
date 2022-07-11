@@ -15,9 +15,6 @@ export type ByteSource = ArrayBuffer | Uint8Array | number[] | string;
 
 /**
  * Converts any type defined in jspb.ByteSource into a Uint8Array.
- * @param {!jspb.ByteSource} data
- * @return {!Uint8Array}
- * @suppress {invalidCasts}
  */
 export function byteSourceToUint8Array(data: ByteSource): Uint8Array {
   if (data instanceof Uint8Array) {
@@ -35,12 +32,6 @@ export function byteSourceToUint8Array(data: ByteSource): Uint8Array {
  * Converts split 64-bit values from zigzag encoding to standard two's
  * complement encoding. Invokes the provided function to produce final result.
  *
- * @param {number} bitsLow
- * @param {number} bitsHigh
- * @param {function(number, number): T} convert Conversion function to produce
- *     the result value, takes parameters (lowBits, highBits).
- * @return {T}
- * @template T
  */
 export function fromZigzag64<T>(
   bitsLow: number,
@@ -64,13 +55,6 @@ export function fromZigzag64<T>(
 /**
  * Converts split 64-bit values from standard two's complement encoding to
  * zig-zag encoding. Invokes the provided function to produce final result.
- *
- * @param {number} bitsLow
- * @param {number} bitsHigh
- * @param {function(number, number): T} convert Conversion function to produce
- *     the result value, takes parameters (lowBits, highBits).
- * @return {T}
- * @template T
  */
 export function toZigzag64<T>(
   bitsLow: number,
@@ -93,14 +77,11 @@ export function toZigzag64<T>(
   return convert(bitsLow, bitsHigh);
 }
 
-/** @const @private {number} '0' */
 const ZERO_CHAR_CODE_ = 48;
 
 /**
  * Converts a signed or unsigned decimal string into its hash string
  * representation.
- * @param {string} dec
- * @return {string}
  */
 export function decimalStringToHash64(dec: string): string {
   assert(dec.length > 0);
@@ -167,7 +148,6 @@ export let split64High = 0;
 /**
  * Splits a signed Javascript integer into two 32-bit halves and stores it in
  * the temp values above.
- * @param {number} value The number to split.
  */
 export const splitInt64 = function (value: number): void {
   // Convert to sign-magnitude representation.
@@ -198,7 +178,6 @@ export const splitInt64 = function (value: number): void {
 /**
  * Splits an unsigned Javascript integer into two 32-bit halves and stores it
  * in the temp values above.
- * @param {number} value The number to split.
  */
 export const splitUint64 = function (value: number): void {
   // Extract low 32 bits and high 32 bits as unsigned integers.
@@ -212,7 +191,6 @@ export const splitUint64 = function (value: number): void {
 /**
  * Converts a signed Javascript integer into zigzag format, splits it into two
  * 32-bit halves, and stores it in the temp values above.
- * @param {number} value The number to split.
  */
 export const splitZigzag64 = function (value: number): void {
   // Convert to sign-magnitude and scale by 2 before we split the value.
@@ -246,7 +224,6 @@ export const splitZigzag64 = function (value: number): void {
 /**
  * Converts an 8-character hash string into two 32-bit numbers and stores them
  * in the temp values above.
- * @param {string} hash
  */
 export const splitHash64 = function (hash: string): void {
   const a = hash.charCodeAt(0);
@@ -265,7 +242,6 @@ export const splitHash64 = function (hash: string): void {
 /**
  * Converts a floating-point number into 32-bit IEEE representation and stores
  * it in the temp values above.
- * @param {number} value
  */
 export const splitFloat32 = function (value: number): void {
   const sign = value < 0 ? 1 : 0;
@@ -325,7 +301,6 @@ export const splitFloat32 = function (value: number): void {
 /**
  * Converts a floating-point number into 64-bit IEEE representation and stores
  * it in the temp values above.
- * @param {number} value
  */
 export const splitFloat64 = function (value: number): void {
   const sign = value < 0 ? 1 : 0;
@@ -400,9 +375,6 @@ export const splitFloat64 = function (value: number): void {
 /**
  * Joins two 32-bit values into a 64-bit unsigned integer. Precision will be
  * lost if the result is greater than 2^52.
- * @param {number} bitsLow
- * @param {number} bitsHigh
- * @return {number}
  */
 export const joinUint64 = function (bitsLow: number, bitsHigh: number): number {
   return bitsHigh * TWO_TO_32 + (bitsLow >>> 0);
@@ -411,9 +383,6 @@ export const joinUint64 = function (bitsLow: number, bitsHigh: number): number {
 /**
  * Joins two 32-bit values into a 64-bit signed integer. Precision will be lost
  * if the result is greater than 2^52.
- * @param {number} bitsLow
- * @param {number} bitsHigh
- * @return {number}
  */
 export const joinInt64 = function (bitsLow: number, bitsHigh: number): number {
   // If the high bit is set, do a manual two's complement conversion.
@@ -433,9 +402,6 @@ export const joinInt64 = function (bitsLow: number, bitsHigh: number): number {
 /**
  * Joins two 32-bit values into a 64-bit unsigned integer and applies zigzag
  * decoding. Precision will be lost if the result is greater than 2^52.
- * @param {number} bitsLow
- * @param {number} bitsHigh
- * @return {number}
  */
 export const joinZigzag64 = function (
   bitsLow: number,
@@ -446,9 +412,6 @@ export const joinZigzag64 = function (
 
 /**
  * Joins two 32-bit values into an 8-character hash string.
- * @param {number} bitsLow
- * @param {number} bitsHigh
- * @return {string}
  */
 export const joinHash64 = function (bitsLow: number, bitsHigh: number): string {
   const a = (bitsLow >>> 0) & 0xff;
@@ -466,8 +429,6 @@ export const joinHash64 = function (bitsLow: number, bitsHigh: number): string {
 /**
  * Joins two 32-bit values into a 32-bit IEEE floating point number and
  * converts it back into a Javascript number.
- * @param {number} bitsLow The low 32 bits of the binary number;
- * @return {number}
  */
 export function joinFloat32(bitsLow: number): number {
   const sign = (bitsLow >> 31) * 2 + 1;
@@ -493,9 +454,6 @@ export function joinFloat32(bitsLow: number): number {
 /**
  * Joins two 32-bit values into a 64-bit IEEE floating point number and
  * converts it back into a Javascript number.
- * @param {number} bitsLow The low 32 bits of the binary number;
- * @param {number} bitsHigh The high 32 bits of the binary number.
- * @return {number}
  */
 export const joinFloat64 = function (
   bitsLow: number,
@@ -524,9 +482,6 @@ export const joinFloat64 = function (
 /**
  * Losslessly converts a 64-bit unsigned integer in 32:32 split representation
  * into a decimal string.
- * @param {number} bitsLow The low 32 bits of the binary number;
- * @param {number} bitsHigh The high 32 bits of the binary number.
- * @return {string} The binary number represented as a string.
  */
 export const joinUnsignedDecimalString = function (
   bitsLow: number,
@@ -593,9 +548,6 @@ export const joinUnsignedDecimalString = function (
 /**
  * Losslessly converts a 64-bit signed integer in 32:32 split representation
  * into a decimal string.
- * @param {number} bitsLow The low 32 bits of the binary number;
- * @param {number} bitsHigh The high 32 bits of the binary number.
- * @return {string} The binary number represented as a string.
  */
 export const joinSignedDecimalString = function (
   bitsLow: number,

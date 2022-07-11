@@ -16,7 +16,7 @@ export class UInt64 {
   static fromString(s: string) {
     const bigint = BigInt.asUintN(64, BigInt(s));
     const lo = Number(BigInt.asUintN(32, bigint));
-    const hi = Number(bigint >> 32n);
+    const hi = Number(bigint >> BigInt(32));
     return new UInt64(bigint, lo, hi);
   }
 }

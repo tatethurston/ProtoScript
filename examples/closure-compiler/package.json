@@ -1,0 +1,15 @@
+{
+  "name": "js-example",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build:esm": "yarn google-closure-compiler 'src/*.js' 'node_modules/protoscript/index.js' 'node_modules/protoscript/runtime/**/*.js' 'node_modules/protoscript/runtime/*.js' --js_output_file dist/index.js --module_resolution=NODE --compilation_level ADVANCED",
+    "test": "node dist/index.js"
+  },
+  "dependencies": {
+    "protoscript": "*"
+  },
+  "devDependencies": {
+    "google-closure-compiler": "^20220601.0.0"
+  }
+}

@@ -20,7 +20,6 @@ export const FieldType = {
   SINT64: 18,
 
   // Extended types for Javascript
-
   FHASH64: 30, // 64-bit hash string, fixed-length encoding.
   VHASH64: 31, // 64-bit hash string, varint encoding.
 };
@@ -29,7 +28,6 @@ export type FieldType = typeof FieldType[keyof typeof FieldType];
 
 /**
  * Wire-format type codes, taken from proto2/public/wire_format_lite.h.
- * @enum {number}
  */
 export const WireType = {
   INVALID: -1,
@@ -45,8 +43,6 @@ export type WireType = typeof WireType[keyof typeof WireType];
 
 /**
  * Translates field type to wire type.
- * @param {jspb.BinaryConstants.FieldType} fieldType
- * @return {jspb.BinaryConstants.WireType}
  */
 export const FieldTypeToWireType = function (fieldType: FieldType): WireType {
   switch (fieldType) {
@@ -60,23 +56,19 @@ export const FieldTypeToWireType = function (fieldType: FieldType): WireType {
     case FieldType.ENUM:
     case FieldType.VHASH64:
       return WireType.VARINT;
-
     case FieldType.DOUBLE:
     case FieldType.FIXED64:
     case FieldType.SFIXED64:
     case FieldType.FHASH64:
       return WireType.FIXED64;
-
     case FieldType.STRING:
     case FieldType.MESSAGE:
     case FieldType.BYTES:
       return WireType.DELIMITED;
-
     case FieldType.FLOAT:
     case FieldType.FIXED32:
     case FieldType.SFIXED32:
       return WireType.FIXED32;
-
     case FieldType.INVALID:
     case FieldType.GROUP:
     default:
@@ -86,72 +78,60 @@ export const FieldTypeToWireType = function (fieldType: FieldType): WireType {
 
 /**
  * Flag to indicate a missing field.
- * @const {number}
  */
 export const INVALID_FIELD_NUMBER = -1;
 
 /**
  * The smallest normal float64 value.
- * @const {number}
  */
 export const FLOAT32_MIN = 1.1754943508222875e-38;
 
 /**
  * The largest finite float32 value.
- * @const {number}
  */
 export const FLOAT32_MAX = 3.4028234663852886e38;
 
 /**
  * The smallest normal float64 value.
- * @const {number}
  */
 export const FLOAT64_MIN = 2.2250738585072014e-308;
 
 /**
  * The largest finite float64 value.
- * @const {number}
  */
 export const FLOAT64_MAX = 1.7976931348623157e308;
 
 /**
  * Convenience constant equal to 2^20.
- * @const {number}
  */
 export const TWO_TO_20 = 1048576;
 
 /**
  * Convenience constant equal to 2^23.
- * @const {number}
  */
 export const TWO_TO_23 = 8388608;
 
 /**
  * Convenience constant equal to 2^31.
- * @const {number}
  */
 export const TWO_TO_31 = 2147483648;
 
 /**
  * Convenience constant equal to 2^32.
- * @const {number}
  */
 export const TWO_TO_32 = 4294967296;
 
 /**
  * Convenience constant equal to 2^52.
- * @const {number}
  */
 export const TWO_TO_52 = 4503599627370496;
 
 /**
  * Convenience constant equal to 2^63.
- * @const {number}
  */
 export const TWO_TO_63 = 9223372036854775808;
 
 /**
  * Convenience constant equal to 2^64.
- * @const {number}
  */
 export const TWO_TO_64 = 18446744073709551616;
