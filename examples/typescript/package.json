@@ -4,10 +4,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "yarn tsc && node dist/index.js"
+    "test": "tsc && node dist/index.js"
   },
   "dependencies": {
-    "protoscript": "*"
+    "protoscript": "file:../../dist"
   },
   "devDependencies": {
     "typescript": "^4.7.4"

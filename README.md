@@ -65,14 +65,14 @@ If you're looking for an RPC framework, you may be interested in [TwirpScript](h
    Or install from a [precompiled binary](https://github.com/protocolbuffers/protobuf/releases).
 
 1. Add this package to your project:
-   `yarn add protoscript` or `npm install protoscript`
+   `npm install protoscript` or `yarn add protoscript`
 
 ## Examples 🚀
 
-### yarn
+### npx
 
 ```sh
-yarn protoscript
+npx protoscript
 ```
 
 ### cli
@@ -119,7 +119,7 @@ ProtoScript does not make any guarantees for tools like linters and formatters s
 
 ## Configuration 🛠
 
-ProtoScript aims to be zero config, but can be configured via the cli interface, or when using the `yarn protoscript` command, by creating a `.protoscript.json` file in your project root.
+ProtoScript aims to be zero config, but can be configured via the cli interface, or when using the `npx protoscript` command, by creating a `.protoscript.json` file in your project root.
 
 <table>
   <thead>
