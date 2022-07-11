@@ -9,18 +9,18 @@
     "url": "https://github.com/tatethurston/protoscript"
   },
   "scripts": {
-    "build:commonjs": "yarn esbuild src/index.ts --bundle --platform=node --outfile=dist/cjs/index.cjs",
-    "build:module": "yarn tsc",
+    "build:commonjs": "esbuild src/index.ts --bundle --platform=node --outfile=dist/cjs/index.cjs",
+    "build:module": "tsc",
     "clean": "rm -rf dist",
-    "lint": "yarn typecheck && prettier --check . && prettier-package-json --list-different '{,example/,}package.json' && eslint .",
+    "lint": "npm run typecheck && prettier --check . && prettier-package-json --list-different '{,example/,}package.json' && eslint .",
     "lint:fix": "prettier --write . && prettier-package-json --write '{,example/}package.json' && eslint --fix .",
-    "package:build": "yarn install && yarn clean && yarn build:commonjs && yarn build:module && chmod +x dist/compiler.js dist/cli/index.js && cp src/compiler.cmd dist/compiler.cmd && yarn package:prune && yarn package:copy:files",
+    "package:build": "npm install && npm run clean && npm run build:commonjs && npm run build:module && chmod +x dist/compiler.js dist/cli/index.js && cp src/compiler.cmd dist/compiler.cmd && npm run package:prune && npm run package:copy:files",
     "package:copy:files": "cp ./LICENSE ./README.md dist/ && cp ./public.package.json dist/package.json",
     "package:prune": "find dist -name *test* -delete",
     "prepare": "husky install",
-    "test": "yarn jest",
-    "test:ci": "yarn test --coverage",
-    "typecheck": "yarn tsc --noEmit"
+    "test": "jest",
+    "test:ci": "npm run test --coverage",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "google-protobuf": "^3.20.1"
