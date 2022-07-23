@@ -2,6 +2,7 @@
 import type { FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb.js";
 import { IdentifierTable, ProtoTypes, processTypes } from "../utils.js";
 import { UserConfig } from "../../cli/index.js";
+import { type Plugin } from "../../plugin.js";
 
 const DEFAULT_IMPORT_TRACKER = {
   hasBytes: false,
@@ -732,7 +733,7 @@ function escapeComment(comment: string): string {
   return comment.replace(/\*\//g, "*" + "\\" + "/");
 }
 
-function printComments(comment: string): string {
+export function printComments(comment: string): string {
   const lines = escapeComment(comment).split("\n");
   return `\
     /**
@@ -741,7 +742,7 @@ function printComments(comment: string): string {
       `;
 }
 
-function addJSONSuffixToFullyQualifiedName(name: string): string {
+export function addJSONSuffixToFullyQualifiedName(name: string): string {
   const [first, ...rest] = name.split(".");
   return [first + "JSON", ...rest].join(".");
 }
@@ -770,7 +771,9 @@ let config = {
   },
 };
 
-function printIfTypescript(str: string): string {
+export type Config = typeof config;
+
+export function printIfTypescript(str: string): string {
   return printIf(config.isTS, str);
 }
 
@@ -781,7 +784,8 @@ function printIf(cond: boolean, str: string): string {
 export function generate(
   fileDescriptorProto: FileDescriptorProto,
   identifierTable: IdentifierTable,
-  options: Pick<UserConfig, "language" | "json" | "typescript">
+  options: Pick<UserConfig, "language" | "json" | "typescript">,
+  plugins: Plugin[]
 ): string {
   config = {
     isTS: options.language === "typescript",
@@ -793,11 +797,16 @@ export function generate(
 
   IMPORT_TRACKER = { ...DEFAULT_IMPORT_TRACKER };
 
-  const { imports, types } = processTypes(fileDescriptorProto, identifierTable);
+  const ast = processTypes(fileDescriptorProto, identifierTable);
+  const { imports, types } = ast;
   const sourceFile = fileDescriptorProto.getName();
   if (!sourceFile) {
     return "";
   }
+
+  const plugs = plugins.map((plugin) => plugin({ ast, config }));
+  const pluginImports = plugs.map((p) => p?.imports).filter(Boolean);
+  const pluginServices = plugs.map((p) => p?.services).filter(Boolean);
 
   const hasTypes = types.length > 0;
   const hasSerializer =
@@ -834,7 +843,7 @@ ${printIf(
     "decodeBase64Bytes,\n"
   )}} from 'protoscript';`
 )}
-
+${printIf(pluginImports.length > 0, pluginImports.join("\n"))}
 ${imports
   .map(({ identifiers, path }) => {
     const names = identifiers.flatMap((name) => [name, `${name}JSON`]);
@@ -847,6 +856,7 @@ ${printIf(
   `${printIfTypescript(printHeading("Types"))}
 ${typeDefinitions}`
 )}
+${printIf(pluginServices.length > 0, pluginServices.join("\n"))}
 ${printIf(
   !!protobufSerializers,
   `${printHeading("Protobuf Encode / Decode")}

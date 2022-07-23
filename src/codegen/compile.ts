@@ -9,8 +9,12 @@ import {
 import { format } from "prettier";
 import { deserializeConfig } from "../cli/utils.js";
 const { CodeGeneratorRequest, CodeGeneratorResponse } = PluginPb;
+import { type Plugin } from "../plugin.js";
 
-export function compile(input: Uint8Array): CodeGeneratorResponseType {
+export function compile(
+  input: Uint8Array,
+  plugins: Plugin[] = []
+): CodeGeneratorResponseType {
   const request = CodeGeneratorRequest.deserializeBinary(input);
   const options = deserializeConfig(request.getParameter() ?? "");
   const isTypescript = options.language === "typescript";
@@ -36,7 +40,12 @@ export function compile(input: Uint8Array): CodeGeneratorResponseType {
       return;
     }
 
-    const protobufTs = generate(fileDescriptorProto, identifierTable, options);
+    const protobufTs = generate(
+      fileDescriptorProto,
+      identifierTable,
+      options,
+      plugins
+    );
     writeFile(
       isTypescript ? getProtobufTSFileName(name) : getProtobufJSFileName(name),
       protobufTs

@@ -9,6 +9,8 @@ jobs:
     name: "Lint and Test"
     runs-on: ubuntu-latest
     steps:
+      # Install protoc for e2e:setup
+      - uses: arduino/setup-protoc@v1
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:

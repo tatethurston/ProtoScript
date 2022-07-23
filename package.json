@@ -12,6 +12,10 @@
     "build:commonjs": "esbuild src/index.ts --bundle --platform=node --outfile=dist/cjs/index.cjs",
     "build:module": "tsc",
     "clean": "rm -rf dist",
+    "e2e:setup": "npm run package:build && (cd e2e/serialization && npm install && npx protoscript)",
+    "examples:each": "for e in $(ls examples); do (cd ./examples/\"$e\" && $npm_config_command); done",
+    "examples:regen": "npm run examples:each --command='npx protoscript' && npm run examples:each --command='tsc --noEmit'",
+    "examples:setup": "npm run examples:each --command='npm install'",
     "lint": "npm run typecheck && prettier --check . && prettier-package-json --list-different '{,example/,}package.json' && eslint .",
     "lint:fix": "prettier --write . && prettier-package-json --write '{,example/}package.json' && eslint --fix .",
     "package:build": "npm install && npm run clean && npm run build:commonjs && npm run build:module && chmod +x dist/compiler.js dist/cli/index.js && cp src/compiler.cmd dist/compiler.cmd && npm run package:prune && npm run package:copy:files",
@@ -19,7 +23,7 @@
     "package:prune": "find dist -name *test* -delete",
     "prepare": "husky install",
     "test": "jest",
-    "test:ci": "npm run test --coverage",
+    "test:ci": "npm run e2e:setup && npm run test --coverage",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

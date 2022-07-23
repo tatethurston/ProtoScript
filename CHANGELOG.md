@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.8
+
+- Add experimental plugin support
+
 ## v0.0.7
 
 - Include file extensions in generated file imports.

@@ -511,7 +511,7 @@ export interface Service {
   comments?: Comments;
 }
 
-interface TypeFile {
+export interface ParsedAst {
   packageName: string | undefined;
   imports: {
     identifiers: string[];
@@ -612,8 +612,8 @@ function isNotBlank<T>(x: T): x is NonNullable<T> {
 export function processTypes(
   fileDescriptorProto: FileDescriptorProto,
   identifierTable: IdentifierTable
-): TypeFile {
-  const typeFile: TypeFile = {
+): ParsedAst {
+  const typeFile: ParsedAst = {
     packageName: fileDescriptorProto.getPackage(),
     imports: [],
     services: [],
