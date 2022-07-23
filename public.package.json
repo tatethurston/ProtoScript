@@ -1,6 +1,6 @@
 {
   "name": "protoscript",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A Protobuf runtime and code generation tool for JavaScript and TypeScript",
   "license": "MIT",
   "author": "Tate <tatethurston@gmail.com>",
@@ -28,6 +28,7 @@
       "module": "./index.js",
       "require": "./cjs/index.cjs",
       "default": "./index.js"
-    }
+    },
+    "./plugin": "./plugin.js"
   }
 }
