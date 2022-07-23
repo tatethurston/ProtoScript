@@ -2,7 +2,7 @@
 
 ## v0.0.8
 
-- Add experimental plugin support
+- Use ["property"] access for JSON objects. This ensures generated JSON serialization code is correct when using minification tools that perform property mangling. See #4 for more context.
 
 ## v0.0.7
 
