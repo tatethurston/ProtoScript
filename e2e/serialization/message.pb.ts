@@ -688,7 +688,7 @@ export const FooJSON = {
   _writeMessage: function (msg: Partial<Foo>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.fieldOne != undefined) {
-      json.fieldOne = msg.fieldOne;
+      json["fieldOne"] = msg.fieldOne;
     }
     if (msg.fieldTwo) {
       const fieldTwo = Object.fromEntries(
@@ -698,47 +698,47 @@ export const FooJSON = {
           .map(({ key, value }) => [key, value])
       );
       if (Object.keys(fieldTwo).length > 0) {
-        json.fieldTwo = fieldTwo;
+        json["fieldTwo"] = fieldTwo;
       }
     }
     if (msg.fieldThree?.length) {
-      json.fieldThree = msg.fieldThree.map(BarJSON._writeMessage);
+      json["fieldThree"] = msg.fieldThree.map(BarJSON._writeMessage);
     }
     if (msg.fieldFour) {
       const fieldFour = FooJSON.FooBar._writeMessage(msg.fieldFour);
       if (Object.keys(fieldFour).length > 0) {
-        json.fieldFour = fieldFour;
+        json["fieldFour"] = fieldFour;
       }
     }
     if (msg.fieldFive?.length) {
-      json.fieldFive = msg.fieldFive.map((x) => x.toString());
+      json["fieldFive"] = msg.fieldFive.map((x) => x.toString());
     }
     if (msg.fieldSix && BazJSON._toInt(msg.fieldSix)) {
-      json.fieldSix = msg.fieldSix;
+      json["fieldSix"] = msg.fieldSix;
     }
     if (msg.fieldSeven?.length) {
       json["luckySeven"] = msg.fieldSeven;
     }
     if (msg.fieldEight) {
-      json.fieldEight = msg.fieldEight.toString();
+      json["fieldEight"] = msg.fieldEight.toString();
     }
     if (msg.fieldNine?.length) {
-      json.fieldNine = encodeBase64Bytes(msg.fieldNine);
+      json["fieldNine"] = encodeBase64Bytes(msg.fieldNine);
     }
     if (msg.fieldTen?.length) {
-      json.fieldTen = msg.fieldTen.map(encodeBase64Bytes);
+      json["fieldTen"] = msg.fieldTen.map(encodeBase64Bytes);
     }
     if (msg.fieldEleven != undefined) {
       const fieldEleven = BarJSON._writeMessage(msg.fieldEleven);
-      json.fieldEleven = fieldEleven;
+      json["fieldEleven"] = fieldEleven;
     }
     if (msg.fieldTwelve != undefined) {
       const fieldTwelve = BarJSON._writeMessage(msg.fieldTwelve);
-      json.fieldTwelve = fieldTwelve;
+      json["fieldTwelve"] = fieldTwelve;
     }
     if (msg.fieldThirteen != undefined) {
       const fieldThirteen = BarJSON._writeMessage(msg.fieldThirteen);
-      json.fieldThirteen = fieldThirteen;
+      json["fieldThirteen"] = fieldThirteen;
     }
     return json;
   },
@@ -747,11 +747,11 @@ export const FooJSON = {
    * @private
    */
   _readMessage: function (msg: Foo, json: any): Foo {
-    const _fieldOne = json.fieldOne ?? json.field_one;
+    const _fieldOne = json["fieldOne"] ?? json["field_one"];
     if (_fieldOne) {
       msg.fieldOne = _fieldOne;
     }
-    const _fieldTwo = json.fieldTwo ?? json.field_two;
+    const _fieldTwo = json["fieldTwo"] ?? json["field_two"];
     if (_fieldTwo) {
       msg.fieldTwo = Object.fromEntries(
         Object.entries(_fieldTwo)
@@ -760,7 +760,7 @@ export const FooJSON = {
           .map(({ key, value }) => [key, value])
       );
     }
-    const _fieldThree = json.fieldThree ?? json.field_three;
+    const _fieldThree = json["fieldThree"] ?? json["field_three"];
     if (_fieldThree) {
       for (const item of _fieldThree) {
         const m = Bar.initialize();
@@ -768,49 +768,50 @@ export const FooJSON = {
         msg.fieldThree.push(m);
       }
     }
-    const _fieldFour = json.fieldFour ?? json.field_four;
+    const _fieldFour = json["fieldFour"] ?? json["field_four"];
     if (_fieldFour) {
       const m = Foo.FooBar.initialize();
       FooJSON.FooBar._readMessage(m, _fieldFour);
       msg.fieldFour = m;
     }
-    const _fieldFive = json.fieldFive ?? json.field_five;
+    const _fieldFive = json["fieldFive"] ?? json["field_five"];
     if (_fieldFive) {
       msg.fieldFive = _fieldFive.map(BigInt);
     }
-    const _fieldSix = json.fieldSix ?? json.field_six;
+    const _fieldSix = json["fieldSix"] ?? json["field_six"];
     if (_fieldSix) {
       msg.fieldSix = _fieldSix;
     }
-    const _fieldSeven = json["luckySeven"] ?? json.field_seven;
+    const _fieldSeven =
+      json["luckySeven"] ?? json["fieldSeven"] ?? json["field_seven"];
     if (_fieldSeven) {
       msg.fieldSeven = _fieldSeven;
     }
-    const _fieldEight = json.fieldEight ?? json.field_eight;
+    const _fieldEight = json["fieldEight"] ?? json["field_eight"];
     if (_fieldEight) {
       msg.fieldEight = BigInt(_fieldEight);
     }
-    const _fieldNine = json.fieldNine ?? json.field_nine;
+    const _fieldNine = json["fieldNine"] ?? json["field_nine"];
     if (_fieldNine) {
       msg.fieldNine = decodeBase64Bytes(_fieldNine);
     }
-    const _fieldTen = json.fieldTen ?? json.field_ten;
+    const _fieldTen = json["fieldTen"] ?? json["field_ten"];
     if (_fieldTen) {
       msg.fieldTen = _fieldTen.map(decodeBase64Bytes);
     }
-    const _fieldEleven = json.fieldEleven ?? json.field_eleven;
+    const _fieldEleven = json["fieldEleven"] ?? json["field_eleven"];
     if (_fieldEleven) {
       const m = Bar.initialize();
       BarJSON._readMessage(m, _fieldEleven);
       msg.fieldEleven = m;
     }
-    const _fieldTwelve = json.fieldTwelve ?? json.field_twelve;
+    const _fieldTwelve = json["fieldTwelve"] ?? json["field_twelve"];
     if (_fieldTwelve) {
       const m = Bar.initialize();
       BarJSON._readMessage(m, _fieldTwelve);
       msg.fieldTwelve = m;
     }
-    const _fieldThirteen = json.fieldThirteen ?? json.field_thirteen;
+    const _fieldThirteen = json["fieldThirteen"] ?? json["field_thirteen"];
     if (_fieldThirteen) {
       const m = Bar.initialize();
       BarJSON._readMessage(m, _fieldThirteen);
@@ -856,7 +857,7 @@ export const FooJSON = {
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.fieldOne) {
-        json.fieldOne = msg.fieldOne;
+        json["fieldOne"] = msg.fieldOne;
       }
       if (msg.fieldTwo) {
         const fieldTwo = Object.fromEntries(
@@ -866,11 +867,11 @@ export const FooJSON = {
             .map(({ key, value }) => [key, value])
         );
         if (Object.keys(fieldTwo).length > 0) {
-          json.fieldTwo = fieldTwo;
+          json["fieldTwo"] = fieldTwo;
         }
       }
       if (msg.fieldThree?.length) {
-        json.fieldThree = msg.fieldThree;
+        json["fieldThree"] = msg.fieldThree;
       }
       return json;
     },
@@ -879,11 +880,11 @@ export const FooJSON = {
      * @private
      */
     _readMessage: function (msg: Foo.FooBar, json: any): Foo.FooBar {
-      const _fieldOne = json.fieldOne ?? json.field_one;
+      const _fieldOne = json["fieldOne"] ?? json["field_one"];
       if (_fieldOne) {
         msg.fieldOne = _fieldOne;
       }
-      const _fieldTwo = json.fieldTwo ?? json.field_two;
+      const _fieldTwo = json["fieldTwo"] ?? json["field_two"];
       if (_fieldTwo) {
         msg.fieldTwo = Object.fromEntries(
           Object.entries(_fieldTwo)
@@ -892,7 +893,7 @@ export const FooJSON = {
             .map(({ key, value }) => [key, value])
         );
       }
-      const _fieldThree = json.fieldThree ?? json.field_three;
+      const _fieldThree = json["fieldThree"] ?? json["field_three"];
       if (_fieldThree) {
         msg.fieldThree = _fieldThree;
       }
@@ -908,10 +909,10 @@ export const FooJSON = {
       ): Record<string, unknown> {
         const json: Record<string, unknown> = {};
         if (msg.key) {
-          json.key = msg.key;
+          json["key"] = msg.key;
         }
         if (msg.value) {
-          json.value = msg.value.toString();
+          json["value"] = msg.value.toString();
         }
         return json;
       },
@@ -923,11 +924,11 @@ export const FooJSON = {
         msg: Foo.FooBar.FieldTwo,
         json: any
       ): Foo.FooBar.FieldTwo {
-        const _key = json.key;
+        const _key = json["key"];
         if (_key) {
           msg.key = _key;
         }
-        const _value = json.value;
+        const _value = json["value"];
         if (_value) {
           msg.value = BigInt(_value);
         }
@@ -945,12 +946,12 @@ export const FooJSON = {
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
-        json.key = msg.key;
+        json["key"] = msg.key;
       }
       if (msg.value) {
         const value = BarJSON._writeMessage(msg.value);
         if (Object.keys(value).length > 0) {
-          json.value = value;
+          json["value"] = value;
         }
       }
       return json;
@@ -960,11 +961,11 @@ export const FooJSON = {
      * @private
      */
     _readMessage: function (msg: Foo.FieldTwo, json: any): Foo.FieldTwo {
-      const _key = json.key;
+      const _key = json["key"];
       if (_key) {
         msg.key = _key;
       }
-      const _value = json.value;
+      const _value = json["value"];
       if (_value) {
         const m = Bar.initialize();
         BarJSON._readMessage(m, _value);
@@ -1007,7 +1008,7 @@ export const BarJSON = {
   _writeMessage: function (msg: Partial<Bar>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.fieldOne) {
-      json.fieldOne = msg.fieldOne;
+      json["fieldOne"] = msg.fieldOne;
     }
     if (msg.fieldTwo) {
       const fieldTwo = Object.fromEntries(
@@ -1017,11 +1018,11 @@ export const BarJSON = {
           .map(({ key, value }) => [key, value])
       );
       if (Object.keys(fieldTwo).length > 0) {
-        json.fieldTwo = fieldTwo;
+        json["fieldTwo"] = fieldTwo;
       }
     }
     if (msg.fieldThree?.length) {
-      json.fieldThree = msg.fieldThree;
+      json["fieldThree"] = msg.fieldThree;
     }
     return json;
   },
@@ -1030,11 +1031,11 @@ export const BarJSON = {
    * @private
    */
   _readMessage: function (msg: Bar, json: any): Bar {
-    const _fieldOne = json.fieldOne ?? json.field_one;
+    const _fieldOne = json["fieldOne"] ?? json["field_one"];
     if (_fieldOne) {
       msg.fieldOne = _fieldOne;
     }
-    const _fieldTwo = json.fieldTwo ?? json.field_two;
+    const _fieldTwo = json["fieldTwo"] ?? json["field_two"];
     if (_fieldTwo) {
       msg.fieldTwo = Object.fromEntries(
         Object.entries(_fieldTwo)
@@ -1043,7 +1044,7 @@ export const BarJSON = {
           .map(({ key, value }) => [key, value])
       );
     }
-    const _fieldThree = json.fieldThree ?? json.field_three;
+    const _fieldThree = json["fieldThree"] ?? json["field_three"];
     if (_fieldThree) {
       msg.fieldThree = _fieldThree;
     }
@@ -1059,10 +1060,10 @@ export const BarJSON = {
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
-        json.key = msg.key;
+        json["key"] = msg.key;
       }
       if (msg.value) {
-        json.value = msg.value.toString();
+        json["value"] = msg.value.toString();
       }
       return json;
     },
@@ -1071,11 +1072,11 @@ export const BarJSON = {
      * @private
      */
     _readMessage: function (msg: Bar.FieldTwo, json: any): Bar.FieldTwo {
-      const _key = json.key;
+      const _key = json["key"];
       if (_key) {
         msg.key = _key;
       }
-      const _value = json.value;
+      const _value = json["value"];
       if (_value) {
         msg.value = BigInt(_value);
       }

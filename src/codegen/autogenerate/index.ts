@@ -499,16 +499,9 @@ function writeJSONSerializers(
           ${node.content.fields
             .map((field) => {
               let res = "";
-              let setField = "";
-              if (config.json.useProtoFieldName) {
-                setField = `json.${field.protoName}`;
-              } else {
-                setField =
-                  // use brackets to protect against unsafe json_name (eg 'foo bar').
-                  field.jsonName !== field.name
-                    ? `json["${field.jsonName}"]`
-                    : `json.${field.name}`;
-              }
+              const setField = config.json.useProtoFieldName
+                ? `json["${field.protoName}"]`
+                : `json["${field.jsonName}"]`;
 
               if (!config.json.emitFieldsWithDefaultValues) {
                 if (field.repeated || field.read === "readBytes") {
@@ -599,17 +592,13 @@ function writeJSONSerializers(
             .map((field) => {
               let res = "";
               const name = `_${field.name}`;
-              let getField;
-              if (
-                field.name === field.jsonName &&
-                field.name === field.protoName
-              ) {
-                getField = `json.${field.name}`;
-              } else if (field.jsonName !== field.name) {
-                getField = `json["${field.jsonName}"] ?? json.${field.protoName}`;
-              } else {
-                getField = `json.${field.name} ?? json.${field.protoName}`;
-              }
+              const getField = [
+                `json["${field.jsonName}"]`,
+                field.name !== field.jsonName && `json["${field.name}"]`,
+                field.protoName !== field.name && `json["${field.protoName}"]`,
+              ]
+                .filter(Boolean)
+                .join(" ?? ");
 
               res += `const ${name} = ${getField};`;
               res += `if (${name}) {`;
