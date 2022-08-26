@@ -67,6 +67,11 @@ If you're looking for an RPC framework, you may be interested in [TwirpScript](h
 1. Add this package to your project:
    `npm install protoscript` or `yarn add protoscript`
 
+## Requirements ⚠️
+
+- Node.js v16 or greater
+- TypeScript v4.7 or greater when using TypeScript
+
 ## Examples 🚀
 
 ### npx
