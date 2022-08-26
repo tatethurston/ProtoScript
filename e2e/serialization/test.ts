@@ -63,97 +63,97 @@ describe("Serialization/Deserialization", () => {
     describe("deserialization", () => {
       it("empty deserialization", () => {
         expect(Foo.decode(Foo.encode({}))).toMatchInlineSnapshot(`
-          Object {
+          {
             "fieldEight": 0n,
             "fieldEleven": undefined,
-            "fieldFive": Array [],
-            "fieldFour": Object {
+            "fieldFive": [],
+            "fieldFour": {
               "fieldOne": "",
-              "fieldThree": Array [],
-              "fieldTwo": Object {},
+              "fieldThree": [],
+              "fieldTwo": {},
             },
             "fieldNine": Uint8Array [],
             "fieldOne": undefined,
-            "fieldSeven": Array [],
+            "fieldSeven": [],
             "fieldSix": "FOO",
-            "fieldTen": Array [],
+            "fieldTen": [],
             "fieldThirteen": undefined,
-            "fieldThree": Array [],
+            "fieldThree": [],
             "fieldTwelve": undefined,
-            "fieldTwo": Object {},
+            "fieldTwo": {},
           }
         `);
       });
 
       it("partial deserialization", () => {
         expect(Foo.decode(Foo.encode(partialMessage))).toMatchInlineSnapshot(`
-          Object {
+          {
             "fieldEight": 0n,
             "fieldEleven": undefined,
-            "fieldFive": Array [],
-            "fieldFour": Object {
+            "fieldFive": [],
+            "fieldFour": {
               "fieldOne": "",
-              "fieldThree": Array [],
-              "fieldTwo": Object {},
+              "fieldThree": [],
+              "fieldTwo": {},
             },
             "fieldNine": Uint8Array [],
             "fieldOne": 3,
-            "fieldSeven": Array [],
+            "fieldSeven": [],
             "fieldSix": "FOO",
-            "fieldTen": Array [],
+            "fieldTen": [],
             "fieldThirteen": undefined,
-            "fieldThree": Array [],
+            "fieldThree": [],
             "fieldTwelve": undefined,
-            "fieldTwo": Object {},
+            "fieldTwo": {},
           }
         `);
       });
 
       it("default message deserialization", () => {
         expect(Foo.decode(Foo.encode(Foo.initialize()))).toMatchInlineSnapshot(`
-          Object {
+          {
             "fieldEight": 0n,
             "fieldEleven": undefined,
-            "fieldFive": Array [],
-            "fieldFour": Object {
+            "fieldFive": [],
+            "fieldFour": {
               "fieldOne": "",
-              "fieldThree": Array [],
-              "fieldTwo": Object {},
+              "fieldThree": [],
+              "fieldTwo": {},
             },
             "fieldNine": Uint8Array [],
             "fieldOne": undefined,
-            "fieldSeven": Array [],
+            "fieldSeven": [],
             "fieldSix": "FOO",
-            "fieldTen": Array [],
+            "fieldTen": [],
             "fieldThirteen": undefined,
-            "fieldThree": Array [],
+            "fieldThree": [],
             "fieldTwelve": undefined,
-            "fieldTwo": Object {},
+            "fieldTwo": {},
           }
         `);
       });
 
       it("full deserialization", () => {
         expect(Foo.decode(Foo.encode(fullMessage))).toMatchInlineSnapshot(`
-          Object {
+          {
             "fieldEight": 223372036854775807n,
-            "fieldEleven": Object {
+            "fieldEleven": {
               "fieldOne": "",
-              "fieldThree": Array [],
-              "fieldTwo": Object {},
+              "fieldThree": [],
+              "fieldTwo": {},
             },
-            "fieldFive": Array [
+            "fieldFive": [
               1n,
               2n,
             ],
-            "fieldFour": Object {
+            "fieldFour": {
               "fieldOne": "foo",
-              "fieldThree": Array [
+              "fieldThree": [
                 1,
                 2,
                 3,
               ],
-              "fieldTwo": Object {
+              "fieldTwo": {
                 "bar": 4n,
                 "foo": 3n,
               },
@@ -163,52 +163,52 @@ describe("Serialization/Deserialization", () => {
               7,
             ],
             "fieldOne": 3,
-            "fieldSeven": Array [
+            "fieldSeven": [
               "BAR",
               "FOO",
             ],
             "fieldSix": "BAR",
-            "fieldTen": Array [
+            "fieldTen": [
               Uint8Array [
                 4,
               ],
             ],
-            "fieldThirteen": Object {
+            "fieldThirteen": {
               "fieldOne": "foo",
-              "fieldThree": Array [
+              "fieldThree": [
                 1,
                 2,
                 3,
               ],
-              "fieldTwo": Object {
+              "fieldTwo": {
                 "bar": 4n,
                 "foo": 3n,
               },
             },
-            "fieldThree": Array [
-              Object {
+            "fieldThree": [
+              {
                 "fieldOne": "foo",
-                "fieldThree": Array [
+                "fieldThree": [
                   1,
                   2,
                   3,
                 ],
-                "fieldTwo": Object {
+                "fieldTwo": {
                   "bar": 4n,
                   "foo": 3n,
                 },
               },
             ],
             "fieldTwelve": undefined,
-            "fieldTwo": Object {
-              "foo": Object {
+            "fieldTwo": {
+              "foo": {
                 "fieldOne": "foo",
-                "fieldThree": Array [
+                "fieldThree": [
                   1,
                   2,
                   3,
                 ],
-                "fieldTwo": Object {
+                "fieldTwo": {
                   "bar": 4n,
                   "foo": 3n,
                 },
@@ -413,24 +413,24 @@ describe("Serialization/Deserialization", () => {
     describe("deserialization", () => {
       it("empty deserialization", () => {
         expect(FooJSON.decode(FooJSON.encode({}))).toMatchInlineSnapshot(`
-          Object {
+          {
             "fieldEight": 0n,
             "fieldEleven": undefined,
-            "fieldFive": Array [],
-            "fieldFour": Object {
+            "fieldFive": [],
+            "fieldFour": {
               "fieldOne": "",
-              "fieldThree": Array [],
-              "fieldTwo": Object {},
+              "fieldThree": [],
+              "fieldTwo": {},
             },
             "fieldNine": Uint8Array [],
             "fieldOne": undefined,
-            "fieldSeven": Array [],
+            "fieldSeven": [],
             "fieldSix": "FOO",
-            "fieldTen": Array [],
+            "fieldTen": [],
             "fieldThirteen": undefined,
-            "fieldThree": Array [],
+            "fieldThree": [],
             "fieldTwelve": undefined,
-            "fieldTwo": Object {},
+            "fieldTwo": {},
           }
         `);
       });
@@ -438,24 +438,24 @@ describe("Serialization/Deserialization", () => {
       it("partial deserialization", () => {
         expect(FooJSON.decode(FooJSON.encode(partialMessage)))
           .toMatchInlineSnapshot(`
-          Object {
+          {
             "fieldEight": 0n,
             "fieldEleven": undefined,
-            "fieldFive": Array [],
-            "fieldFour": Object {
+            "fieldFive": [],
+            "fieldFour": {
               "fieldOne": "",
-              "fieldThree": Array [],
-              "fieldTwo": Object {},
+              "fieldThree": [],
+              "fieldTwo": {},
             },
             "fieldNine": Uint8Array [],
             "fieldOne": 3,
-            "fieldSeven": Array [],
+            "fieldSeven": [],
             "fieldSix": "FOO",
-            "fieldTen": Array [],
+            "fieldTen": [],
             "fieldThirteen": undefined,
-            "fieldThree": Array [],
+            "fieldThree": [],
             "fieldTwelve": undefined,
-            "fieldTwo": Object {},
+            "fieldTwo": {},
           }
         `);
       });
@@ -463,24 +463,24 @@ describe("Serialization/Deserialization", () => {
       it("default message deserialization", () => {
         expect(FooJSON.decode(FooJSON.encode(FooJSON.initialize())))
           .toMatchInlineSnapshot(`
-          Object {
+          {
             "fieldEight": 0n,
             "fieldEleven": undefined,
-            "fieldFive": Array [],
-            "fieldFour": Object {
+            "fieldFive": [],
+            "fieldFour": {
               "fieldOne": "",
-              "fieldThree": Array [],
-              "fieldTwo": Object {},
+              "fieldThree": [],
+              "fieldTwo": {},
             },
             "fieldNine": Uint8Array [],
             "fieldOne": undefined,
-            "fieldSeven": Array [],
+            "fieldSeven": [],
             "fieldSix": "FOO",
-            "fieldTen": Array [],
+            "fieldTen": [],
             "fieldThirteen": undefined,
-            "fieldThree": Array [],
+            "fieldThree": [],
             "fieldTwelve": undefined,
-            "fieldTwo": Object {},
+            "fieldTwo": {},
           }
         `);
       });
@@ -488,25 +488,25 @@ describe("Serialization/Deserialization", () => {
       it("full deserialization", () => {
         expect(FooJSON.decode(FooJSON.encode(fullMessage)))
           .toMatchInlineSnapshot(`
-          Object {
+          {
             "fieldEight": 223372036854775807n,
-            "fieldEleven": Object {
+            "fieldEleven": {
               "fieldOne": "",
-              "fieldThree": Array [],
-              "fieldTwo": Object {},
+              "fieldThree": [],
+              "fieldTwo": {},
             },
-            "fieldFive": Array [
+            "fieldFive": [
               1n,
               2n,
             ],
-            "fieldFour": Object {
+            "fieldFour": {
               "fieldOne": "foo",
-              "fieldThree": Array [
+              "fieldThree": [
                 1,
                 2,
                 3,
               ],
-              "fieldTwo": Object {
+              "fieldTwo": {
                 "bar": "4",
                 "foo": "3",
               },
@@ -516,52 +516,52 @@ describe("Serialization/Deserialization", () => {
               7,
             ],
             "fieldOne": 3,
-            "fieldSeven": Array [
+            "fieldSeven": [
               "BAR",
               "FOO",
             ],
             "fieldSix": "BAR",
-            "fieldTen": Array [
+            "fieldTen": [
               Uint8Array [
                 4,
               ],
             ],
-            "fieldThirteen": Object {
+            "fieldThirteen": {
               "fieldOne": "foo",
-              "fieldThree": Array [
+              "fieldThree": [
                 1,
                 2,
                 3,
               ],
-              "fieldTwo": Object {
+              "fieldTwo": {
                 "bar": "4",
                 "foo": "3",
               },
             },
-            "fieldThree": Array [
-              Object {
+            "fieldThree": [
+              {
                 "fieldOne": "foo",
-                "fieldThree": Array [
+                "fieldThree": [
                   1,
                   2,
                   3,
                 ],
-                "fieldTwo": Object {
+                "fieldTwo": {
                   "bar": "4",
                   "foo": "3",
                 },
               },
             ],
             "fieldTwelve": undefined,
-            "fieldTwo": Object {
-              "foo": Object {
+            "fieldTwo": {
+              "foo": {
                 "fieldOne": "foo",
-                "fieldThree": Array [
+                "fieldThree": [
                   1,
                   2,
                   3,
                 ],
-                "fieldTwo": Object {
+                "fieldTwo": {
                   "bar": "4",
                   "foo": "3",
                 },
@@ -573,24 +573,24 @@ describe("Serialization/Deserialization", () => {
 
       it("original proto field name", () => {
         expect(FooJSON.decode('{ "field_one": 3 }')).toMatchInlineSnapshot(`
-          Object {
+          {
             "fieldEight": 0n,
             "fieldEleven": undefined,
-            "fieldFive": Array [],
-            "fieldFour": Object {
+            "fieldFive": [],
+            "fieldFour": {
               "fieldOne": "",
-              "fieldThree": Array [],
-              "fieldTwo": Object {},
+              "fieldThree": [],
+              "fieldTwo": {},
             },
             "fieldNine": Uint8Array [],
             "fieldOne": 3,
-            "fieldSeven": Array [],
+            "fieldSeven": [],
             "fieldSix": "FOO",
-            "fieldTen": Array [],
+            "fieldTen": [],
             "fieldThirteen": undefined,
-            "fieldThree": Array [],
+            "fieldThree": [],
             "fieldTwelve": undefined,
-            "fieldTwo": Object {},
+            "fieldTwo": {},
           }
         `);
       });
@@ -603,7 +603,7 @@ describe("Serialization/Deserialization", () => {
 
       it("partial serialization", () => {
         expect(FooJSON.encode(partialMessage)).toMatchInlineSnapshot(
-          `"{\\"fieldOne\\":3}"`
+          `"{"fieldOne":3}"`
         );
       });
 
@@ -613,7 +613,7 @@ describe("Serialization/Deserialization", () => {
 
       it("full serialization", () => {
         expect(FooJSON.encode(fullMessage)).toMatchInlineSnapshot(
-          `"{\\"fieldOne\\":3,\\"fieldTwo\\":{\\"foo\\":{\\"fieldOne\\":\\"foo\\",\\"fieldTwo\\":{\\"foo\\":\\"3\\",\\"bar\\":\\"4\\"},\\"fieldThree\\":[1,2,3]}},\\"fieldThree\\":[{\\"fieldOne\\":\\"foo\\",\\"fieldTwo\\":{\\"foo\\":\\"3\\",\\"bar\\":\\"4\\"},\\"fieldThree\\":[1,2,3]}],\\"fieldFour\\":{\\"fieldOne\\":\\"foo\\",\\"fieldTwo\\":{\\"foo\\":\\"3\\",\\"bar\\":\\"4\\"},\\"fieldThree\\":[1,2,3]},\\"fieldFive\\":[\\"1\\",\\"2\\"],\\"fieldSix\\":\\"BAR\\",\\"luckySeven\\":[\\"BAR\\",\\"FOO\\"],\\"fieldEight\\":\\"223372036854775807\\",\\"fieldNine\\":\\"CAc=\\",\\"fieldTen\\":[\\"BA==\\"],\\"fieldEleven\\":{},\\"fieldThirteen\\":{\\"fieldOne\\":\\"foo\\",\\"fieldTwo\\":{\\"foo\\":\\"3\\",\\"bar\\":\\"4\\"},\\"fieldThree\\":[1,2,3]}}"`
+          `"{"fieldOne":3,"fieldTwo":{"foo":{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]}},"fieldThree":[{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]}],"fieldFour":{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]},"fieldFive":["1","2"],"fieldSix":"BAR","luckySeven":["BAR","FOO"],"fieldEight":"223372036854775807","fieldNine":"CAc=","fieldTen":["BA=="],"fieldEleven":{},"fieldThirteen":{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]}}"`
         );
       });
     });
