@@ -71,6 +71,7 @@ If you're looking for an RPC framework, you may be interested in [TwirpScript](h
 
 - Node.js v16 or greater
 - TypeScript v4.7 or greater when using TypeScript
+- [webpack setup](#webpack-setup) when using a compiler other than TypeScript (like webpack)
 
 ## Examples 🚀
 
@@ -315,6 +316,33 @@ TypeScript projects will generally want to set this value to match their `rootDi
 ProtoScript's JSON serialization/deserialization implements the [proto3 specification](https://developers.google.com/protocol-buffers/docs/proto3#json). This is nearly complete, but still in progress.
 
 ProtoScript will serialize JSON keys as `lowerCamelCase` versions of the proto field. Per the proto3 spec, the runtime will accept both `lowerCamelCase` and the original proto field name when deserializing. You can provide the `json_name` field option to specify an alternate key name. When doing so, the runtime will encode JSON messages using the the `json_name` as the key, and will decode JSON messages using the `json_name` if present, otherwise falling back to the `lowerCamelCase` name and finally to the original proto field name.
+
+## Webpack Setup
+
+If you're using a compiler other than TypeScript, such as webpack, this [outstanding issue in TypeScript](https://github.com/microsoft/typescript/issues/37582) adds an additional hurdle.
+
+The short summary of the issue:
+
+- Extensions are required for ESM imports.
+- Extension-less imports have sidestepped this TypeScript issue, but extensions are required for ESM adoption.
+- The TypeScript compiler requires `.js` extensions for imports.
+- Compilers other than TypeScript expect `.ts` extensions for imports.
+
+The TypeScript team is investigating [improving this issue](https://github.com/microsoft/TypeScript/issues/37582) in their [4.9 plan](https://github.com/microsoft/TypeScript/issues/50457)
+
+Webpack users can use [extensionAlias](https://webpack.js.org/configuration/resolve/#resolveextensionalias) to solve this problem:
+
+```diff
+module.exports = {
++  resolve: {
++    extensionAlias: {
++      ".js": [".ts", ".js"],
++    },
++  },
+};
+```
+
+For more context, see [TypeScript#37582](https://github.com/microsoft/typescript/issues/37582) and [Webpack#13252](https://github.com/webpack/webpack/issues/13252).
 
 ## Contributing 👫
 
