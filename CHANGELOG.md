@@ -21,6 +21,8 @@ export default {
 };
 ```
 
+- Use relative file path for determining path to compiler instead of hard coding from project root. This should interop better with more exotic package tooling and repo setup.
+
 ## v0.0.9
 
 - Remove `process.stdin.fd` usage to see if it resolves intermittent `Error: EAGAIN: resource temporarily unavailable, read`. See [#191](https://github.com/tatethurston/TwirpScript/issues/191) for more context.
