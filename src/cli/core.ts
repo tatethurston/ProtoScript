@@ -1,13 +1,7 @@
 import { spawnSync } from "child_process";
 import { existsSync, mkdirSync } from "fs";
 import { join, relative, resolve } from "path";
-import {
-  checksum,
-  commandIsInPath,
-  findFiles,
-  isWindows,
-  pluralize,
-} from "./utils.js";
+import { checksum, commandIsInPath, findFiles, pluralize } from "./utils.js";
 
 let logger: Pick<Console, "info" | "warn" | "error">;
 
@@ -246,14 +240,16 @@ async function getConfig(): Promise<Config> {
 }
 
 interface CliOptions {
+  compiler: {
+    path: string;
+  };
   logger?: {
     name: string;
   };
 }
 
-export async function main(opts?: CliOptions): Promise<void> {
-  const projectRoot = process.cwd();
-  initLogger(opts?.logger?.name ?? "ProtoScript");
+export async function main(opts: CliOptions): Promise<void> {
+  initLogger(opts.logger?.name ?? "ProtoScript");
   const config = await getConfig();
   const excludes = config.exclude.map((pattern) => RegExp(pattern));
   const protos = findFiles(config.root, ".proto")
@@ -303,12 +299,7 @@ export async function main(opts?: CliOptions): Promise<void> {
     const protoc = spawnSync(
       `\
 protoc \
-  --plugin=protoc-gen-protoscript=${join(
-    projectRoot,
-    "node_modules",
-    "protoscript",
-    `compiler.${isWindows ? "cmd" : "js"}`
-  )} \
+  --plugin=protoc-gen-protoscript=${opts.compiler.path} \
   --protoscript_out=${destination} \
   --protoscript_opt=language=${config.language} \
   ${

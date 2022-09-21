@@ -14,12 +14,14 @@ The following `.protoscript.json`:
 
 Would be renamed to `proto.config.mjs` and changed to the following:
 
-```json
+```js
 /** @type {import('protoscript').Config} */
 export default {
   root: "src",
 };
 ```
+
+- Use relative file path for determining path to compiler instead of hard coding from project root. This should interop better with more exotic package tooling and repo setup.
 
 ## v0.0.9
 
