@@ -54,3 +54,14 @@ export {
    */
   compile,
 } from "./codegen/compile.js";
+
+export {
+  /**
+   * @private this is experimental and likely to change
+   */
+  type UserConfig as Config,
+  /**
+   * @private this is experimental and likely to change
+   */
+  main,
+} from "./cli/core.js";

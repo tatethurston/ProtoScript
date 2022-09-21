@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-explicit-any */
-import type { FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb.js";
-import { IdentifierTable, ProtoTypes, processTypes } from "../utils.js";
-import { UserConfig } from "../../cli/index.js";
+import { type FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb.js";
+import { type UserConfig } from "../../cli/core.js";
 import { type Plugin } from "../../plugin.js";
+import { IdentifierTable, ProtoTypes, processTypes } from "../utils.js";
 
 const DEFAULT_IMPORT_TRACKER = {
   hasBytes: false,

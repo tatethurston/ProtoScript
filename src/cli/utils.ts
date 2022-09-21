@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, statSync } from "fs";
 import { join } from "path";
-import type { UserConfig } from ".";
+import type { UserConfig } from "./core.js";
 import { createHash } from "crypto";
 import { execSync } from "child_process";
 
