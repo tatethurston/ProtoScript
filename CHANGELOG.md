@@ -14,7 +14,7 @@ The following `.protoscript.json`:
 
 Would be renamed to `proto.config.mjs` and changed to the following:
 
-```json
+```js
 /** @type {import('protoscript').Config} */
 export default {
   root: "src",
