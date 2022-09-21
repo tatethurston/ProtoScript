@@ -125,7 +125,7 @@ ProtoScript does not make any guarantees for tools like linters and formatters s
 
 ## Configuration 🛠
 
-ProtoScript aims to be zero config, but can be configured via the cli interface, or when using the `npx protoscript` command, by creating a `.protoscript.json` file in your project root.
+ProtoScript aims to be zero config, but can be configured via the cli interface, or when using the `npx protoscript` command, by creating a `proto.config.mjs` (or `.js` or `.cjs`) file in your project root.
 
 <table>
   <thead>
@@ -163,12 +163,13 @@ ProtoScript aims to be zero config, but can be configured via the cli interface,
  
   Setting `root` to `src`:
 
-// .protoscript.json
+// proto.config.mjs
 
-```json
-{
-  "root": "src"
-}
+```js
+/** @type {import('protoscript').Config} */
+export default {
+  root: "src",
+};
 ```
 
 A.proto would `import` B.proto as follows:
@@ -198,10 +199,11 @@ TypeScript projects will generally want to set this value to match their `rootDi
   
    Setting `exclude` to `["/bar/"]`:
   
-   // .protoscript.json
-   ```json
-   {
-     "exclude": ["/bar/"]
+   // proto.config.mjs
+   ```js
+   /** @type {import('protoscript').Config} */
+   export default {
+     exclude: ["/bar/"]
    }
    ```
   
@@ -236,10 +238,11 @@ TypeScript projects will generally want to set this value to match their `rootDi
  
   Setting `dest` to `out` will generate the following:
  
-  // .protoscript.json
-  ```json
-  {
-    "dest": "out",
+  // proto.config.mjs
+  ```js
+  /** @type {import('protoscript').Config} */
+  export default {
+    dest: "out",
   }
   ```
  
@@ -257,11 +260,12 @@ TypeScript projects will generally want to set this value to match their `rootDi
   
   Setting `root` to `src` (in addition to setting `dest` to `out`) will generate the following:
  
-  // .protoscript.json
-  ```json
-  {
-    "root": "src",
-    "dest": "out",
+  // proto.config.mjs
+  ```js
+  /** @type {import('protoscript').Config} */
+  export default {
+    root: "src",
+    dest: "out",
   }
   ```
   
