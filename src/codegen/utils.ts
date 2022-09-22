@@ -200,11 +200,17 @@ export function getDescriptor(
         identifierTable,
         fileDescriptorProto
       );
-      // Hack until better option:
-      // https://github.com/protocolbuffers/protobuf/issues/9369
+
+      /* eslint-disable */
       const isMap =
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access , @typescript-eslint/no-unsafe-call
-        _type.endsWith("Entry") && !field.toArray()[0].endsWith("Entry");
+        (
+          identifierTable.find(
+            ({ namespacedIdentifier }) => _type === namespacedIdentifier
+          )?.descriptorProto as DescriptorProto
+        )
+          .getOptions()
+          ?.getMapEntry() ?? false;
+      /* eslint-enable */
 
       if (isMap) {
         return {
@@ -359,6 +365,7 @@ export type IdentifierTable = {
   file: string;
   package: string;
   publicImport: string | undefined;
+  descriptorProto: DescriptorProto | EnumDescriptorProto;
 }[];
 
 /**
@@ -377,12 +384,17 @@ export function buildIdentifierTable(
     }
 
     const _package = fileDescriptorProto.getPackage() ?? "";
-    function addEntry(namespacing: string, name: string): void {
+    function addEntry(
+      namespacing: string,
+      name: string,
+      descriptorProto: DescriptorProto | EnumDescriptorProto
+    ): void {
       table.push({
         namespacedIdentifier: applyNamespace(namespacing, name),
         file: protoFilePath as string,
         package: _package,
         publicImport: undefined,
+        descriptorProto,
       });
     }
 
@@ -391,7 +403,7 @@ export function buildIdentifierTable(
       enums.forEach((enumDescriptorProto) => {
         const enumName = enumDescriptorProto.getName();
         if (enumName) {
-          addEntry(namespacing, enumName);
+          addEntry(namespacing, enumName, enumDescriptorProto);
         }
       });
 
@@ -401,7 +413,7 @@ export function buildIdentifierTable(
         if (!messageName) {
           return;
         }
-        addEntry(namespacing, messageName);
+        addEntry(namespacing, messageName, descriptor);
         walk(applyNamespace(namespacing, messageName), descriptor);
       });
     }
@@ -413,7 +425,7 @@ export function buildIdentifierTable(
     enums.forEach((enumDescriptorProto) => {
       const enumName = enumDescriptorProto.getName();
       if (enumName) {
-        addEntry(namespacing, enumName);
+        addEntry(namespacing, enumName, enumDescriptorProto);
       }
     });
 
@@ -423,7 +435,7 @@ export function buildIdentifierTable(
       if (!messageName) {
         return;
       }
-      addEntry(namespacing, messageName);
+      addEntry(namespacing, messageName, descriptorProto);
       walk(applyNamespace(namespacing, messageName), descriptorProto);
     });
   });
@@ -667,9 +679,7 @@ export function processTypes(
       throw new Error(`Expected name for ${node}`);
     }
 
-    // Hack until better option:
-    // https://github.com/protocolbuffers/protobuf/issues/9369
-    const isMap = name.endsWith("Entry") && node.getFieldList().length == 2;
+    const isMap = node.getOptions()?.getMapEntry() ?? false;
     name = isMap ? name.slice(0, name.lastIndexOf("Entry")) : name;
 
     const opts: MessageOpts = {
