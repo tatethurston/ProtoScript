@@ -786,7 +786,7 @@ export function generate(
 
   IMPORT_TRACKER = { ...DEFAULT_IMPORT_TRACKER };
 
-  const ast = processTypes(fileDescriptorProto, identifierTable);
+  const ast = processTypes(fileDescriptorProto, identifierTable, config.isTS);
   const { imports, types } = ast;
   const sourceFile = fileDescriptorProto.getName();
   if (!sourceFile) {
