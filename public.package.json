@@ -1,6 +1,6 @@
 {
   "name": "protoscript",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A Protobuf runtime and code generation tool for JavaScript and TypeScript",
   "license": "MIT",
   "author": "Tate <tatethurston@gmail.com>",

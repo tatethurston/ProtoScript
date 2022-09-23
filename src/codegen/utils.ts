@@ -331,6 +331,10 @@ function stripProtoExtension(protoFileName: string): string {
   return protoFileName.replace(".proto", "");
 }
 
+function getProtobufTSFileNameImport(protoFileName: string): string {
+  return stripProtoExtension(protoFileName) + ".pb";
+}
+
 export function getProtobufTSFileName(protoFileName: string): string {
   return stripProtoExtension(protoFileName) + ".pb.ts";
 }
@@ -561,7 +565,8 @@ function getIdentifierEntryFromTable(
 function getImportForIdentifier(
   identifier: string,
   identifiers: IdentifierTable,
-  fileDescriptorProto: FileDescriptorProto
+  fileDescriptorProto: FileDescriptorProto,
+  isTS: boolean
 ): Import {
   const dep = getIdentifierEntryFromTable(
     identifier,
@@ -573,7 +578,18 @@ function getImportForIdentifier(
 
   const importPath = relative(
     dirname(sourceFile),
-    getProtobufJSFileName(dependencyImportPath)
+    /*
+     * When targetting ESM, the TypeScripts compiler expects .js extensions and not .ts extensions because the compiler does not manipulate import paths: https://www.typescriptlang.org/docs/handbook/esm-node.html.
+     *
+     * Including a full extension results in:
+     *
+     * [tsserver 2691] [E] An import path cannot end with a '.ts' extension.
+     *
+     * The TypeScript team's recomendation to use .js extensions for .ts file imports causes a number of issues with the broader JavaScript ecosystem. Until this situation is rectified, do not emit ESM compliant extensions for TypeScript. This only impacts TypeScript users who wish to target ESM in Node.JS. If you're impacted by this, please join the discussion in https://github.com/tatethurston/TwirpScript/issues/202.
+     */
+    isTS
+      ? getProtobufTSFileNameImport(dependencyImportPath)
+      : getProtobufJSFileName(dependencyImportPath)
   );
   const path = getImportPath(importPath);
 
@@ -623,7 +639,8 @@ function isNotBlank<T>(x: T): x is NonNullable<T> {
 
 export function processTypes(
   fileDescriptorProto: FileDescriptorProto,
-  identifierTable: IdentifierTable
+  identifierTable: IdentifierTable,
+  isTS: boolean
 ): ParsedAst {
   const typeFile: ParsedAst = {
     packageName: fileDescriptorProto.getPackage(),
@@ -636,7 +653,8 @@ export function processTypes(
     const _import = getImportForIdentifier(
       identifier,
       identifierTable,
-      fileDescriptorProto
+      fileDescriptorProto,
+      isTS
     );
     const exisitingImport = typeFile.imports.find(
       ({ path }) => path === _import.path
