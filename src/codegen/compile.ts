@@ -5,6 +5,7 @@ import {
   getProtobufTSFileName,
   buildIdentifierTable,
   getProtobufJSFileName,
+  KNOWN_TYPES,
 } from "./utils.js";
 import { format } from "prettier";
 import { deserializeConfig } from "../cli/utils.js";
@@ -37,6 +38,9 @@ export function compile(
   request.getProtoFileList().forEach((fileDescriptorProto) => {
     const name = fileDescriptorProto.getName();
     if (!name) {
+      return;
+    }
+    if (!process.env.GENERATE_KNOWN_TYPES && KNOWN_TYPES.includes(name)) {
       return;
     }
 
