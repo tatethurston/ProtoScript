@@ -347,6 +347,20 @@ function getImportPath(importPath: string) {
   return importPath.startsWith("..") ? importPath : `./${importPath}`;
 }
 
+export const KNOWN_TYPES = [
+  "google/protobuf/any.proto",
+  "google/protobuf/api.proto",
+  "google/protobuf/descriptor.proto",
+  "google/protobuf/duration.proto",
+  "google/protobuf/empty.proto",
+  "google/protobuf/field_mask.proto",
+  "google/protobuf/source_context.proto",
+  "google/protobuf/struct.proto",
+  "google/protobuf/timestamp.proto",
+  "google/protobuf/type.proto",
+  "google/protobuf/wrappers.proto",
+];
+
 function applyNamespace(
   namespacing: string,
   name: string,
@@ -591,7 +605,10 @@ function getImportForIdentifier(
       ? getProtobufTSFileNameImport(dependencyImportPath)
       : getProtobufJSFileName(dependencyImportPath)
   );
-  const path = getImportPath(importPath);
+  let path = getImportPath(importPath);
+  if (KNOWN_TYPES.includes(dependencyImportPath)) {
+    path = "protoscript";
+  }
 
   const dependencyIdentifier = identifier.split(".").pop() ?? "";
   return { identifier: dependencyIdentifier, path };
