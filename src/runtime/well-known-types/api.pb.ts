@@ -5,8 +5,14 @@
 import type { ByteSource } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
-import { Option, OptionJSON, Syntax, SyntaxJSON } from "./type.pb";
-import { SourceContext, SourceContextJSON } from "./source_context.pb";
+import {
+  Option,
+  OptionJSON,
+  SourceContext,
+  SourceContextJSON,
+  Syntax,
+  SyntaxJSON,
+} from "protoscript";
 
 //========================================//
 //                 Types                  //

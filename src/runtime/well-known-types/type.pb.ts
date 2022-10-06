@@ -5,8 +5,7 @@
 import type { ByteSource } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
-import { SourceContext, SourceContextJSON } from "./source_context.pb";
-import { Any, AnyJSON } from "./any.pb";
+import { SourceContext, SourceContextJSON, Any, AnyJSON } from "protoscript";
 
 //========================================//
 //                 Types                  //
