@@ -18,8 +18,8 @@ function titleCase(str: string): string {
   return str[0].toUpperCase() + str.slice(1);
 }
 
-function camelCase(str: string): string {
-  const [first, ...rest] = str.split("_");
+function camelCase(segments: string[]): string {
+  const [first, ...rest] = segments;
   return first + rest.map(titleCase).join("");
 }
 
@@ -54,6 +54,7 @@ interface Descriptor {
   readPacked: ReaderMethod | undefined;
   repeated: boolean;
   tsType: string;
+  tsTypeJSON: string;
   write: WriterMethod;
 }
 
@@ -82,6 +83,7 @@ export function getDescriptor(
         readPacked: "readPackedDouble",
         repeated,
         tsType: "number",
+        tsTypeJSON: "number",
         write: repeated ? "writePackedDouble" : "writeDouble",
       };
     }
@@ -94,6 +96,7 @@ export function getDescriptor(
         readPacked: "readPackedFloat",
         repeated,
         tsType: "number",
+        tsTypeJSON: "number",
         write: repeated ? "writePackedFloat" : "writeFloat",
       };
     }
@@ -106,6 +109,7 @@ export function getDescriptor(
         readPacked: "readPackedInt64String",
         repeated,
         tsType: "bigint",
+        tsTypeJSON: "bigint",
         write: repeated ? "writePackedInt64String" : "writeInt64String",
       };
     }
@@ -118,6 +122,7 @@ export function getDescriptor(
         readPacked: "readPackedUint64String",
         repeated,
         tsType: "bigint",
+        tsTypeJSON: "bigint",
         write: repeated ? "writePackedUint64String" : "writeUint64String",
       };
     }
@@ -130,6 +135,7 @@ export function getDescriptor(
         readPacked: "readPackedInt32",
         repeated,
         tsType: "number",
+        tsTypeJSON: "number",
         write: repeated ? "writePackedInt32" : "writeInt32",
       };
     }
@@ -142,16 +148,30 @@ export function getDescriptor(
         readPacked: "readPackedFixed64String",
         repeated,
         tsType: "bigint",
+        tsTypeJSON: "bigint",
         write: repeated ? "writePackedFixed64String" : "writeFixed64String",
       };
     }
     case FieldDescriptorProto.Type.TYPE_ENUM: {
       const _type = field.getTypeName() ?? "";
-      const name = removePackagePrefix(
+      let name = removePackagePrefix(
         _type,
         identifierTable,
         fileDescriptorProto
       );
+      let jsonName = JSONName(name);
+      if (
+        !identifierIsDefinedInFile(_type, identifierTable, fileDescriptorProto)
+      ) {
+        const dep = getIdentifierEntryFromTable(
+          _type,
+          identifierTable,
+          fileDescriptorProto
+        );
+        const moduleName = getModuleName(dep);
+        name = moduleName + "." + name;
+        jsonName = moduleName + "." + jsonName;
+      }
 
       return {
         defaultValue: `${name}._fromInt(0)`,
@@ -161,6 +181,7 @@ export function getDescriptor(
         readPacked: "readPackedEnum",
         repeated,
         tsType: name,
+        tsTypeJSON: jsonName,
         write: repeated ? "writePackedEnum" : "writeEnum",
       };
     }
@@ -173,6 +194,7 @@ export function getDescriptor(
         readPacked: "readPackedFixed32",
         repeated,
         tsType: "number",
+        tsTypeJSON: "number",
         write: repeated ? "writePackedFixed32" : "writeFixed32",
       };
     }
@@ -185,6 +207,7 @@ export function getDescriptor(
         readPacked: "readPackedBool",
         repeated,
         tsType: "boolean",
+        tsTypeJSON: "boolean",
         write: repeated ? "writePackedBool" : "writeBool",
       };
     }
@@ -195,12 +218,11 @@ export function getDescriptor(
     }
     case FieldDescriptorProto.Type.TYPE_MESSAGE: {
       const _type = field.getTypeName() ?? "";
-      const name = removePackagePrefix(
+      let name = removePackagePrefix(
         _type,
         identifierTable,
         fileDescriptorProto
       );
-
       /* eslint-disable */
       const isMap =
         (
@@ -211,6 +233,22 @@ export function getDescriptor(
           .getOptions()
           ?.getMapEntry() ?? false;
       /* eslint-enable */
+      if (isMap) {
+        name = name.slice(0, name.lastIndexOf("Entry"));
+      }
+      let jsonName = JSONName(name);
+      if (
+        !identifierIsDefinedInFile(_type, identifierTable, fileDescriptorProto)
+      ) {
+        const dep = getIdentifierEntryFromTable(
+          _type,
+          identifierTable,
+          fileDescriptorProto
+        );
+        const moduleName = getModuleName(dep);
+        name = moduleName + "." + name;
+        jsonName = moduleName + "." + jsonName;
+      }
 
       if (isMap) {
         return {
@@ -220,7 +258,8 @@ export function getDescriptor(
           read: "readMessage",
           readPacked: undefined,
           repeated: false,
-          tsType: name.slice(0, name.lastIndexOf("Entry")),
+          tsType: name,
+          tsTypeJSON: jsonName,
           write: "writeRepeatedMessage",
         };
       }
@@ -233,6 +272,7 @@ export function getDescriptor(
         readPacked: undefined,
         repeated,
         tsType: name,
+        tsTypeJSON: jsonName,
         write: repeated ? "writeRepeatedMessage" : "writeMessage",
       };
     }
@@ -245,6 +285,7 @@ export function getDescriptor(
         readPacked: undefined,
         repeated,
         tsType: "string",
+        tsTypeJSON: "string",
         write: repeated ? "writeRepeatedString" : "writeString",
       };
     }
@@ -257,6 +298,7 @@ export function getDescriptor(
         readPacked: undefined,
         repeated,
         tsType: "Uint8Array",
+        tsTypeJSON: "Uint8Array",
         write: repeated ? "writeRepeatedBytes" : "writeBytes",
       };
     }
@@ -269,6 +311,7 @@ export function getDescriptor(
         readPacked: "readPackedUint32",
         repeated,
         tsType: "number",
+        tsTypeJSON: "number",
         write: repeated ? "writePackedUint32" : "writeUint32",
       };
     }
@@ -281,6 +324,7 @@ export function getDescriptor(
         readPacked: "readPackedSfixed32",
         repeated,
         tsType: "number",
+        tsTypeJSON: "number",
         write: repeated ? "writePackedSfixed32" : "writeSfixed32",
       };
     }
@@ -293,6 +337,7 @@ export function getDescriptor(
         readPacked: "readPackedSfixed64String",
         repeated,
         tsType: "bigint",
+        tsTypeJSON: "bigint",
         write: repeated ? "writePackedSfixed64String" : "writeSfixed64String",
       };
     }
@@ -305,6 +350,7 @@ export function getDescriptor(
         readPacked: "readPackedSint32",
         repeated,
         tsType: "number",
+        tsTypeJSON: "number",
         write: repeated ? "writePackedSint32" : "writeSint32",
       };
     }
@@ -317,6 +363,7 @@ export function getDescriptor(
         readPacked: "readPackedSint64String",
         repeated,
         tsType: "bigint",
+        tsTypeJSON: "bigint",
         write: repeated ? "writePackedSint64String" : "writeSint64String",
       };
     }
@@ -325,6 +372,11 @@ export function getDescriptor(
       return _exhaust;
     }
   }
+}
+
+function JSONName(name: string): string {
+  const [first, ...rest] = name.split(".");
+  return [first + "JSON", ...rest].join(".");
 }
 
 function stripProtoExtension(protoFileName: string): string {
@@ -488,6 +540,7 @@ export function buildIdentifierTable(
 export interface Import {
   identifier: string;
   path: string;
+  moduleName: string;
 }
 
 interface Comments {
@@ -497,7 +550,8 @@ interface Comments {
 
 interface EnumOpts {
   name: string;
-  fullyQualifiedName: string;
+  namespacedName: string;
+  namespacedNameJSON: string;
   values: {
     name: string;
     value: number;
@@ -516,7 +570,8 @@ interface Field extends Descriptor {
 
 interface MessageOpts {
   name: string;
-  fullyQualifiedName: string;
+  namespacedName: string;
+  namespacedNameJSON: string;
   fields: Field[];
   comments?: Comments;
   isMap: boolean;
@@ -545,6 +600,7 @@ export interface ParsedAst {
   packageName: string | undefined;
   imports: {
     identifiers: string[];
+    moduleName: string;
     path: string;
   }[];
   types: ProtoTypes[];
@@ -576,6 +632,14 @@ function getIdentifierEntryFromTable(
   return dep;
 }
 
+function getModuleName(dep: IdentifierTable[0]): string {
+  const dependencyImportPath = dep.publicImport ?? dep.file;
+  const mPath = stripProtoExtension(dependencyImportPath).split("/");
+  // remove root dir
+  mPath.shift();
+  return camelCase(mPath);
+}
+
 function getImportForIdentifier(
   identifier: string,
   identifiers: IdentifierTable,
@@ -605,13 +669,15 @@ function getImportForIdentifier(
       ? getProtobufTSFileNameImport(dependencyImportPath)
       : getProtobufJSFileName(dependencyImportPath)
   );
+
   let path = getImportPath(importPath);
+  let moduleName = getModuleName(dep);
   if (KNOWN_TYPES.includes(dependencyImportPath)) {
     path = "protoscript";
+    moduleName = "protoscript";
   }
-
   const dependencyIdentifier = identifier.split(".").pop() ?? "";
-  return { identifier: dependencyIdentifier, path };
+  return { identifier: dependencyIdentifier, moduleName, path };
 }
 
 function identifierIsDefinedInFile(
@@ -683,6 +749,7 @@ export function processTypes(
     } else {
       typeFile.imports.push({
         identifiers: [_import.identifier],
+        moduleName: _import.moduleName,
         path: _import.path,
       });
     }
@@ -693,11 +760,15 @@ export function processTypes(
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       throw new Error(`Expected name for ${node}`);
     }
+
+    const namespacedName = applyNamespace(namespacing, name, {
+      removeLeadingPeriod: true,
+    });
+
     const opts: EnumOpts = {
       name,
-      fullyQualifiedName: applyNamespace(namespacing, name, {
-        removeLeadingPeriod: true,
-      }),
+      namespacedName,
+      namespacedNameJSON: JSONName(namespacedName),
       values: node.getValueList().map((value) => ({
         name: value.getName() ?? "",
         value: value.getNumber() ?? 0,
@@ -717,11 +788,14 @@ export function processTypes(
     const isMap = node.getOptions()?.getMapEntry() ?? false;
     name = isMap ? name.slice(0, name.lastIndexOf("Entry")) : name;
 
+    const namespacedName = applyNamespace(namespacing, name, {
+      removeLeadingPeriod: true,
+    });
+
     const opts: MessageOpts = {
       name,
-      fullyQualifiedName: applyNamespace(namespacing, name, {
-        removeLeadingPeriod: true,
-      }),
+      namespacedName,
+      namespacedNameJSON: JSONName(namespacedName),
       isMap,
       fields: node
         .getFieldList()
@@ -742,7 +816,7 @@ export function processTypes(
             processIdentifier(value.getTypeName() ?? "");
           }
           return {
-            name: camelCase(value.getName() ?? ""),
+            name: camelCase(value.getName()?.split("_") ?? []),
             protoName: value.getName() ?? "",
             jsonName: value.getJsonName(),
             index: value.getNumber() ?? 0,

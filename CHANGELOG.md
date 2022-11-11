@@ -4,6 +4,21 @@
 
 - Fix intermittent EAGAIN issue encountered when compiling protos
 
+- Use glob imports for generated messages instead of destructuring. This preserves tree shaking, but preserves module namespacing to disambiguate name collisions between protos. Previously, identically named messages in different modules could causes a name collision, eg:
+
+  ```proto
+  // foo.proto
+  message Foo {}
+  ```
+
+  ```proto
+  // bar.proto
+  import "foo.proto";
+  message Foo {}
+  ```
+
+  Would result in errors in the generated code. Now, this is namespaced and works correctly.
+
 ## v0.0.13
 
 Update package [Protocol Buffers Well-Known Types](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf) to enable strict ESM.

@@ -42,10 +42,6 @@ export {
    * @private this is experimental and likely to change
    */
   printIfTypescript,
-  /**
-   * @private this is experimental and likely to change
-   */
-  addJSONSuffixToFullyQualifiedName,
 } from "./codegen/autogenerate/index.js";
 
 export {
