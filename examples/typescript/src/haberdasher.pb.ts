@@ -5,25 +5,17 @@
 import type { ByteSource } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
+import * as size from "./size.pb";
+
 //========================================//
 //                 Types                  //
 //========================================//
 
 /**
- * Size of a Hat, in inches.
- */
-export interface Size {
-  /**
-   * must be > 0
-   */
-  inches: number;
-}
-
-/**
  * A Hat is a piece of headwear made by a Haberdasher.
  */
 export interface Hat {
-  inches: number;
+  size: size.Size;
   /**
    * anything but "invisible"
    */
@@ -37,64 +29,6 @@ export interface Hat {
 //========================================//
 //        Protobuf Encode / Decode        //
 //========================================//
-
-export const Size = {
-  /**
-   * Serializes Size to protobuf.
-   */
-  encode: function (msg: Partial<Size>): Uint8Array {
-    return Size._writeMessage(msg, new BinaryWriter()).getResultBuffer();
-  },
-
-  /**
-   * Deserializes Size from protobuf.
-   */
-  decode: function (bytes: ByteSource): Size {
-    return Size._readMessage(Size.initialize(), new BinaryReader(bytes));
-  },
-
-  /**
-   * Initializes Size with all fields set to their default value.
-   */
-  initialize: function (): Size {
-    return {
-      inches: 0,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: Partial<Size>,
-    writer: BinaryWriter
-  ): BinaryWriter {
-    if (msg.inches) {
-      writer.writeInt32(1, msg.inches);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (msg: Size, reader: BinaryReader): Size {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.inches = reader.readInt32();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
 
 export const Hat = {
   /**
@@ -116,7 +50,7 @@ export const Hat = {
    */
   initialize: function (): Hat {
     return {
-      inches: 0,
+      size: size.Size.initialize(),
       color: "",
       name: "",
     };
@@ -129,8 +63,8 @@ export const Hat = {
     msg: Partial<Hat>,
     writer: BinaryWriter
   ): BinaryWriter {
-    if (msg.inches) {
-      writer.writeInt32(1, msg.inches);
+    if (msg.size) {
+      writer.writeMessage(1, msg.size, size.Size._writeMessage);
     }
     if (msg.color) {
       writer.writeString(2, msg.color);
@@ -149,7 +83,7 @@ export const Hat = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          msg.inches = reader.readInt32();
+          reader.readMessage(msg.size, size.Size._readMessage);
           break;
         }
         case 2: {
@@ -174,53 +108,6 @@ export const Hat = {
 //          JSON Encode / Decode          //
 //========================================//
 
-export const SizeJSON = {
-  /**
-   * Serializes Size to JSON.
-   */
-  encode: function (msg: Partial<Size>): string {
-    return JSON.stringify(SizeJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes Size from JSON.
-   */
-  decode: function (json: string): Size {
-    return SizeJSON._readMessage(SizeJSON.initialize(), JSON.parse(json));
-  },
-
-  /**
-   * Initializes Size with all fields set to their default value.
-   */
-  initialize: function (): Size {
-    return {
-      inches: 0,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (msg: Partial<Size>): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.inches) {
-      json["inches"] = msg.inches;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (msg: Size, json: any): Size {
-    const _inches = json["inches"];
-    if (_inches) {
-      msg.inches = _inches;
-    }
-    return msg;
-  },
-};
-
 export const HatJSON = {
   /**
    * Serializes Hat to JSON.
@@ -241,7 +128,7 @@ export const HatJSON = {
    */
   initialize: function (): Hat {
     return {
-      inches: 0,
+      size: size.SizeJSON.initialize(),
       color: "",
       name: "",
     };
@@ -252,8 +139,11 @@ export const HatJSON = {
    */
   _writeMessage: function (msg: Partial<Hat>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
-    if (msg.inches) {
-      json["inches"] = msg.inches;
+    if (msg.size) {
+      const _size_ = size.SizeJSON._writeMessage(msg.size);
+      if (Object.keys(_size_).length > 0) {
+        json["size"] = _size_;
+      }
     }
     if (msg.color) {
       json["color"] = msg.color;
@@ -268,17 +158,19 @@ export const HatJSON = {
    * @private
    */
   _readMessage: function (msg: Hat, json: any): Hat {
-    const _inches = json["inches"];
-    if (_inches) {
-      msg.inches = _inches;
+    const _size_ = json["size"];
+    if (_size_) {
+      const m = size.Size.initialize();
+      size.SizeJSON._readMessage(m, _size_);
+      msg.size = m;
     }
-    const _color = json["color"];
-    if (_color) {
-      msg.color = _color;
+    const _color_ = json["color"];
+    if (_color_) {
+      msg.color = _color_;
     }
-    const _name = json["name"];
-    if (_name) {
-      msg.name = _name;
+    const _name_ = json["name"];
+    if (_name_) {
+      msg.name = _name_;
     }
     return msg;
   },
