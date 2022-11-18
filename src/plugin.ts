@@ -53,6 +53,10 @@ export {
    * @private this is experimental and likely to change
    */
   compile,
+  /**
+   * @private this is experimental and likely to change
+   */
+  compiler,
 } from "./codegen/compile.js";
 
 export {

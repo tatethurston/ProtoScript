@@ -58,3 +58,25 @@ export function compile(
 
   return response;
 }
+
+function readStream(stream: NodeJS.ReadStream): Promise<Uint8Array> {
+  return new Promise((resolve) => {
+    const chunks: Buffer[] = [];
+    stream.on("readable", () => {
+      let chunk: Buffer;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      while ((chunk = process.stdin.read()) !== null) {
+        chunks.push(chunk);
+      }
+    });
+    stream.on("end", () => {
+      resolve(Buffer.concat(chunks));
+    });
+  });
+}
+
+export async function compiler(protocompile: typeof compile): Promise<void> {
+  const input = await readStream(process.stdin);
+  const response = protocompile(input);
+  process.stdout.write(response.serializeBinary());
+}

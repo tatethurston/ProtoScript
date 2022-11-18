@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.14
+
+- Fix intermittent EAGAIN issue encountered when compiling protos
+
 ## v0.0.13
 
 Update package [Protocol Buffers Well-Known Types](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf) to enable strict ESM.
