@@ -589,8 +589,10 @@ export interface Service {
   name: string;
   methods: {
     name: string;
-    input: string | undefined;
-    output: string | undefined;
+    input: string;
+    inputJSON: string;
+    output: string;
+    outputJSON: string;
     comments?: Comments;
   }[];
   comments?: Comments;
@@ -634,9 +636,10 @@ function getIdentifierEntryFromTable(
 
 function getModuleName(dep: IdentifierTable[0]): string {
   const dependencyImportPath = dep.publicImport ?? dep.file;
+  if (KNOWN_TYPES.includes(dependencyImportPath)) {
+    return "protoscript";
+  }
   const mPath = stripProtoExtension(dependencyImportPath).split("/");
-  // remove root dir
-  mPath.shift();
   return camelCase(mPath);
 }
 
@@ -671,11 +674,10 @@ function getImportForIdentifier(
   );
 
   let path = getImportPath(importPath);
-  let moduleName = getModuleName(dep);
   if (KNOWN_TYPES.includes(dependencyImportPath)) {
     path = "protoscript";
-    moduleName = "protoscript";
   }
+  const moduleName = getModuleName(dep);
   const dependencyIdentifier = identifier.split(".").pop() ?? "";
   return { identifier: dependencyIdentifier, moduleName, path };
 }
@@ -904,18 +906,56 @@ export function processTypes(
       processIdentifier(method.getInputType() ?? "");
       processIdentifier(method.getOutputType() ?? "");
 
+      const intype = method.getInputType() ?? "";
+      let input = removePackagePrefix(
+        intype,
+        identifierTable,
+        fileDescriptorProto
+      );
+      let inputJSON = JSONName(input);
+      if (
+        !identifierIsDefinedInFile(intype, identifierTable, fileDescriptorProto)
+      ) {
+        const dep = getIdentifierEntryFromTable(
+          intype,
+          identifierTable,
+          fileDescriptorProto
+        );
+        const moduleName = getModuleName(dep);
+        input = moduleName + "." + input;
+        inputJSON = moduleName + "." + inputJSON;
+      }
+
+      const outtype = method.getOutputType() ?? "";
+      let output = removePackagePrefix(
+        outtype,
+        identifierTable,
+        fileDescriptorProto
+      );
+      let outputJSON = JSONName(output);
+      if (
+        !identifierIsDefinedInFile(
+          outtype,
+          identifierTable,
+          fileDescriptorProto
+        )
+      ) {
+        const dep = getIdentifierEntryFromTable(
+          outtype,
+          identifierTable,
+          fileDescriptorProto
+        );
+        const moduleName = getModuleName(dep);
+        output = moduleName + "." + output;
+        outputJSON = moduleName + "." + outputJSON;
+      }
+
       return {
         name: method.getName() ?? "",
-        input: removePackagePrefix(
-          method.getInputType() ?? "",
-          identifierTable,
-          fileDescriptorProto
-        ),
-        output: removePackagePrefix(
-          method.getOutputType() ?? "",
-          identifierTable,
-          fileDescriptorProto
-        ),
+        input,
+        inputJSON,
+        output,
+        outputJSON,
       };
     }),
   }));
