@@ -5,7 +5,7 @@
 import type { ByteSource } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
-import * as size from "./size.pb";
+import * as srcSize from "./size.pb";
 
 //========================================//
 //                 Types                  //
@@ -15,7 +15,7 @@ import * as size from "./size.pb";
  * A Hat is a piece of headwear made by a Haberdasher.
  */
 export interface Hat {
-  size: size.Size;
+  size: srcSize.Size;
   /**
    * anything but "invisible"
    */
@@ -50,7 +50,7 @@ export const Hat = {
    */
   initialize: function (): Hat {
     return {
-      size: size.Size.initialize(),
+      size: srcSize.Size.initialize(),
       color: "",
       name: "",
     };
@@ -64,7 +64,7 @@ export const Hat = {
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.size) {
-      writer.writeMessage(1, msg.size, size.Size._writeMessage);
+      writer.writeMessage(1, msg.size, srcSize.Size._writeMessage);
     }
     if (msg.color) {
       writer.writeString(2, msg.color);
@@ -83,7 +83,7 @@ export const Hat = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          reader.readMessage(msg.size, size.Size._readMessage);
+          reader.readMessage(msg.size, srcSize.Size._readMessage);
           break;
         }
         case 2: {
@@ -128,7 +128,7 @@ export const HatJSON = {
    */
   initialize: function (): Hat {
     return {
-      size: size.SizeJSON.initialize(),
+      size: srcSize.SizeJSON.initialize(),
       color: "",
       name: "",
     };
@@ -140,7 +140,7 @@ export const HatJSON = {
   _writeMessage: function (msg: Partial<Hat>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.size) {
-      const _size_ = size.SizeJSON._writeMessage(msg.size);
+      const _size_ = srcSize.SizeJSON._writeMessage(msg.size);
       if (Object.keys(_size_).length > 0) {
         json["size"] = _size_;
       }
@@ -160,8 +160,8 @@ export const HatJSON = {
   _readMessage: function (msg: Hat, json: any): Hat {
     const _size_ = json["size"];
     if (_size_) {
-      const m = size.Size.initialize();
-      size.SizeJSON._readMessage(m, _size_);
+      const m = srcSize.Size.initialize();
+      srcSize.SizeJSON._readMessage(m, _size_);
       msg.size = m;
     }
     const _color_ = json["color"];
