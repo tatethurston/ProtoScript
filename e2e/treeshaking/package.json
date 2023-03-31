@@ -1,0 +1,12 @@
+{
+  "name": "test-serialization",
+  "dependencies": {
+    "protoscript": "file:../../dist"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.14"
+  },
+  "scripts": {
+    "build": "protoscript"
+  }
+}

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+message TreeshakingTest {
+  string string_field = 1;
+  repeated string repeated_string_field = 2;
+  bool bool_field = 3;
+  repeated NestedMessage repeated_message_field = 4;
+  optional NestedMessage optional_message_field = 5;
+  google.protobuf.Timestamp timestamp_field = 6;
+  map<string, string> map_field = 7;
+}
+
+message NestedMessage {
+  optional string string_field = 1;
+}
