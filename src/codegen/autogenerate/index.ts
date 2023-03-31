@@ -346,7 +346,14 @@ function writeProtobufSerializers(
         )})${printIfTypescript(`: ${node.content.namespacedName}`)} {
           switch (i) {
         `;
+
+        const seenValues = new Set<number>();
         node.content.values.forEach(({ name, value }) => {
+          if (seenValues.has(value)) {
+            return;
+          }
+
+          seenValues.add(value);
           result += `case ${value}: { return '${name}'; }\n`;
         });
 
@@ -650,7 +657,14 @@ function writeJSONSerializers(
         )})${printIfTypescript(`: ${node.content.namespacedName}`)} {
           switch (i) {
         `;
+
+        const seenValues = new Set<number>();
         node.content.values.forEach(({ name, value }) => {
+          if (seenValues.has(value)) {
+            return;
+          }
+
+          seenValues.add(value);
           result += `case ${value}: { return '${name}'; }\n`;
         });
 
