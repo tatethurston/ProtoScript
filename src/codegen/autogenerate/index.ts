@@ -131,6 +131,14 @@ function writeProtobufSerializers(
           result += "},\n\n";
 
           // initialize
+          const messageFields = node.content.fields.filter(
+            (field) =>
+              !field.optional &&
+              !field.repeated &&
+              field.read === "readMessage" &&
+              !field.map &&
+              !field.tsType.startsWith("protoscript.")
+          );
           result += `\
           /**
            * Initializes ${
@@ -140,6 +148,11 @@ function writeProtobufSerializers(
           initialize: function()${printIfTypescript(
             `: ${node.content.namespacedName}`
           )} {
+            ${messageFields
+              .map((field) => {
+                return `let _${field.name}: ${field.tsType} | undefined;`;
+              })
+              .join("\n")}
             return {
               ${node.content.fields
                 .map((field) => {
@@ -149,7 +162,12 @@ function writeProtobufSerializers(
                   if (field.repeated) {
                     return `${field.name}: [],`;
                   } else if (field.read === "readMessage" && !field.map) {
-                    return `${field.name}: ${field.tsType}.initialize(),`;
+                    return `get ${field.name}(): ${field.tsType} {
+                      if (!_${field.name}) {
+                        _${field.name} = ${field.tsType}.initialize();
+                      }
+                      return _${field.name};
+                    },`;
                   } else {
                     return `${field.name}: ${field.defaultValue},`;
                   }
@@ -456,6 +474,14 @@ function writeJSONSerializers(
           result += "},\n\n";
 
           // initialize
+          const messageFields = node.content.fields.filter(
+            (field) =>
+              !field.optional &&
+              !field.repeated &&
+              field.read === "readMessage" &&
+              !field.map &&
+              !field.tsType.startsWith("protoscript.")
+          );
           result += `\
           /**
            * Initializes ${
@@ -465,6 +491,11 @@ function writeJSONSerializers(
           initialize: function()${printIfTypescript(
             `: ${node.content.namespacedName}`
           )} {
+            ${messageFields
+              .map((field) => {
+                return `let _${field.name}: ${field.tsType} | undefined;`;
+              })
+              .join("\n")}
             return {
               ${node.content.fields
                 .map((field) => {
@@ -474,7 +505,12 @@ function writeJSONSerializers(
                   if (field.repeated) {
                     return `${field.name}: [],`;
                   } else if (field.read === "readMessage" && !field.map) {
-                    return `${field.name}: ${field.tsTypeJSON}.initialize(),`;
+                    return `get ${field.name}(): ${field.tsType} {
+                      if (!_${field.name}) {
+                        _${field.name} = ${field.tsTypeJSON}.initialize();
+                      }
+                      return _${field.name};
+                    },`;
                   } else {
                     return `${field.name}: ${field.defaultValue},`;
                   }
