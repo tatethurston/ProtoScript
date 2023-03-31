@@ -14,7 +14,6 @@ describe("Treeshaking", () => {
       const contents = result.outputFiles[0].contents;
       const code = Buffer.from(contents).toString("utf8");
       expect(code).not.toMatch(/(BinaryReader|BinaryWriter)/);
-      // expect(code).toMatchInlineSnapshot();
     });
   });
 });
