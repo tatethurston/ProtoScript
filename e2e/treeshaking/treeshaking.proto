@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message TreeshakingTest {
+  string string_field = 1;
+  repeated string repeated_string_field = 2;
+  bool bool_field = 3;
+  repeated NestedMessage repeated_message_field = 4;
+}
+
+message NestedMessage {
+  optional string string_field = 1;
+}

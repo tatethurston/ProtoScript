@@ -14,6 +14,7 @@
     "build:wellknowntypes": "(cd ./well-known-types && GENERATE_KNOWN_TYPES=true npx protoscript) && cp ./well-known-types/google/protobuf/* ./src/runtime/well-known-types/",
     "clean": "rm -rf dist",
     "e2e:setup": "npm run package:build && (cd e2e/serialization && npm install && npx protoscript)",
+    "e2e:treeshaking": "npm run package:build && (cd e2e/treeshaking && npm i && npm run build) && jest e2e/treeshaking",
     "examples:each": "for e in $(ls examples); do (cd ./examples/\"$e\" && $npm_config_command); done",
     "examples:regen": "npm run examples:each --command='npx protoscript' && npm run examples:each --command='tsc --noEmit'",
     "examples:setup": "npm run examples:each --command='npm install'",
