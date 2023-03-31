@@ -267,7 +267,7 @@ export const TreeshakingTestJSON = {
       json["repeatedMessageField"] ?? json["repeated_message_field"];
     if (_repeatedMessageField_) {
       for (const item of _repeatedMessageField_) {
-        const m = NestedMessage.initialize();
+        const m = NestedMessageJSON.initialize();
         NestedMessageJSON._readMessage(m, item);
         msg.repeatedMessageField.push(m);
       }

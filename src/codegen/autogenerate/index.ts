@@ -596,12 +596,12 @@ function writeJSONSerializers(
                   )};`;
                 } else if (field.repeated) {
                   res += `for (const item of ${name}) {`;
-                  res += `const m = ${field.tsType}.initialize();`;
+                  res += `const m = ${field.tsTypeJSON}.initialize();`;
                   res += `${field.tsTypeJSON}._readMessage(m, item);`;
                   res += `msg.${field.name}.push(m);`;
                   res += `}`;
                 } else {
-                  res += `const m = ${field.tsType}.initialize();`;
+                  res += `const m = ${field.tsTypeJSON}.initialize();`;
                   res += `${field.tsTypeJSON}._readMessage(m, ${name});`;
                   res += `msg.${field.name} = m;`;
                 }
