@@ -7,6 +7,6 @@
     "test": "node src/index.js"
   },
   "dependencies": {
-    "protoscript": "file:../../dist"
+    "protoscript": "workspace:*"
   }
 }

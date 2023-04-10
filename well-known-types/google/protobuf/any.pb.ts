@@ -254,13 +254,13 @@ export const AnyJSON = {
    * @private
    */
   _readMessage: function (msg: Any, json: any): Any {
-    const _typeUrl = json["typeUrl"] ?? json["type_url"];
-    if (_typeUrl) {
-      msg.typeUrl = _typeUrl;
+    const _typeUrl_ = json["typeUrl"] ?? json["type_url"];
+    if (_typeUrl_) {
+      msg.typeUrl = _typeUrl_;
     }
-    const _value = json["value"];
-    if (_value) {
-      msg.value = decodeBase64Bytes(_value);
+    const _value_ = json["value"];
+    if (_value_) {
+      msg.value = decodeBase64Bytes(_value_);
     }
     return msg;
   },

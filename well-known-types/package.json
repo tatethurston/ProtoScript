@@ -3,11 +3,8 @@
   "main": "index.js",
   "license": "MIT",
   "type": "module",
-  "scripts": {
-    "build": "GENERATE_KNOWN_TYPES=true npx protoscript"
-  },
   "dependencies": {
-    "protoscript": "file:../../dist"
+    "protoscript": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^4.7.4"

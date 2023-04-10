@@ -472,14 +472,14 @@ export const StructJSON = {
   _writeMessage: function (msg: Partial<Struct>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.fields) {
-      const fields = Object.fromEntries(
+      const _fields_ = Object.fromEntries(
         Object.entries(msg.fields)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(StructJSON.Fields._writeMessage)
           .map(({ key, value }) => [key, value])
       );
-      if (Object.keys(fields).length > 0) {
-        json["fields"] = fields;
+      if (Object.keys(_fields_).length > 0) {
+        json["fields"] = _fields_;
       }
     }
     return json;
@@ -489,10 +489,10 @@ export const StructJSON = {
    * @private
    */
   _readMessage: function (msg: Struct, json: any): Struct {
-    const _fields = json["fields"];
-    if (_fields) {
+    const _fields_ = json["fields"];
+    if (_fields_) {
       msg.fields = Object.fromEntries(
-        Object.entries(_fields)
+        Object.entries(_fields_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(StructJSON.Fields._readMessage)
           .map(({ key, value }) => [key, value])
@@ -513,9 +513,9 @@ export const StructJSON = {
         json["key"] = msg.key;
       }
       if (msg.value) {
-        const value = ValueJSON._writeMessage(msg.value);
-        if (Object.keys(value).length > 0) {
-          json["value"] = value;
+        const _value_ = ValueJSON._writeMessage(msg.value);
+        if (Object.keys(_value_).length > 0) {
+          json["value"] = _value_;
         }
       }
       return json;
@@ -525,14 +525,14 @@ export const StructJSON = {
      * @private
      */
     _readMessage: function (msg: Struct.Fields, json: any): Struct.Fields {
-      const _key = json["key"];
-      if (_key) {
-        msg.key = _key;
+      const _key_ = json["key"];
+      if (_key_) {
+        msg.key = _key_;
       }
-      const _value = json["value"];
-      if (_value) {
-        const m = Value.initialize();
-        ValueJSON._readMessage(m, _value);
+      const _value_ = json["value"];
+      if (_value_) {
+        const m = ValueJSON.initialize();
+        ValueJSON._readMessage(m, _value_);
         msg.value = m;
       }
       return msg;
@@ -587,12 +587,12 @@ export const ValueJSON = {
       json["boolValue"] = msg.boolValue;
     }
     if (msg.structValue != undefined) {
-      const structValue = StructJSON._writeMessage(msg.structValue);
-      json["structValue"] = structValue;
+      const _structValue_ = StructJSON._writeMessage(msg.structValue);
+      json["structValue"] = _structValue_;
     }
     if (msg.listValue != undefined) {
-      const listValue = ListValueJSON._writeMessage(msg.listValue);
-      json["listValue"] = listValue;
+      const _listValue_ = ListValueJSON._writeMessage(msg.listValue);
+      json["listValue"] = _listValue_;
     }
     return json;
   },
@@ -601,32 +601,32 @@ export const ValueJSON = {
    * @private
    */
   _readMessage: function (msg: Value, json: any): Value {
-    const _nullValue = json["nullValue"] ?? json["null_value"];
-    if (_nullValue) {
-      msg.nullValue = _nullValue;
+    const _nullValue_ = json["nullValue"] ?? json["null_value"];
+    if (_nullValue_) {
+      msg.nullValue = _nullValue_;
     }
-    const _numberValue = json["numberValue"] ?? json["number_value"];
-    if (_numberValue) {
-      msg.numberValue = _numberValue;
+    const _numberValue_ = json["numberValue"] ?? json["number_value"];
+    if (_numberValue_) {
+      msg.numberValue = _numberValue_;
     }
-    const _stringValue = json["stringValue"] ?? json["string_value"];
-    if (_stringValue) {
-      msg.stringValue = _stringValue;
+    const _stringValue_ = json["stringValue"] ?? json["string_value"];
+    if (_stringValue_) {
+      msg.stringValue = _stringValue_;
     }
-    const _boolValue = json["boolValue"] ?? json["bool_value"];
-    if (_boolValue) {
-      msg.boolValue = _boolValue;
+    const _boolValue_ = json["boolValue"] ?? json["bool_value"];
+    if (_boolValue_) {
+      msg.boolValue = _boolValue_;
     }
-    const _structValue = json["structValue"] ?? json["struct_value"];
-    if (_structValue) {
-      const m = Struct.initialize();
-      StructJSON._readMessage(m, _structValue);
+    const _structValue_ = json["structValue"] ?? json["struct_value"];
+    if (_structValue_) {
+      const m = StructJSON.initialize();
+      StructJSON._readMessage(m, _structValue_);
       msg.structValue = m;
     }
-    const _listValue = json["listValue"] ?? json["list_value"];
-    if (_listValue) {
-      const m = ListValue.initialize();
-      ListValueJSON._readMessage(m, _listValue);
+    const _listValue_ = json["listValue"] ?? json["list_value"];
+    if (_listValue_) {
+      const m = ListValueJSON.initialize();
+      ListValueJSON._readMessage(m, _listValue_);
       msg.listValue = m;
     }
     return msg;
@@ -675,10 +675,10 @@ export const ListValueJSON = {
    * @private
    */
   _readMessage: function (msg: ListValue, json: any): ListValue {
-    const _values = json["values"];
-    if (_values) {
-      for (const item of _values) {
-        const m = Value.initialize();
+    const _values_ = json["values"];
+    if (_values_) {
+      for (const item of _values_) {
+        const m = ValueJSON.initialize();
         ValueJSON._readMessage(m, item);
         msg.values.push(m);
       }

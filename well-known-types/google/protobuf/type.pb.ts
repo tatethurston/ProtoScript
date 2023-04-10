@@ -5,7 +5,7 @@
 import type { ByteSource } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
-import { SourceContext, SourceContextJSON, Any, AnyJSON } from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -39,7 +39,7 @@ export interface Type {
   /**
    * The source context.
    */
-  sourceContext: SourceContext;
+  sourceContext: protoscript.SourceContext;
   /**
    * The source syntax.
    */
@@ -148,7 +148,7 @@ export interface Enum {
   /**
    * The source context.
    */
-  sourceContext: SourceContext;
+  sourceContext: protoscript.SourceContext;
   /**
    * The source syntax.
    */
@@ -191,7 +191,7 @@ export interface Option {
    * should be used. If the value is an enum, it should be stored as an int32
    * value using the google.protobuf.Int32Value type.
    */
-  value: Any;
+  value: protoscript.Any;
 }
 
 //========================================//
@@ -267,7 +267,7 @@ export const Type = {
       fields: [],
       oneofs: [],
       options: [],
-      sourceContext: SourceContext.initialize(),
+      sourceContext: protoscript.SourceContext.initialize(),
       syntax: Syntax._fromInt(0),
     };
   },
@@ -292,7 +292,11 @@ export const Type = {
       writer.writeRepeatedMessage(4, msg.options as any, Option._writeMessage);
     }
     if (msg.sourceContext) {
-      writer.writeMessage(5, msg.sourceContext, SourceContext._writeMessage);
+      writer.writeMessage(
+        5,
+        msg.sourceContext,
+        protoscript.SourceContext._writeMessage
+      );
     }
     if (msg.syntax && Syntax._toInt(msg.syntax)) {
       writer.writeEnum(6, Syntax._toInt(msg.syntax));
@@ -328,7 +332,10 @@ export const Type = {
           break;
         }
         case 5: {
-          reader.readMessage(msg.sourceContext, SourceContext._readMessage);
+          reader.readMessage(
+            msg.sourceContext,
+            protoscript.SourceContext._readMessage
+          );
           break;
         }
         case 6: {
@@ -780,7 +787,7 @@ export const Enum = {
       name: "",
       enumvalue: [],
       options: [],
-      sourceContext: SourceContext.initialize(),
+      sourceContext: protoscript.SourceContext.initialize(),
       syntax: Syntax._fromInt(0),
     };
   },
@@ -806,7 +813,11 @@ export const Enum = {
       writer.writeRepeatedMessage(3, msg.options as any, Option._writeMessage);
     }
     if (msg.sourceContext) {
-      writer.writeMessage(4, msg.sourceContext, SourceContext._writeMessage);
+      writer.writeMessage(
+        4,
+        msg.sourceContext,
+        protoscript.SourceContext._writeMessage
+      );
     }
     if (msg.syntax && Syntax._toInt(msg.syntax)) {
       writer.writeEnum(5, Syntax._toInt(msg.syntax));
@@ -838,7 +849,10 @@ export const Enum = {
           break;
         }
         case 4: {
-          reader.readMessage(msg.sourceContext, SourceContext._readMessage);
+          reader.readMessage(
+            msg.sourceContext,
+            protoscript.SourceContext._readMessage
+          );
           break;
         }
         case 5: {
@@ -955,7 +969,7 @@ export const Option = {
   initialize: function (): Option {
     return {
       name: "",
-      value: Any.initialize(),
+      value: protoscript.Any.initialize(),
     };
   },
 
@@ -970,7 +984,7 @@ export const Option = {
       writer.writeString(1, msg.name);
     }
     if (msg.value) {
-      writer.writeMessage(2, msg.value, Any._writeMessage);
+      writer.writeMessage(2, msg.value, protoscript.Any._writeMessage);
     }
     return writer;
   },
@@ -987,7 +1001,7 @@ export const Option = {
           break;
         }
         case 2: {
-          reader.readMessage(msg.value, Any._readMessage);
+          reader.readMessage(msg.value, protoscript.Any._readMessage);
           break;
         }
         default: {
@@ -1073,7 +1087,7 @@ export const TypeJSON = {
       fields: [],
       oneofs: [],
       options: [],
-      sourceContext: SourceContext.initialize(),
+      sourceContext: protoscript.SourceContextJSON.initialize(),
       syntax: Syntax._fromInt(0),
     };
   },
@@ -1096,9 +1110,11 @@ export const TypeJSON = {
       json["options"] = msg.options.map(OptionJSON._writeMessage);
     }
     if (msg.sourceContext) {
-      const sourceContext = SourceContextJSON._writeMessage(msg.sourceContext);
-      if (Object.keys(sourceContext).length > 0) {
-        json["sourceContext"] = sourceContext;
+      const _sourceContext_ = protoscript.SourceContextJSON._writeMessage(
+        msg.sourceContext
+      );
+      if (Object.keys(_sourceContext_).length > 0) {
+        json["sourceContext"] = _sourceContext_;
       }
     }
     if (msg.syntax && SyntaxJSON._toInt(msg.syntax)) {
@@ -1111,39 +1127,39 @@ export const TypeJSON = {
    * @private
    */
   _readMessage: function (msg: Type, json: any): Type {
-    const _name = json["name"];
-    if (_name) {
-      msg.name = _name;
+    const _name_ = json["name"];
+    if (_name_) {
+      msg.name = _name_;
     }
-    const _fields = json["fields"];
-    if (_fields) {
-      for (const item of _fields) {
-        const m = Field.initialize();
+    const _fields_ = json["fields"];
+    if (_fields_) {
+      for (const item of _fields_) {
+        const m = FieldJSON.initialize();
         FieldJSON._readMessage(m, item);
         msg.fields.push(m);
       }
     }
-    const _oneofs = json["oneofs"];
-    if (_oneofs) {
-      msg.oneofs = _oneofs;
+    const _oneofs_ = json["oneofs"];
+    if (_oneofs_) {
+      msg.oneofs = _oneofs_;
     }
-    const _options = json["options"];
-    if (_options) {
-      for (const item of _options) {
-        const m = Option.initialize();
+    const _options_ = json["options"];
+    if (_options_) {
+      for (const item of _options_) {
+        const m = OptionJSON.initialize();
         OptionJSON._readMessage(m, item);
         msg.options.push(m);
       }
     }
-    const _sourceContext = json["sourceContext"] ?? json["source_context"];
-    if (_sourceContext) {
-      const m = SourceContext.initialize();
-      SourceContextJSON._readMessage(m, _sourceContext);
+    const _sourceContext_ = json["sourceContext"] ?? json["source_context"];
+    if (_sourceContext_) {
+      const m = protoscript.SourceContextJSON.initialize();
+      protoscript.SourceContextJSON._readMessage(m, _sourceContext_);
       msg.sourceContext = m;
     }
-    const _syntax = json["syntax"];
-    if (_syntax) {
-      msg.syntax = _syntax;
+    const _syntax_ = json["syntax"];
+    if (_syntax_) {
+      msg.syntax = _syntax_;
     }
     return msg;
   },
@@ -1224,49 +1240,49 @@ export const FieldJSON = {
    * @private
    */
   _readMessage: function (msg: Field, json: any): Field {
-    const _kind = json["kind"];
-    if (_kind) {
-      msg.kind = _kind;
+    const _kind_ = json["kind"];
+    if (_kind_) {
+      msg.kind = _kind_;
     }
-    const _cardinality = json["cardinality"];
-    if (_cardinality) {
-      msg.cardinality = _cardinality;
+    const _cardinality_ = json["cardinality"];
+    if (_cardinality_) {
+      msg.cardinality = _cardinality_;
     }
-    const _number = json["number"];
-    if (_number) {
-      msg.number = _number;
+    const _number_ = json["number"];
+    if (_number_) {
+      msg.number = _number_;
     }
-    const _name = json["name"];
-    if (_name) {
-      msg.name = _name;
+    const _name_ = json["name"];
+    if (_name_) {
+      msg.name = _name_;
     }
-    const _typeUrl = json["typeUrl"] ?? json["type_url"];
-    if (_typeUrl) {
-      msg.typeUrl = _typeUrl;
+    const _typeUrl_ = json["typeUrl"] ?? json["type_url"];
+    if (_typeUrl_) {
+      msg.typeUrl = _typeUrl_;
     }
-    const _oneofIndex = json["oneofIndex"] ?? json["oneof_index"];
-    if (_oneofIndex) {
-      msg.oneofIndex = _oneofIndex;
+    const _oneofIndex_ = json["oneofIndex"] ?? json["oneof_index"];
+    if (_oneofIndex_) {
+      msg.oneofIndex = _oneofIndex_;
     }
-    const _packed = json["packed"];
-    if (_packed) {
-      msg.packed = _packed;
+    const _packed_ = json["packed"];
+    if (_packed_) {
+      msg.packed = _packed_;
     }
-    const _options = json["options"];
-    if (_options) {
-      for (const item of _options) {
-        const m = Option.initialize();
+    const _options_ = json["options"];
+    if (_options_) {
+      for (const item of _options_) {
+        const m = OptionJSON.initialize();
         OptionJSON._readMessage(m, item);
         msg.options.push(m);
       }
     }
-    const _jsonName = json["jsonName"] ?? json["json_name"];
-    if (_jsonName) {
-      msg.jsonName = _jsonName;
+    const _jsonName_ = json["jsonName"] ?? json["json_name"];
+    if (_jsonName_) {
+      msg.jsonName = _jsonName_;
     }
-    const _defaultValue = json["defaultValue"] ?? json["default_value"];
-    if (_defaultValue) {
-      msg.defaultValue = _defaultValue;
+    const _defaultValue_ = json["defaultValue"] ?? json["default_value"];
+    if (_defaultValue_) {
+      msg.defaultValue = _defaultValue_;
     }
     return msg;
   },
@@ -1575,7 +1591,7 @@ export const EnumJSON = {
       name: "",
       enumvalue: [],
       options: [],
-      sourceContext: SourceContext.initialize(),
+      sourceContext: protoscript.SourceContextJSON.initialize(),
       syntax: Syntax._fromInt(0),
     };
   },
@@ -1595,9 +1611,11 @@ export const EnumJSON = {
       json["options"] = msg.options.map(OptionJSON._writeMessage);
     }
     if (msg.sourceContext) {
-      const sourceContext = SourceContextJSON._writeMessage(msg.sourceContext);
-      if (Object.keys(sourceContext).length > 0) {
-        json["sourceContext"] = sourceContext;
+      const _sourceContext_ = protoscript.SourceContextJSON._writeMessage(
+        msg.sourceContext
+      );
+      if (Object.keys(_sourceContext_).length > 0) {
+        json["sourceContext"] = _sourceContext_;
       }
     }
     if (msg.syntax && SyntaxJSON._toInt(msg.syntax)) {
@@ -1610,35 +1628,35 @@ export const EnumJSON = {
    * @private
    */
   _readMessage: function (msg: Enum, json: any): Enum {
-    const _name = json["name"];
-    if (_name) {
-      msg.name = _name;
+    const _name_ = json["name"];
+    if (_name_) {
+      msg.name = _name_;
     }
-    const _enumvalue = json["enumvalue"];
-    if (_enumvalue) {
-      for (const item of _enumvalue) {
-        const m = EnumValue.initialize();
+    const _enumvalue_ = json["enumvalue"];
+    if (_enumvalue_) {
+      for (const item of _enumvalue_) {
+        const m = EnumValueJSON.initialize();
         EnumValueJSON._readMessage(m, item);
         msg.enumvalue.push(m);
       }
     }
-    const _options = json["options"];
-    if (_options) {
-      for (const item of _options) {
-        const m = Option.initialize();
+    const _options_ = json["options"];
+    if (_options_) {
+      for (const item of _options_) {
+        const m = OptionJSON.initialize();
         OptionJSON._readMessage(m, item);
         msg.options.push(m);
       }
     }
-    const _sourceContext = json["sourceContext"] ?? json["source_context"];
-    if (_sourceContext) {
-      const m = SourceContext.initialize();
-      SourceContextJSON._readMessage(m, _sourceContext);
+    const _sourceContext_ = json["sourceContext"] ?? json["source_context"];
+    if (_sourceContext_) {
+      const m = protoscript.SourceContextJSON.initialize();
+      protoscript.SourceContextJSON._readMessage(m, _sourceContext_);
       msg.sourceContext = m;
     }
-    const _syntax = json["syntax"];
-    if (_syntax) {
-      msg.syntax = _syntax;
+    const _syntax_ = json["syntax"];
+    if (_syntax_) {
+      msg.syntax = _syntax_;
     }
     return msg;
   },
@@ -1694,18 +1712,18 @@ export const EnumValueJSON = {
    * @private
    */
   _readMessage: function (msg: EnumValue, json: any): EnumValue {
-    const _name = json["name"];
-    if (_name) {
-      msg.name = _name;
+    const _name_ = json["name"];
+    if (_name_) {
+      msg.name = _name_;
     }
-    const _number = json["number"];
-    if (_number) {
-      msg.number = _number;
+    const _number_ = json["number"];
+    if (_number_) {
+      msg.number = _number_;
     }
-    const _options = json["options"];
-    if (_options) {
-      for (const item of _options) {
-        const m = Option.initialize();
+    const _options_ = json["options"];
+    if (_options_) {
+      for (const item of _options_) {
+        const m = OptionJSON.initialize();
         OptionJSON._readMessage(m, item);
         msg.options.push(m);
       }
@@ -1735,7 +1753,7 @@ export const OptionJSON = {
   initialize: function (): Option {
     return {
       name: "",
-      value: Any.initialize(),
+      value: protoscript.AnyJSON.initialize(),
     };
   },
 
@@ -1748,9 +1766,9 @@ export const OptionJSON = {
       json["name"] = msg.name;
     }
     if (msg.value) {
-      const value = AnyJSON._writeMessage(msg.value);
-      if (Object.keys(value).length > 0) {
-        json["value"] = value;
+      const _value_ = protoscript.AnyJSON._writeMessage(msg.value);
+      if (Object.keys(_value_).length > 0) {
+        json["value"] = _value_;
       }
     }
     return json;
@@ -1760,14 +1778,14 @@ export const OptionJSON = {
    * @private
    */
   _readMessage: function (msg: Option, json: any): Option {
-    const _name = json["name"];
-    if (_name) {
-      msg.name = _name;
+    const _name_ = json["name"];
+    if (_name_) {
+      msg.name = _name_;
     }
-    const _value = json["value"];
-    if (_value) {
-      const m = Any.initialize();
-      AnyJSON._readMessage(m, _value);
+    const _value_ = json["value"];
+    if (_value_) {
+      const m = protoscript.AnyJSON.initialize();
+      protoscript.AnyJSON._readMessage(m, _value_);
       msg.value = m;
     }
     return msg;

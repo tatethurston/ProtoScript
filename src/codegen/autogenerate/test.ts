@@ -1,4 +1,3 @@
-import { describe, it } from "@jest/globals";
 import { printHeading } from "./index.js";
 
 describe("printHeading", () => {

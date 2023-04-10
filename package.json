@@ -1,5 +1,5 @@
 {
-  "name": "protoscript-dev",
+  "name": "protoscript",
   "version": "0.0.1",
   "description": "A Protobuf runtime and code generation tool for JavaScript and TypeScript",
   "license": "MIT",
@@ -8,46 +8,50 @@
     "type": "git",
     "url": "https://github.com/tatethurston/protoscript"
   },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
   "scripts": {
     "build:commonjs": "esbuild src/index.ts --bundle --platform=node --target=es2020 --outfile=dist/cjs/index.cjs",
     "build:module": "tsc",
-    "build:wellknowntypes": "(cd ./well-known-types && GENERATE_KNOWN_TYPES=true npx protoscript) && cp ./well-known-types/google/protobuf/* ./src/runtime/well-known-types/",
+    "build:wellknowntypes": "(pnpm --filter './well-known-types' exec protoscript) && cp ./well-known-types/google/protobuf/* ./src/runtime/well-known-types/",
     "clean": "rm -rf dist",
-    "e2e:setup": "npm run package:build && (cd e2e/serialization && npm install && npx protoscript) && (cd e2e/treeshaking && npm i && npm run build)",
-    "examples:each": "for e in $(ls examples); do (cd ./examples/\"$e\" && $npm_config_command); done",
-    "examples:regen": "npm run examples:each --command='npx protoscript' && npm run examples:each --command='tsc --noEmit'",
-    "examples:setup": "npm run examples:each --command='npm install'",
-    "lint": "npm run typecheck && prettier --check . && prettier-package-json --list-different '{,example/,}package.json' && eslint .",
+    "e2e:setup": "pnpm --filter './e2e/*' exec protoscript",
+    "examples:regen": "pnpm --filter './examples/*' exec protoscript && pnpm --filter './examples/*' exec tsc --noEmit",
+    "lint": "pnpm run typecheck && prettier --check . && prettier-package-json --list-different '{,example/,}package.json' && eslint .",
     "lint:fix": "prettier --write . && prettier-package-json --write '{,example/}package.json' && eslint --fix .",
-    "package:build": "npm install && npm run clean && npm run build:commonjs && npm run build:module && chmod +x dist/compiler.js dist/cli/index.js && cp src/compiler.cmd dist/compiler.cmd && npm run package:prune && npm run package:copy:files",
+    "package:build": "pnpm run clean && pnpm run build:commonjs && pnpm run build:module && chmod +x dist/compiler.js dist/cli/index.js && cp src/compiler.cmd dist/compiler.cmd && pnpm run package:prune && pnpm run package:copy:files",
     "package:copy:files": "cp ./LICENSE ./README.md dist/ && cp ./public.package.json dist/package.json",
     "package:prune": "find dist -name *test* -delete",
     "prepare": "husky install",
     "test": "jest",
-    "test:ci": "npm run e2e:setup && npm run test --coverage",
+    "test:ci": "pnpm run e2e:setup && pnpm run test --coverage",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "google-protobuf": "^3.20.1"
+    "google-protobuf": "^3.21.2"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.4",
     "@types/google-protobuf": "^3.15.6",
-    "@types/jest": "^29.0.3",
-    "@types/node": "^18.0.3",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5",
-    "babel-loader": "^8.2.5",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "babel-loader": "^9.1.2",
     "codecov": "^3.8.3",
-    "esbuild": "^0.15.5",
-    "eslint": "^8.19.0",
-    "eslint-config-prettier": "^8.1.0",
-    "husky": "^8.0.1",
-    "jest": "^29.0.1",
-    "prettier": "^2.7.1",
-    "prettier-package-json": "^2.6.4",
-    "protoscript": "^0.0.12",
-    "typescript": "^4.7.4"
-  }
+    "esbuild": "^0.17.16",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "husky": "^8.0.3",
+    "jest": "^29.5.0",
+    "prettier": "^2.8.7",
+    "prettier-package-json": "^2.8.0",
+    "typescript": "^5.0.4"
+  },
+  "packageManager": "pnpm@7.17.0"
 }
