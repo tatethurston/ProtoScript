@@ -7,9 +7,9 @@
     "test": "node dist/index.js"
   },
   "dependencies": {
-    "protoscript": "file:../../dist"
+    "protoscript": "workspace:*"
   },
   "devDependencies": {
-    "google-closure-compiler": "^20220601.0.0"
+    "google-closure-compiler": "^20230228.0.0"
   }
 }

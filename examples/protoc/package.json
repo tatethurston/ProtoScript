@@ -7,7 +7,7 @@
     "test": "node src/index.js"
   },
   "dependencies": {
-    "google-protobuf": "*",
-    "protoscript": "file:../../dist"
+    "google-protobuf": "^3.21.2",
+    "protoscript": "workspace:*"
   }
 }

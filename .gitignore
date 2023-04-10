@@ -1,5 +1,5 @@
-!**/dist/index.html
 **/dist/*
+!**/dist/package.json
 coverage
 node_modules
 todo.txt

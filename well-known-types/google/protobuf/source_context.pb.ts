@@ -140,9 +140,9 @@ export const SourceContextJSON = {
    * @private
    */
   _readMessage: function (msg: SourceContext, json: any): SourceContext {
-    const _fileName = json["fileName"] ?? json["file_name"];
-    if (_fileName) {
-      msg.fileName = _fileName;
+    const _fileName_ = json["fileName"] ?? json["file_name"];
+    if (_fileName_) {
+      msg.fileName = _fileName_;
     }
     return msg;
   },

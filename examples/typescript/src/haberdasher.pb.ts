@@ -160,7 +160,7 @@ export const HatJSON = {
   _readMessage: function (msg: Hat, json: any): Hat {
     const _size_ = json["size"];
     if (_size_) {
-      const m = srcSize.Size.initialize();
+      const m = srcSize.SizeJSON.initialize();
       srcSize.SizeJSON._readMessage(m, _size_);
       msg.size = m;
     }

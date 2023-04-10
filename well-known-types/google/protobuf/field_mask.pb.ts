@@ -328,9 +328,9 @@ export const FieldMaskJSON = {
    * @private
    */
   _readMessage: function (msg: FieldMask, json: any): FieldMask {
-    const _paths = json["paths"];
-    if (_paths) {
-      msg.paths = _paths;
+    const _paths_ = json["paths"];
+    if (_paths_) {
+      msg.paths = _paths_;
     }
     return msg;
   },

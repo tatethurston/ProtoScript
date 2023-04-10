@@ -5,14 +5,7 @@
 import type { ByteSource } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
-import {
-  Option,
-  OptionJSON,
-  SourceContext,
-  SourceContextJSON,
-  Syntax,
-  SyntaxJSON,
-} from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -42,7 +35,7 @@ export interface Api {
   /**
    * Any metadata attached to the interface.
    */
-  options: Option[];
+  options: protoscript.Option[];
   /**
    * A version string for this interface. If specified, must have the form
    * `major-version.minor-version`, as in `1.10`. If the minor version is
@@ -71,7 +64,7 @@ export interface Api {
    * Source context for the protocol buffer service represented by this
    * message.
    */
-  sourceContext: SourceContext;
+  sourceContext: protoscript.SourceContext;
   /**
    * Included interfaces. See [Mixin][].
    */
@@ -79,7 +72,7 @@ export interface Api {
   /**
    * The source syntax of the service.
    */
-  syntax: Syntax;
+  syntax: protoscript.Syntax;
 }
 
 /**
@@ -109,11 +102,11 @@ export interface Method {
   /**
    * Any metadata attached to the method.
    */
-  options: Option[];
+  options: protoscript.Option[];
   /**
    * The source syntax of this method.
    */
-  syntax: Syntax;
+  syntax: protoscript.Syntax;
 }
 
 /**
@@ -236,9 +229,9 @@ export const Api = {
       methods: [],
       options: [],
       version: "",
-      sourceContext: SourceContext.initialize(),
+      sourceContext: protoscript.SourceContext.initialize(),
       mixins: [],
-      syntax: Syntax._fromInt(0),
+      syntax: protoscript.Syntax._fromInt(0),
     };
   },
 
@@ -256,19 +249,27 @@ export const Api = {
       writer.writeRepeatedMessage(2, msg.methods as any, Method._writeMessage);
     }
     if (msg.options?.length) {
-      writer.writeRepeatedMessage(3, msg.options as any, Option._writeMessage);
+      writer.writeRepeatedMessage(
+        3,
+        msg.options as any,
+        protoscript.Option._writeMessage
+      );
     }
     if (msg.version) {
       writer.writeString(4, msg.version);
     }
     if (msg.sourceContext) {
-      writer.writeMessage(5, msg.sourceContext, SourceContext._writeMessage);
+      writer.writeMessage(
+        5,
+        msg.sourceContext,
+        protoscript.SourceContext._writeMessage
+      );
     }
     if (msg.mixins?.length) {
       writer.writeRepeatedMessage(6, msg.mixins as any, Mixin._writeMessage);
     }
-    if (msg.syntax && Syntax._toInt(msg.syntax)) {
-      writer.writeEnum(7, Syntax._toInt(msg.syntax));
+    if (msg.syntax && protoscript.Syntax._toInt(msg.syntax)) {
+      writer.writeEnum(7, protoscript.Syntax._toInt(msg.syntax));
     }
     return writer;
   },
@@ -291,8 +292,8 @@ export const Api = {
           break;
         }
         case 3: {
-          const m = Option.initialize();
-          reader.readMessage(m, Option._readMessage);
+          const m = protoscript.Option.initialize();
+          reader.readMessage(m, protoscript.Option._readMessage);
           msg.options.push(m);
           break;
         }
@@ -301,7 +302,10 @@ export const Api = {
           break;
         }
         case 5: {
-          reader.readMessage(msg.sourceContext, SourceContext._readMessage);
+          reader.readMessage(
+            msg.sourceContext,
+            protoscript.SourceContext._readMessage
+          );
           break;
         }
         case 6: {
@@ -311,7 +315,7 @@ export const Api = {
           break;
         }
         case 7: {
-          msg.syntax = Syntax._fromInt(reader.readEnum());
+          msg.syntax = protoscript.Syntax._fromInt(reader.readEnum());
           break;
         }
         default: {
@@ -350,7 +354,7 @@ export const Method = {
       responseTypeUrl: "",
       responseStreaming: false,
       options: [],
-      syntax: Syntax._fromInt(0),
+      syntax: protoscript.Syntax._fromInt(0),
     };
   },
 
@@ -377,10 +381,14 @@ export const Method = {
       writer.writeBool(5, msg.responseStreaming);
     }
     if (msg.options?.length) {
-      writer.writeRepeatedMessage(6, msg.options as any, Option._writeMessage);
+      writer.writeRepeatedMessage(
+        6,
+        msg.options as any,
+        protoscript.Option._writeMessage
+      );
     }
-    if (msg.syntax && Syntax._toInt(msg.syntax)) {
-      writer.writeEnum(7, Syntax._toInt(msg.syntax));
+    if (msg.syntax && protoscript.Syntax._toInt(msg.syntax)) {
+      writer.writeEnum(7, protoscript.Syntax._toInt(msg.syntax));
     }
     return writer;
   },
@@ -413,13 +421,13 @@ export const Method = {
           break;
         }
         case 6: {
-          const m = Option.initialize();
-          reader.readMessage(m, Option._readMessage);
+          const m = protoscript.Option.initialize();
+          reader.readMessage(m, protoscript.Option._readMessage);
           msg.options.push(m);
           break;
         }
         case 7: {
-          msg.syntax = Syntax._fromInt(reader.readEnum());
+          msg.syntax = protoscript.Syntax._fromInt(reader.readEnum());
           break;
         }
         default: {
@@ -526,9 +534,9 @@ export const ApiJSON = {
       methods: [],
       options: [],
       version: "",
-      sourceContext: SourceContext.initialize(),
+      sourceContext: protoscript.SourceContextJSON.initialize(),
       mixins: [],
-      syntax: Syntax._fromInt(0),
+      syntax: protoscript.Syntax._fromInt(0),
     };
   },
 
@@ -544,21 +552,23 @@ export const ApiJSON = {
       json["methods"] = msg.methods.map(MethodJSON._writeMessage);
     }
     if (msg.options?.length) {
-      json["options"] = msg.options.map(OptionJSON._writeMessage);
+      json["options"] = msg.options.map(protoscript.OptionJSON._writeMessage);
     }
     if (msg.version) {
       json["version"] = msg.version;
     }
     if (msg.sourceContext) {
-      const sourceContext = SourceContextJSON._writeMessage(msg.sourceContext);
-      if (Object.keys(sourceContext).length > 0) {
-        json["sourceContext"] = sourceContext;
+      const _sourceContext_ = protoscript.SourceContextJSON._writeMessage(
+        msg.sourceContext
+      );
+      if (Object.keys(_sourceContext_).length > 0) {
+        json["sourceContext"] = _sourceContext_;
       }
     }
     if (msg.mixins?.length) {
       json["mixins"] = msg.mixins.map(MixinJSON._writeMessage);
     }
-    if (msg.syntax && SyntaxJSON._toInt(msg.syntax)) {
+    if (msg.syntax && protoscript.SyntaxJSON._toInt(msg.syntax)) {
       json["syntax"] = msg.syntax;
     }
     return json;
@@ -568,47 +578,47 @@ export const ApiJSON = {
    * @private
    */
   _readMessage: function (msg: Api, json: any): Api {
-    const _name = json["name"];
-    if (_name) {
-      msg.name = _name;
+    const _name_ = json["name"];
+    if (_name_) {
+      msg.name = _name_;
     }
-    const _methods = json["methods"];
-    if (_methods) {
-      for (const item of _methods) {
-        const m = Method.initialize();
+    const _methods_ = json["methods"];
+    if (_methods_) {
+      for (const item of _methods_) {
+        const m = MethodJSON.initialize();
         MethodJSON._readMessage(m, item);
         msg.methods.push(m);
       }
     }
-    const _options = json["options"];
-    if (_options) {
-      for (const item of _options) {
-        const m = Option.initialize();
-        OptionJSON._readMessage(m, item);
+    const _options_ = json["options"];
+    if (_options_) {
+      for (const item of _options_) {
+        const m = protoscript.OptionJSON.initialize();
+        protoscript.OptionJSON._readMessage(m, item);
         msg.options.push(m);
       }
     }
-    const _version = json["version"];
-    if (_version) {
-      msg.version = _version;
+    const _version_ = json["version"];
+    if (_version_) {
+      msg.version = _version_;
     }
-    const _sourceContext = json["sourceContext"] ?? json["source_context"];
-    if (_sourceContext) {
-      const m = SourceContext.initialize();
-      SourceContextJSON._readMessage(m, _sourceContext);
+    const _sourceContext_ = json["sourceContext"] ?? json["source_context"];
+    if (_sourceContext_) {
+      const m = protoscript.SourceContextJSON.initialize();
+      protoscript.SourceContextJSON._readMessage(m, _sourceContext_);
       msg.sourceContext = m;
     }
-    const _mixins = json["mixins"];
-    if (_mixins) {
-      for (const item of _mixins) {
-        const m = Mixin.initialize();
+    const _mixins_ = json["mixins"];
+    if (_mixins_) {
+      for (const item of _mixins_) {
+        const m = MixinJSON.initialize();
         MixinJSON._readMessage(m, item);
         msg.mixins.push(m);
       }
     }
-    const _syntax = json["syntax"];
-    if (_syntax) {
-      msg.syntax = _syntax;
+    const _syntax_ = json["syntax"];
+    if (_syntax_) {
+      msg.syntax = _syntax_;
     }
     return msg;
   },
@@ -640,7 +650,7 @@ export const MethodJSON = {
       responseTypeUrl: "",
       responseStreaming: false,
       options: [],
-      syntax: Syntax._fromInt(0),
+      syntax: protoscript.Syntax._fromInt(0),
     };
   },
 
@@ -665,9 +675,9 @@ export const MethodJSON = {
       json["responseStreaming"] = msg.responseStreaming;
     }
     if (msg.options?.length) {
-      json["options"] = msg.options.map(OptionJSON._writeMessage);
+      json["options"] = msg.options.map(protoscript.OptionJSON._writeMessage);
     }
-    if (msg.syntax && SyntaxJSON._toInt(msg.syntax)) {
+    if (msg.syntax && protoscript.SyntaxJSON._toInt(msg.syntax)) {
       json["syntax"] = msg.syntax;
     }
     return json;
@@ -677,40 +687,40 @@ export const MethodJSON = {
    * @private
    */
   _readMessage: function (msg: Method, json: any): Method {
-    const _name = json["name"];
-    if (_name) {
-      msg.name = _name;
+    const _name_ = json["name"];
+    if (_name_) {
+      msg.name = _name_;
     }
-    const _requestTypeUrl = json["requestTypeUrl"] ?? json["request_type_url"];
-    if (_requestTypeUrl) {
-      msg.requestTypeUrl = _requestTypeUrl;
+    const _requestTypeUrl_ = json["requestTypeUrl"] ?? json["request_type_url"];
+    if (_requestTypeUrl_) {
+      msg.requestTypeUrl = _requestTypeUrl_;
     }
-    const _requestStreaming =
+    const _requestStreaming_ =
       json["requestStreaming"] ?? json["request_streaming"];
-    if (_requestStreaming) {
-      msg.requestStreaming = _requestStreaming;
+    if (_requestStreaming_) {
+      msg.requestStreaming = _requestStreaming_;
     }
-    const _responseTypeUrl =
+    const _responseTypeUrl_ =
       json["responseTypeUrl"] ?? json["response_type_url"];
-    if (_responseTypeUrl) {
-      msg.responseTypeUrl = _responseTypeUrl;
+    if (_responseTypeUrl_) {
+      msg.responseTypeUrl = _responseTypeUrl_;
     }
-    const _responseStreaming =
+    const _responseStreaming_ =
       json["responseStreaming"] ?? json["response_streaming"];
-    if (_responseStreaming) {
-      msg.responseStreaming = _responseStreaming;
+    if (_responseStreaming_) {
+      msg.responseStreaming = _responseStreaming_;
     }
-    const _options = json["options"];
-    if (_options) {
-      for (const item of _options) {
-        const m = Option.initialize();
-        OptionJSON._readMessage(m, item);
+    const _options_ = json["options"];
+    if (_options_) {
+      for (const item of _options_) {
+        const m = protoscript.OptionJSON.initialize();
+        protoscript.OptionJSON._readMessage(m, item);
         msg.options.push(m);
       }
     }
-    const _syntax = json["syntax"];
-    if (_syntax) {
-      msg.syntax = _syntax;
+    const _syntax_ = json["syntax"];
+    if (_syntax_) {
+      msg.syntax = _syntax_;
     }
     return msg;
   },
@@ -759,13 +769,13 @@ export const MixinJSON = {
    * @private
    */
   _readMessage: function (msg: Mixin, json: any): Mixin {
-    const _name = json["name"];
-    if (_name) {
-      msg.name = _name;
+    const _name_ = json["name"];
+    if (_name_) {
+      msg.name = _name_;
     }
-    const _root = json["root"];
-    if (_root) {
-      msg.root = _root;
+    const _root_ = json["root"];
+    if (_root_) {
+      msg.root = _root_;
     }
     return msg;
   },

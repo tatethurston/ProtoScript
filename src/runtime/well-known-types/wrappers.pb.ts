@@ -721,9 +721,9 @@ export const DoubleValueJSON = {
    * @private
    */
   _readMessage: function (msg: DoubleValue, json: any): DoubleValue {
-    const _value = json["value"];
-    if (_value) {
-      msg.value = _value;
+    const _value_ = json["value"];
+    if (_value_) {
+      msg.value = _value_;
     }
     return msg;
   },
@@ -771,9 +771,9 @@ export const FloatValueJSON = {
    * @private
    */
   _readMessage: function (msg: FloatValue, json: any): FloatValue {
-    const _value = json["value"];
-    if (_value) {
-      msg.value = _value;
+    const _value_ = json["value"];
+    if (_value_) {
+      msg.value = _value_;
     }
     return msg;
   },
@@ -821,9 +821,9 @@ export const Int64ValueJSON = {
    * @private
    */
   _readMessage: function (msg: Int64Value, json: any): Int64Value {
-    const _value = json["value"];
-    if (_value) {
-      msg.value = BigInt(_value);
+    const _value_ = json["value"];
+    if (_value_) {
+      msg.value = BigInt(_value_);
     }
     return msg;
   },
@@ -871,9 +871,9 @@ export const UInt64ValueJSON = {
    * @private
    */
   _readMessage: function (msg: UInt64Value, json: any): UInt64Value {
-    const _value = json["value"];
-    if (_value) {
-      msg.value = BigInt(_value);
+    const _value_ = json["value"];
+    if (_value_) {
+      msg.value = BigInt(_value_);
     }
     return msg;
   },
@@ -921,9 +921,9 @@ export const Int32ValueJSON = {
    * @private
    */
   _readMessage: function (msg: Int32Value, json: any): Int32Value {
-    const _value = json["value"];
-    if (_value) {
-      msg.value = _value;
+    const _value_ = json["value"];
+    if (_value_) {
+      msg.value = _value_;
     }
     return msg;
   },
@@ -971,9 +971,9 @@ export const UInt32ValueJSON = {
    * @private
    */
   _readMessage: function (msg: UInt32Value, json: any): UInt32Value {
-    const _value = json["value"];
-    if (_value) {
-      msg.value = _value;
+    const _value_ = json["value"];
+    if (_value_) {
+      msg.value = _value_;
     }
     return msg;
   },
@@ -1021,9 +1021,9 @@ export const BoolValueJSON = {
    * @private
    */
   _readMessage: function (msg: BoolValue, json: any): BoolValue {
-    const _value = json["value"];
-    if (_value) {
-      msg.value = _value;
+    const _value_ = json["value"];
+    if (_value_) {
+      msg.value = _value_;
     }
     return msg;
   },
@@ -1071,9 +1071,9 @@ export const StringValueJSON = {
    * @private
    */
   _readMessage: function (msg: StringValue, json: any): StringValue {
-    const _value = json["value"];
-    if (_value) {
-      msg.value = _value;
+    const _value_ = json["value"];
+    if (_value_) {
+      msg.value = _value_;
     }
     return msg;
   },
@@ -1121,9 +1121,9 @@ export const BytesValueJSON = {
    * @private
    */
   _readMessage: function (msg: BytesValue, json: any): BytesValue {
-    const _value = json["value"];
-    if (_value) {
-      msg.value = decodeBase64Bytes(_value);
+    const _value_ = json["value"];
+    if (_value_) {
+      msg.value = decodeBase64Bytes(_value_);
     }
     return msg;
   },

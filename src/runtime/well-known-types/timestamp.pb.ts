@@ -243,13 +243,13 @@ export const TimestampJSON = {
    * @private
    */
   _readMessage: function (msg: Timestamp, json: any): Timestamp {
-    const _seconds = json["seconds"];
-    if (_seconds) {
-      msg.seconds = BigInt(_seconds);
+    const _seconds_ = json["seconds"];
+    if (_seconds_) {
+      msg.seconds = BigInt(_seconds_);
     }
-    const _nanos = json["nanos"];
-    if (_nanos) {
-      msg.nanos = _nanos;
+    const _nanos_ = json["nanos"];
+    if (_nanos_) {
+      msg.nanos = _nanos_;
     }
     return msg;
   },

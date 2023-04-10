@@ -11,17 +11,17 @@ jobs:
     steps:
       # Install protoc for e2e:setup
       - uses: arduino/setup-protoc@v1
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
-          cache: "npm"
-      - run: npm install
-      - run: npm run lint
-      - run: npm run test:ci && npx codecov --token=$CODECOV_TOKEN
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm package:build
+      # run again to link bin that is now available after package:build
+      - run: pnpm install
+      - run: pnpm lint
+      - run: pnpm test:ci && pnpm codecov --token=$CODECOV_TOKEN
         env:
-          # 1. Get here:
-          # https://app.codecov.io/gh/tatethurston/protoscript/settings
-          # 2. Upload here:
-          # https://github.com/tatethurston/protoscript/settings/secrets/actions/new
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

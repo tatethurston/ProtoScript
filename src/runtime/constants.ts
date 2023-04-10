@@ -24,7 +24,7 @@ export const FieldType = {
   VHASH64: 31, // 64-bit hash string, varint encoding.
 };
 
-export type FieldType = typeof FieldType[keyof typeof FieldType];
+export type FieldType = (typeof FieldType)[keyof typeof FieldType];
 
 /**
  * Wire-format type codes, taken from proto2/public/wire_format_lite.h.
@@ -39,7 +39,7 @@ export const WireType = {
   FIXED32: 5,
 };
 
-export type WireType = typeof WireType[keyof typeof WireType];
+export type WireType = (typeof WireType)[keyof typeof WireType];
 
 /**
  * Translates field type to wire type.
