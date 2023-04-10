@@ -25,3 +25,23 @@ jobs:
       - run: pnpm test:ci && pnpm codecov --token=$CODECOV_TOKEN
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Check for uncommited changes to well known types (pnpm build:wellknowntypes)
+        run: |
+          pnpm build:wellknowntypes
+          if git diff --quiet; then
+            echo "No changes detected."
+          else
+            git diff --name-only
+            echo "Changes detected. Failing build."
+            exit 1
+          fi
+      - name: Check for uncommited changes to examples (pnpm examples:regen)
+        run: |
+          pnpm examples:regen
+          if git diff --quiet; then
+            echo "No changes detected."
+          else
+            git diff --name-only
+            echo "Changes detected. Failing build."
+            exit 1
+          fi
