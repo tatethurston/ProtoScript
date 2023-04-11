@@ -817,8 +817,10 @@ export function processTypes(
           ) {
             processIdentifier(value.getTypeName() ?? "");
           }
+          const nameWithoutUnderscores =
+            value.getName()?.split(/_+/).filter(Boolean) ?? [];
           return {
-            name: camelCase(value.getName()?.split("_") ?? []),
+            name: camelCase(nameWithoutUnderscores),
             protoName: value.getName() ?? "",
             jsonName: value.getJsonName(),
             index: value.getNumber() ?? 0,

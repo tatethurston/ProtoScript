@@ -1,0 +1,6 @@
+{
+  "name": "conformance",
+  "dependencies": {
+    "protoscript": "workspace:*"
+  }
+}
