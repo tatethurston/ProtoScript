@@ -2545,15 +2545,6 @@ export const TestAllTypesProto3 = {
         case 2: {
           return "ALIAS_BAZ";
         }
-        case 2: {
-          return "MOO";
-        }
-        case 2: {
-          return "moo";
-        }
-        case 2: {
-          return "bAz";
-        }
         // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
         default: {
           return i as unknown as TestAllTypesProto3.AliasedEnum;
@@ -5683,15 +5674,6 @@ export const TestAllTypesProto3JSON = {
         }
         case 2: {
           return "ALIAS_BAZ";
-        }
-        case 2: {
-          return "MOO";
-        }
-        case 2: {
-          return "moo";
-        }
-        case 2: {
-          return "bAz";
         }
         // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
         default: {

@@ -23,6 +23,16 @@ function camelCase(segments: string[]): string {
   return first + rest.map(titleCase).join("");
 }
 
+export function uniqueBy<T>(arr: T[], cb: (el: T) => unknown): T[] {
+  const seen = new Set();
+  return arr.filter((x) => {
+    const val = cb(x);
+    const dup = seen.has(val);
+    seen.add(val);
+    return !dup;
+  });
+}
+
 const FileLabel = {
   Message: 4,
   Enum: 5,
