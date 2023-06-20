@@ -2,7 +2,12 @@
 import { type FileDescriptorProto } from "google-protobuf/google/protobuf/descriptor_pb.js";
 import { type UserConfig } from "../../cli/core.js";
 import { type Plugin } from "../../plugin.js";
-import { IdentifierTable, ProtoTypes, processTypes } from "../utils.js";
+import {
+  IdentifierTable,
+  ProtoTypes,
+  processTypes,
+  uniqueBy,
+} from "../utils.js";
 
 const DEFAULT_IMPORT_TRACKER = {
   hasBytes: false,
@@ -346,9 +351,13 @@ function writeProtobufSerializers(
         )})${printIfTypescript(`: ${node.content.namespacedName}`)} {
           switch (i) {
         `;
-        node.content.values.forEach(({ name, value }) => {
-          result += `case ${value}: { return '${name}'; }\n`;
-        });
+        // Though all alias values are valid during deserialization, the first value is always used when serializing
+        // https://protobuf.dev/programming-guides/proto3/#enum
+        uniqueBy(node.content.values, (x) => x.value).forEach(
+          ({ name, value }) => {
+            result += `case ${value}: { return '${name}'; }\n`;
+          }
+        );
 
         result += `// unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
         default: { return i${printIfTypescript(
@@ -650,9 +659,13 @@ function writeJSONSerializers(
         )})${printIfTypescript(`: ${node.content.namespacedName}`)} {
           switch (i) {
         `;
-        node.content.values.forEach(({ name, value }) => {
-          result += `case ${value}: { return '${name}'; }\n`;
-        });
+        // Though all alias values are valid during deserialization, the first value is always used when serializing
+        // https://protobuf.dev/programming-guides/proto3/#enum
+        uniqueBy(node.content.values, (x) => x.value).forEach(
+          ({ name, value }) => {
+            result += `case ${value}: { return '${name}'; }\n`;
+          }
+        );
 
         result += `// unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
         default: { return i${printIfTypescript(
