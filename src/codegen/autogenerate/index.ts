@@ -45,15 +45,12 @@ function writeTypes(types: ProtoTypes[], parents: string[]): string {
             node.content.name,
           ]);
 
-          result += `${fieldName}${printIf(
-            optional || mandatoryOptional,
-            "?"
-          )}:`;
+          result += `${fieldName}${printIf(optional, "?")}:`;
           if (map) {
             result += `Record<string, ${tsType}['value'] | undefined>`;
           } else {
             result += tsType;
-            if (optional) {
+            if (optional || mandatoryOptional) {
               result += "| null | undefined";
             } else if (repeated) {
               result += "[]";

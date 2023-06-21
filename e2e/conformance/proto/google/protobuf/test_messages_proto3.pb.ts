@@ -53,7 +53,7 @@ export interface TestAllTypesProto3 {
   optionalAliasedEnum: TestAllTypesProto3.AliasedEnum;
   optionalStringPiece: string;
   optionalCord: string;
-  recursiveMessage?: TestAllTypesProto3;
+  recursiveMessage: TestAllTypesProto3 | null | undefined;
   /**
    * Repeated
    */
@@ -273,7 +273,7 @@ export declare namespace TestAllTypesProto3 {
 
   export interface NestedMessage {
     a: number;
-    corecursive?: TestAllTypesProto3;
+    corecursive: TestAllTypesProto3 | null | undefined;
   }
 
   interface MapInt32Int32 {
