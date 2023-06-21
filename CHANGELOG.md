@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.0.15
+
+This release includes a number of bug fixes
+
+- Fix treeshaking for nested messages. Previously, there were cases where protobuf did not tree shake out of JSON only client usage. Thanks @noahseger!
+- Fix camelcasing for fieldnames with multiple sequential underscores. Thanks @noahseger!
+- Fix generated toInt helper when using aliased enums. Thanks @noahseger!
+- Fix recursive message initialization. Previously, recursive messages, messages with fields that referenced themselves, would cause an infinite loop when initializing because protoscript eagerly instantiates message objects. Now the compiler detects cycles and will instead generate up until the cycle, and mark the recursive field as optional.
+
 ## v0.0.14
 
 - Fix intermittent EAGAIN issue encountered when compiling protos

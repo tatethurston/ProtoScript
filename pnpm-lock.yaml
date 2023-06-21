@@ -96,7 +96,7 @@ importers:
 
   examples/typescript:
     specifiers:
-      protoscript: workspace:^0.0.14
+      protoscript: workspace:*
       typescript: ^5.0.4
     dependencies:
       protoscript: link:../../dist

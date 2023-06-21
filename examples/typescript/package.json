@@ -7,7 +7,7 @@
     "test": "tsc && node dist/index.js"
   },
   "dependencies": {
-    "protoscript": "workspace:^0.0.14"
+    "protoscript": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.0.4"

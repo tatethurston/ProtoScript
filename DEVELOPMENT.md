@@ -8,6 +8,8 @@ From the project directory root:
 nvm use
 pnpm install
 pnpm package:build
+# second time to link protoscript bin commands now available after package:build in packages
+pnpm install
 pnpm examples:regen
 pnpm build:wellknowntypes
 pnpm test
