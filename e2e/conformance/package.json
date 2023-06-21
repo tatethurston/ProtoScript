@@ -1,7 +1,8 @@
 {
   "name": "conformance",
   "scripts": {
-    "build": "esbuild runner.ts --bundle --platform=node --target=es2020 --outfile=dist/runner.cjs"
+    "build": "esbuild runner.ts --bundle --platform=node --target=es2020 --outfile=dist/runner.cjs",
+    "conformance:build": "./bin/generate_conformance_test_runner.sh"
   },
   "dependencies": {
     "protoscript": "workspace:*"
