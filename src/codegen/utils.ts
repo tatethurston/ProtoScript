@@ -33,6 +33,10 @@ export function uniqueBy<T>(arr: T[], cb: (el: T) => unknown): T[] {
   });
 }
 
+export function cycleDetected(node: string, graph: string[]): boolean {
+  return graph.includes(node);
+}
+
 const FileLabel = {
   Message: 4,
   Enum: 5,

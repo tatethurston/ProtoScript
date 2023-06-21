@@ -5,6 +5,7 @@ import { type Plugin } from "../../plugin.js";
 import {
   IdentifierTable,
   ProtoTypes,
+  cycleDetected,
   processTypes,
   uniqueBy,
 } from "../utils.js";
@@ -15,8 +16,9 @@ const DEFAULT_IMPORT_TRACKER = {
 
 let IMPORT_TRACKER: typeof DEFAULT_IMPORT_TRACKER;
 
-function writeTypes(types: ProtoTypes[], isTopLevel: boolean): string {
+function writeTypes(types: ProtoTypes[], parents: string[]): string {
   let result = "";
+  const isTopLevel = parents.length === 0;
 
   types.forEach((node) => {
     const name = node.content.name;
@@ -38,7 +40,15 @@ function writeTypes(types: ProtoTypes[], isTopLevel: boolean): string {
             result += printComments(comments.leading);
           }
 
-          result += `${fieldName}${printIf(optional, "?")}:`;
+          const mandatoryOptional = cycleDetected(tsType, [
+            ...parents,
+            node.content.name,
+          ]);
+
+          result += `${fieldName}${printIf(
+            optional || mandatoryOptional,
+            "?"
+          )}:`;
           if (map) {
             result += `Record<string, ${tsType}['value'] | undefined>`;
           } else {
@@ -60,7 +70,8 @@ function writeTypes(types: ProtoTypes[], isTopLevel: boolean): string {
           isTopLevel,
           "export declare"
         )} namespace ${name} { \n`;
-        result += writeTypes(node.children, false) + "\n\n";
+        result +=
+          writeTypes(node.children, [...parents, node.content.name]) + "\n\n";
         result += `}\n\n`;
       }
     }
@@ -79,9 +90,10 @@ const fromMapMessage = (x: string) =>
 
 function writeProtobufSerializers(
   types: ProtoTypes[],
-  isTopLevel: boolean
+  parents: string[]
 ): string {
   let result = "";
+  const isTopLevel = parents.length === 0;
 
   types.forEach((node) => {
     result += isTopLevel
@@ -154,7 +166,16 @@ function writeProtobufSerializers(
                   if (field.repeated) {
                     return `${field.name}: [],`;
                   } else if (field.read === "readMessage" && !field.map) {
-                    return `${field.name}: ${field.tsType}.initialize(),`;
+                    if (
+                      cycleDetected(field.tsType, [
+                        ...parents,
+                        node.content.name,
+                      ])
+                    ) {
+                      return `${field.name}: undefined,`;
+                    } else {
+                      return `${field.name}: ${field.tsType}.initialize(),`;
+                    }
                   } else {
                     return `${field.name}: ${field.defaultValue},`;
                   }
@@ -327,7 +348,10 @@ function writeProtobufSerializers(
             return msg;`;
         }
         result += "},\n\n";
-        result += writeProtobufSerializers(node.children, false);
+        result += writeProtobufSerializers(node.children, [
+          ...parents,
+          node.content.name,
+        ]);
         result += `}${isTopLevel ? ";" : ","}\n\n`;
         break;
       }
@@ -399,11 +423,9 @@ function writeProtobufSerializers(
   return result;
 }
 
-function writeJSONSerializers(
-  types: ProtoTypes[],
-  isTopLevel: boolean
-): string {
+function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
   let result = "";
+  const isTopLevel = parents.length === 0;
 
   types.forEach((node) => {
     result += isTopLevel
@@ -476,7 +498,16 @@ function writeJSONSerializers(
                   if (field.repeated) {
                     return `${field.name}: [],`;
                   } else if (field.read === "readMessage" && !field.map) {
-                    return `${field.name}: ${field.tsTypeJSON}.initialize(),`;
+                    if (
+                      cycleDetected(field.tsTypeJSON, [
+                        ...parents,
+                        node.content.name,
+                      ])
+                    ) {
+                      return `${field.name}: undefined,`;
+                    } else {
+                      return `${field.name}: ${field.tsTypeJSON}.initialize(),`;
+                    }
                   } else {
                     return `${field.name}: ${field.defaultValue},`;
                   }
@@ -635,7 +666,10 @@ function writeJSONSerializers(
             .join("\n")}
           return msg;`;
         result += "},\n\n";
-        result += writeJSONSerializers(node.children, false);
+        result += writeJSONSerializers(node.children, [
+          ...parents,
+          node.content.name,
+        ]);
         result += `}${isTopLevel ? ";" : ","}\n\n`;
         break;
       }
@@ -789,15 +823,14 @@ export function generate(
     !config.typescript.emitDeclarationOnly &&
     !!types.find((x) => x.type === "message");
 
-  const typeDefinitions =
-    hasTypes && config.isTS ? writeTypes(types, true) : "";
+  const typeDefinitions = hasTypes && config.isTS ? writeTypes(types, []) : "";
 
   const protobufSerializers = !config.typescript.emitDeclarationOnly
-    ? writeProtobufSerializers(types, true)
+    ? writeProtobufSerializers(types, [])
     : "";
 
   const jsonSerializers = !config.typescript.emitDeclarationOnly
-    ? writeJSONSerializers(types, true)
+    ? writeJSONSerializers(types, [])
     : "";
 
   return `\

@@ -53,7 +53,7 @@ export interface TestAllTypesProto3 {
   optionalAliasedEnum: TestAllTypesProto3.AliasedEnum;
   optionalStringPiece: string;
   optionalCord: string;
-  recursiveMessage: TestAllTypesProto3;
+  recursiveMessage?: TestAllTypesProto3;
   /**
    * Repeated
    */
@@ -273,7 +273,7 @@ export declare namespace TestAllTypesProto3 {
 
   export interface NestedMessage {
     a: number;
-    corecursive: TestAllTypesProto3;
+    corecursive?: TestAllTypesProto3;
   }
 
   interface MapInt32Int32 {
@@ -482,7 +482,7 @@ export const TestAllTypesProto3 = {
       optionalAliasedEnum: TestAllTypesProto3.AliasedEnum._fromInt(0),
       optionalStringPiece: "",
       optionalCord: "",
-      recursiveMessage: TestAllTypesProto3.initialize(),
+      recursiveMessage: undefined,
       repeatedInt32: [],
       repeatedInt64: [],
       repeatedUint32: [],
@@ -2611,7 +2611,7 @@ export const TestAllTypesProto3 = {
     initialize: function (): TestAllTypesProto3.NestedMessage {
       return {
         a: 0,
-        corecursive: TestAllTypesProto3.initialize(),
+        corecursive: undefined,
       };
     },
 
