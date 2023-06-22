@@ -2,7 +2,14 @@
 
 ### First time setup
 
-From the project directory root:
+1. Install the following dependencies:
+
+```sh
+brew install protobuf
+brew install bazel
+```
+
+2. From the project directory root:
 
 ```sh
 nvm use
