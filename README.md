@@ -29,7 +29,7 @@ ProtoScript is a [protocol buffers](https://developers.google.com/protocol-buffe
 
 ProtoScript consists of two parts:
 
-1. Runtime. This is nearly identical to [google-protobuf](https://www.npmjs.com/package/google-protobuf), but significantly smaller (9.6KB vs 46KB gzipped) and written in ESM to enable dead-code elimination.
+1. Runtime. This is nearly identical to [google-protobuf](https://www.npmjs.com/package/google-protobuf), but significantly smaller (9.6KB vs 46KB gzipped) and written in ESM to enable dead-code elimination. If you only use the generated JSON serializers, the protobuf runtime will be eliminated from the final build, resulting in a substantially smaller runtime.
 
 2. Code generation. This is a replacement of `protoc`'s JavaScript generation that generates idiomatic JavaScript code, JSON serializers/deserializers, and includes TSDoc comments.
 
@@ -41,13 +41,76 @@ If you're looking for an RPC framework, you may be interested in [TwirpScript](h
 
 2. In-editor API documentation. Comments in your `.proto` files become [TSDoc](https://github.com/microsoft/tsdoc) comments in the generated code and will show inline documentation in supported editors.
 
-3. JSON Serialization/Deserialization. Unlike `protoc`, ProtoScript's code generation generates JSON serialization and deserialization methods.
+3. JSON Serialization/Deserialization. Unlike `protoc`, ProtoScript's code generation also generates JSON serialization and deserialization methods.
 
-4. Small. ProtoScript's runtime and generated code are built with [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) to minimize bundle sizes. This results in a significantly smaller bundle size than [google-protobuf](https://www.npmjs.com/package/google-protobuf). ProtoScript's runtime is 67KB (9.6KB gzipped) compared to google-protobuf's 231KB (46KB gzipped).
+4. Small. ProtoScript's runtime and generated code are built with [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) to minimize bundle sizes. This results in a significantly smaller bundle size than [google-protobuf](https://www.npmjs.com/package/google-protobuf). ProtoScript's runtime is 67KB (9.6KB gzipped) compared to google-protobuf's 231KB (46KB gzipped). If you only use the generated JSON serializers, the protobuf runtime will be eliminated from the final build, resulting in a substantially smaller runtime.
 
 5. Isomorphic. ProtoScript's generated serializers/deserializers can be consumed in the browser or Node.js runtimes.
 
 6. No additional runtime dependencies.
+
+## Interface Examples
+
+If you have the following protobuf defined in `user.pb`:
+
+```protobuf
+message User {
+  string first_name = 1;
+  string last_name = 2;
+  bool active = 3;
+  User manager = 4;
+  repeated string locations = 5;
+  map<string, string> projects = 6;
+}
+```
+
+Using the generated `User` from ProtoScript will look like this:
+
+```typescript
+import { User, UserJSON } from "./user.pb.js";
+
+let user: User;
+
+// protocol buffers
+const bytes = User.encode({
+  firstName: "Homer",
+  lastName: "Simpson",
+  active: true,
+  locations: ["Springfield"],
+  projects: { SPP: "Springfield Power Plant" },
+  manager: {
+    firstName: "Montgomery",
+    lastName: "Burns",
+  },
+});
+console.log(bytes);
+
+user = User.decode(bytes);
+console.log(user)
+
+// json
+const json = UserJSON.encode({
+  firstName: "Homer",
+  lastName: "Simpson",
+  active: true,
+  locations: ["Springfield"],
+  projects: { SPP: "Springfield Power Plant" },
+  manager: {
+    firstName: "Montgomery",
+    lastName: "Burns",
+  },
+});
+console.log(json)
+
+user = UserJSON.decode(json);
+console.log(user);
+
+// ProtoScript generates and consumes plain JavaScript objects (POJOs) over classes. If you want to generate a full message
+// with default fields, you can use the #initialize method on the generated message class:
+
+user = User.initialize();
+console.log(user); 
+```
 
 ## Installation 📦
 
@@ -316,7 +379,7 @@ TypeScript projects will generally want to set this value to match their `rootDi
 
 ## JSON
 
-ProtoScript's JSON serialization/deserialization implements the [proto3 specification](https://developers.google.com/protocol-buffers/docs/proto3#json). This is nearly complete, but still in progress.
+ProtoScript's JSON serialization/deserialization implements the [proto3 specification](https://developers.google.com/protocol-buffers/docs/proto3#json). If you find a discrepancy, please open an issue.
 
 ProtoScript will serialize JSON keys as `lowerCamelCase` versions of the proto field. Per the proto3 spec, the runtime will accept both `lowerCamelCase` and the original proto field name when deserializing. You can provide the `json_name` field option to specify an alternate key name. When doing so, the runtime will encode JSON messages using the the `json_name` as the key, and will decode JSON messages using the `json_name` if present, otherwise falling back to the `lowerCamelCase` name and finally to the original proto field name.
 
