@@ -27,7 +27,7 @@ export class BinaryReader {
   static alloc(
     opt_bytes?: ByteSource | undefined,
     opt_start?: number | undefined,
-    opt_length?: number | undefined
+    opt_length?: number | undefined,
   ): BinaryReader {
     const newReader = BinaryReader.instanceCache_.pop();
     if (newReader) {
@@ -51,7 +51,7 @@ export class BinaryReader {
   constructor(
     opt_bytes: ByteSource | undefined = undefined,
     opt_start: number | undefined = undefined,
-    opt_length: number | undefined = undefined
+    opt_length: number | undefined = undefined,
   ) {
     /**
      * Wire-format decoder.
@@ -218,7 +218,7 @@ export class BinaryReader {
       nextWireType != WireType.END_GROUP
     ) {
       fail(
-        `Invalid wire type: ${nextWireType} (at position ${this.fieldCursor_})`
+        `Invalid wire type: ${nextWireType} (at position ${this.fieldCursor_})`,
       );
       this.error_ = true;
       return false;
@@ -363,7 +363,7 @@ export class BinaryReader {
   registerReadCallback(
     callbackName: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    callback: (arg0: BinaryReader) => any
+    callback: (arg0: BinaryReader) => any,
   ) {
     assert(!this.readCallbacks_[callbackName]);
     this.readCallbacks_[callbackName] = callback;
@@ -465,7 +465,7 @@ export class BinaryReader {
   readGroup<T>(
     field: number,
     message: T,
-    reader: (arg0: T, arg1: BinaryReader) => T
+    reader: (arg0: T, arg1: BinaryReader) => T,
   ) {
     // Ensure that the wire type is correct.
     assert(this.nextWireType_ == WireType.START_GROUP);
@@ -494,7 +494,7 @@ export class BinaryReader {
     const innerDecoder = BinaryDecoder.alloc(
       this.decoder_.getBuffer(),
       start,
-      length
+      length,
     );
     this.decoder_.setCursor(end);
     return innerDecoder;

@@ -4,6 +4,6 @@
     "protoscript": "workspace:*"
   },
   "devDependencies": {
-    "esbuild": "^0.17.16"
+    "esbuild": "^0.18.16"
   }
 }

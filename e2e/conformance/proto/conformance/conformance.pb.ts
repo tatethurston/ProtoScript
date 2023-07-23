@@ -2,7 +2,7 @@
 // Source: proto/conformance/conformance.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import {
   BinaryReader,
   BinaryWriter,
@@ -298,7 +298,7 @@ export const FailureSet = {
   /**
    * Serializes FailureSet to protobuf.
    */
-  encode: function (msg: Partial<FailureSet>): Uint8Array {
+  encode: function (msg: PartialDeep<FailureSet>): Uint8Array {
     return FailureSet._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -308,7 +308,7 @@ export const FailureSet = {
   decode: function (bytes: ByteSource): FailureSet {
     return FailureSet._readMessage(
       FailureSet.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -325,8 +325,8 @@ export const FailureSet = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<FailureSet>,
-    writer: BinaryWriter
+    msg: PartialDeep<FailureSet>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.failure?.length) {
       writer.writeRepeatedString(1, msg.failure);
@@ -359,10 +359,10 @@ export const ConformanceRequest = {
   /**
    * Serializes ConformanceRequest to protobuf.
    */
-  encode: function (msg: Partial<ConformanceRequest>): Uint8Array {
+  encode: function (msg: PartialDeep<ConformanceRequest>): Uint8Array {
     return ConformanceRequest._writeMessage(
       msg,
-      new BinaryWriter()
+      new BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -372,7 +372,7 @@ export const ConformanceRequest = {
   decode: function (bytes: ByteSource): ConformanceRequest {
     return ConformanceRequest._readMessage(
       ConformanceRequest.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -397,8 +397,8 @@ export const ConformanceRequest = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ConformanceRequest>,
-    writer: BinaryWriter
+    msg: PartialDeep<ConformanceRequest>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.protobufPayload?.length) {
       writer.writeBytes(1, msg.protobufPayload);
@@ -428,7 +428,7 @@ export const ConformanceRequest = {
       writer.writeMessage(
         6,
         msg.jspbEncodingOptions,
-        JspbEncodingConfig._writeMessage
+        JspbEncodingConfig._writeMessage,
       );
     }
     if (msg.printUnknownFields) {
@@ -442,7 +442,7 @@ export const ConformanceRequest = {
    */
   _readMessage: function (
     msg: ConformanceRequest,
-    reader: BinaryReader
+    reader: BinaryReader,
   ): ConformanceRequest {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -478,7 +478,7 @@ export const ConformanceRequest = {
         case 6: {
           reader.readMessage(
             msg.jspbEncodingOptions,
-            JspbEncodingConfig._readMessage
+            JspbEncodingConfig._readMessage,
           );
           break;
         }
@@ -500,10 +500,10 @@ export const ConformanceResponse = {
   /**
    * Serializes ConformanceResponse to protobuf.
    */
-  encode: function (msg: Partial<ConformanceResponse>): Uint8Array {
+  encode: function (msg: PartialDeep<ConformanceResponse>): Uint8Array {
     return ConformanceResponse._writeMessage(
       msg,
-      new BinaryWriter()
+      new BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -513,7 +513,7 @@ export const ConformanceResponse = {
   decode: function (bytes: ByteSource): ConformanceResponse {
     return ConformanceResponse._readMessage(
       ConformanceResponse.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -538,8 +538,8 @@ export const ConformanceResponse = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ConformanceResponse>,
-    writer: BinaryWriter
+    msg: PartialDeep<ConformanceResponse>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.parseError != undefined) {
       writer.writeString(1, msg.parseError);
@@ -576,7 +576,7 @@ export const ConformanceResponse = {
    */
   _readMessage: function (
     msg: ConformanceResponse,
-    reader: BinaryReader
+    reader: BinaryReader,
   ): ConformanceResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -631,10 +631,10 @@ export const JspbEncodingConfig = {
   /**
    * Serializes JspbEncodingConfig to protobuf.
    */
-  encode: function (msg: Partial<JspbEncodingConfig>): Uint8Array {
+  encode: function (msg: PartialDeep<JspbEncodingConfig>): Uint8Array {
     return JspbEncodingConfig._writeMessage(
       msg,
-      new BinaryWriter()
+      new BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -644,7 +644,7 @@ export const JspbEncodingConfig = {
   decode: function (bytes: ByteSource): JspbEncodingConfig {
     return JspbEncodingConfig._readMessage(
       JspbEncodingConfig.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -661,8 +661,8 @@ export const JspbEncodingConfig = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<JspbEncodingConfig>,
-    writer: BinaryWriter
+    msg: PartialDeep<JspbEncodingConfig>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.useJspbArrayAnyFormat) {
       writer.writeBool(1, msg.useJspbArrayAnyFormat);
@@ -675,7 +675,7 @@ export const JspbEncodingConfig = {
    */
   _readMessage: function (
     msg: JspbEncodingConfig,
-    reader: BinaryReader
+    reader: BinaryReader,
   ): JspbEncodingConfig {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -844,7 +844,7 @@ export const FailureSetJSON = {
   /**
    * Serializes FailureSet to JSON.
    */
-  encode: function (msg: Partial<FailureSet>): string {
+  encode: function (msg: PartialDeep<FailureSet>): string {
     return JSON.stringify(FailureSetJSON._writeMessage(msg));
   },
 
@@ -854,7 +854,7 @@ export const FailureSetJSON = {
   decode: function (json: string): FailureSet {
     return FailureSetJSON._readMessage(
       FailureSetJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -870,7 +870,9 @@ export const FailureSetJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<FailureSet>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<FailureSet>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.failure?.length) {
       json["failure"] = msg.failure;
@@ -894,7 +896,7 @@ export const ConformanceRequestJSON = {
   /**
    * Serializes ConformanceRequest to JSON.
    */
-  encode: function (msg: Partial<ConformanceRequest>): string {
+  encode: function (msg: PartialDeep<ConformanceRequest>): string {
     return JSON.stringify(ConformanceRequestJSON._writeMessage(msg));
   },
 
@@ -904,7 +906,7 @@ export const ConformanceRequestJSON = {
   decode: function (json: string): ConformanceRequest {
     return ConformanceRequestJSON._readMessage(
       ConformanceRequestJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -929,7 +931,7 @@ export const ConformanceRequestJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ConformanceRequest>
+    msg: PartialDeep<ConformanceRequest>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.protobufPayload?.length) {
@@ -958,7 +960,7 @@ export const ConformanceRequestJSON = {
     }
     if (msg.jspbEncodingOptions) {
       const _jspbEncodingOptions_ = JspbEncodingConfigJSON._writeMessage(
-        msg.jspbEncodingOptions
+        msg.jspbEncodingOptions,
       );
       if (Object.keys(_jspbEncodingOptions_).length > 0) {
         json["jspbEncodingOptions"] = _jspbEncodingOptions_;
@@ -975,7 +977,7 @@ export const ConformanceRequestJSON = {
    */
   _readMessage: function (
     msg: ConformanceRequest,
-    json: any
+    json: any,
   ): ConformanceRequest {
     const _protobufPayload_ =
       json["protobufPayload"] ?? json["protobuf_payload"];
@@ -1010,9 +1012,10 @@ export const ConformanceRequestJSON = {
     const _jspbEncodingOptions_ =
       json["jspbEncodingOptions"] ?? json["jspb_encoding_options"];
     if (_jspbEncodingOptions_) {
-      const m = JspbEncodingConfigJSON.initialize();
-      JspbEncodingConfigJSON._readMessage(m, _jspbEncodingOptions_);
-      msg.jspbEncodingOptions = m;
+      JspbEncodingConfigJSON._readMessage(
+        msg.jspbEncodingOptions,
+        _jspbEncodingOptions_,
+      );
     }
     const _printUnknownFields_ =
       json["printUnknownFields"] ?? json["print_unknown_fields"];
@@ -1027,7 +1030,7 @@ export const ConformanceResponseJSON = {
   /**
    * Serializes ConformanceResponse to JSON.
    */
-  encode: function (msg: Partial<ConformanceResponse>): string {
+  encode: function (msg: PartialDeep<ConformanceResponse>): string {
     return JSON.stringify(ConformanceResponseJSON._writeMessage(msg));
   },
 
@@ -1037,7 +1040,7 @@ export const ConformanceResponseJSON = {
   decode: function (json: string): ConformanceResponse {
     return ConformanceResponseJSON._readMessage(
       ConformanceResponseJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -1062,7 +1065,7 @@ export const ConformanceResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ConformanceResponse>
+    msg: PartialDeep<ConformanceResponse>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.parseError != undefined) {
@@ -1100,7 +1103,7 @@ export const ConformanceResponseJSON = {
    */
   _readMessage: function (
     msg: ConformanceResponse,
-    json: any
+    json: any,
   ): ConformanceResponse {
     const _parseError_ = json["parseError"] ?? json["parse_error"];
     if (_parseError_) {
@@ -1147,7 +1150,7 @@ export const JspbEncodingConfigJSON = {
   /**
    * Serializes JspbEncodingConfig to JSON.
    */
-  encode: function (msg: Partial<JspbEncodingConfig>): string {
+  encode: function (msg: PartialDeep<JspbEncodingConfig>): string {
     return JSON.stringify(JspbEncodingConfigJSON._writeMessage(msg));
   },
 
@@ -1157,7 +1160,7 @@ export const JspbEncodingConfigJSON = {
   decode: function (json: string): JspbEncodingConfig {
     return JspbEncodingConfigJSON._readMessage(
       JspbEncodingConfigJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -1174,7 +1177,7 @@ export const JspbEncodingConfigJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<JspbEncodingConfig>
+    msg: PartialDeep<JspbEncodingConfig>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.useJspbArrayAnyFormat) {
@@ -1188,7 +1191,7 @@ export const JspbEncodingConfigJSON = {
    */
   _readMessage: function (
     msg: JspbEncodingConfig,
-    json: any
+    json: any,
   ): JspbEncodingConfig {
     const _useJspbArrayAnyFormat_ =
       json["useJspbArrayAnyFormat"] ?? json["use_jspb_array_any_format"];

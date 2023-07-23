@@ -28,7 +28,7 @@ describe("UInt64", () => {
         lo,
         hi,
         bigint: BigInt(bigint),
-      })
+      }),
     );
   });
 });
@@ -45,7 +45,7 @@ describe("Int64", () => {
         lo,
         hi,
         bigint: BigInt(bigint),
-      })
+      }),
     );
   });
 });

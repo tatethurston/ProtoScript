@@ -28,7 +28,7 @@ export class BinaryDecoder {
   static alloc(
     opt_bytes: ByteSource | undefined,
     opt_start: number | undefined,
-    opt_length: number | undefined
+    opt_length: number | undefined,
   ): BinaryDecoder {
     const newDecoder = BinaryDecoder.instanceCache_.pop();
     if (newDecoder) {
@@ -49,7 +49,7 @@ export class BinaryDecoder {
   constructor(
     opt_bytes: ByteSource | undefined,
     opt_start: number | undefined,
-    opt_length: number | undefined
+    opt_length: number | undefined,
   ) {
     /**
      * Typed byte-wise view of the source buffer.
@@ -99,7 +99,7 @@ export class BinaryDecoder {
     return BinaryDecoder.alloc(
       this.bytes_,
       this.start_,
-      this.end_ - this.start_
+      this.end_ - this.start_,
     );
   }
 
@@ -128,10 +128,10 @@ export class BinaryDecoder {
   setBlock(
     data: ByteSource,
     opt_start: number | undefined,
-    opt_length: number | undefined
+    opt_length: number | undefined,
   ) {
     this.bytes_ = byteSourceToUint8Array(data);
-    this.start_ = opt_start !== undefined ? opt_start : 0;
+    this.start_ = opt_start ?? 0;
     this.end_ =
       opt_length !== undefined ? this.start_ + opt_length : this.bytes_.length;
     this.cursor_ = this.start_;
@@ -471,7 +471,7 @@ export class BinaryDecoder {
    *     the result value, takes parameters (lowBits, highBits).
    */
   readSplitZigzagVarint64<T>(
-    convert: (bitsLow: number, bitsHigh: number) => T
+    convert: (bitsLow: number, bitsHigh: number) => T,
   ): T {
     return this.readSplitVarint64(function (low, high) {
       return fromZigzag64(low, high, convert);

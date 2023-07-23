@@ -20,7 +20,7 @@ function main() {
     }
   } catch (e) {
     process.stderr.write(
-      `conformance.ts: exiting after ${testCount} tests: ${String(e)}`
+      `conformance.ts: exiting after ${testCount} tests: ${String(e)}`,
     );
     process.exit(1);
   }
@@ -101,7 +101,7 @@ function test(request: ConformanceRequest): ConformanceResponse {
 // Returns true if the test ran successfully, false on legitimate EOF.
 // If EOF is encountered in an unexpected place, raises IOError.
 function testIo(
-  test: (request: ConformanceRequest) => ConformanceResponse
+  test: (request: ConformanceRequest) => ConformanceResponse,
 ): boolean {
   setBlockingStdout();
 
@@ -154,7 +154,7 @@ function writeBuffer(buffer: Buffer): void {
       1,
       buffer,
       totalWritten,
-      buffer.length - totalWritten
+      buffer.length - totalWritten,
     );
   }
 }

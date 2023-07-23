@@ -14,7 +14,7 @@ describe("Conformance", () => {
       `./bin/conformance_test_runner \
         --enforce_recommended \
         --output_dir . \
-        ./dist/runner.cjs`
+        ./dist/runner.cjs`,
     );
 
     expect(result.output).not.toEqual(undefined);

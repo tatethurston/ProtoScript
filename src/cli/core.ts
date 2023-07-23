@@ -222,13 +222,13 @@ async function getConfig(): Promise<Config> {
     }
 
     const unknownKeys = Object.keys(userConfig).filter(
-      (key) => !(key in defaultConfig)
+      (key) => !(key in defaultConfig),
     );
     if (unknownKeys.length) {
       logger.warn(
         `Found unknown configuration options: ${unknownKeys
           .map((k) => `'${k}'`)
-          .join(", ")}.`
+          .join(", ")}.`,
       );
     }
   }
@@ -271,7 +271,7 @@ export async function main(opts: CliOptions): Promise<void> {
 
   Or install from a precompiled binary:
     https://github.com/protocolbuffers/protobuf/releases
-`
+`,
     );
     process.exit(1);
   }
@@ -293,7 +293,7 @@ export async function main(opts: CliOptions): Promise<void> {
 
     const protoExt = config.language === "typescript" ? "pb.ts" : "pb.js";
     const protosBeforeCompile = Object.fromEntries(
-      findFiles(destination, protoExt).map((file) => [file, checksum(file)])
+      findFiles(destination, protoExt).map((file) => [file, checksum(file)]),
     );
 
     const protoc = spawnSync(
@@ -319,7 +319,7 @@ protoc \
   } \
   ${protos.join(" ")}
 `,
-      { shell: true, encoding: "utf8" }
+      { shell: true, encoding: "utf8" },
     );
 
     if (protoc.stderr) {
@@ -332,27 +332,28 @@ protoc \
     ]);
 
     const created = protosAfterCompile.filter(
-      (file) => !protosBeforeCompile[file[0]]
+      (file) => !protosBeforeCompile[file[0]],
     );
     const updated = protosAfterCompile.filter(
       (file) =>
-        protosBeforeCompile[file[0]] && protosBeforeCompile[file[0]] !== file[1]
+        protosBeforeCompile[file[0]] &&
+        protosBeforeCompile[file[0]] !== file[1],
     );
     const unchanged = protosAfterCompile.filter(
-      (file) => protosBeforeCompile[file[0]] === file[1]
+      (file) => protosBeforeCompile[file[0]] === file[1],
     );
 
     logger.info("\n");
     if (created.length > 0) {
       console.info(
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        `Created:\n${created.map((f) => `  - ${f[0]}`).join("\n")}\n`
+        `Created:\n${created.map((f) => `  - ${f[0]}`).join("\n")}\n`,
       );
     }
     if (updated.length > 0) {
       console.info(
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        `Updated:\n${updated.map((f) => `  - ${f[0]}`).join("\n")}\n`
+        `Updated:\n${updated.map((f) => `  - ${f[0]}`).join("\n")}\n`,
       );
     }
     console.info(
@@ -362,7 +363,7 @@ protoc \
         unchanged.length
       } ${pluralize("file", unchanged.length)} unchanged. ${
         protos.length
-      } ${pluralize("file", protos.length)} found.`
+      } ${pluralize("file", protos.length)} found.`,
     );
   } catch (error) {
     onCliError(error as string, 1);

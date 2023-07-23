@@ -32,7 +32,7 @@ function writeTypes(types: ProtoTypes[], parents: string[]): string {
     } else {
       result += `${printIf(
         !node.content.isMap,
-        "export "
+        "export ",
       )}interface ${name} {\n`;
       node.content.fields.forEach(
         ({ name: fieldName, tsType, repeated, optional, comments, map }) => {
@@ -58,14 +58,14 @@ function writeTypes(types: ProtoTypes[], parents: string[]): string {
           }
 
           result += ";\n";
-        }
+        },
       );
       result += "}\n\n";
 
       if (node.children.length > 0) {
         result += `${printIf(
           isTopLevel,
-          "export declare"
+          "export declare",
         )} namespace ${name} { \n`;
         result +=
           writeTypes(node.children, [...parents, node.content.name]) + "\n\n";
@@ -79,7 +79,7 @@ function writeTypes(types: ProtoTypes[], parents: string[]): string {
 
 const toMapMessage = (name: string) =>
   `Object.entries(${name}).map(([key, value]) => ({ key: key ${printIfTypescript(
-    "as any"
+    "as any",
   )}, value: value ${printIfTypescript("as any")} }))`;
 
 const fromMapMessage = (x: string) =>
@@ -87,7 +87,7 @@ const fromMapMessage = (x: string) =>
 
 function writeProtobufSerializers(
   types: ProtoTypes[],
-  parents: string[]
+  parents: string[],
 ): string {
   let result = "";
   const isTopLevel = parents.length === 0;
@@ -110,12 +110,12 @@ function writeProtobufSerializers(
             `;
           if (isEmpty) {
             result += `encode: function(_msg${printIfTypescript(
-              `?: Partial<${node.content.namespacedName}>`
+              `?: PartialDeep<${node.content.namespacedName}>`,
             )})${printIfTypescript(`: Uint8Array`)} {
               return new Uint8Array();`;
           } else {
             result += `encode: function(msg${printIfTypescript(
-              `: Partial<${node.content.namespacedName}>`
+              `: PartialDeep<${node.content.namespacedName}>`,
             )})${printIfTypescript(`: Uint8Array`)} {
             return ${
               node.content.namespacedName
@@ -131,12 +131,12 @@ function writeProtobufSerializers(
           `;
           if (isEmpty) {
             result += `decode: function(_bytes${printIfTypescript(
-              `?: ByteSource`
+              `?: ByteSource`,
             )})${printIfTypescript(`: ${node.content.namespacedName}`)} {
               return {};`;
           } else {
             result += `decode: function(bytes${printIfTypescript(
-              `: ByteSource`
+              `: ByteSource`,
             )})${printIfTypescript(`: ${node.content.namespacedName}`)} {
             return ${node.content.namespacedName}._readMessage(${
               node.content.namespacedName
@@ -152,7 +152,7 @@ function writeProtobufSerializers(
            } with all fields set to their default value.
            */
           initialize: function()${printIfTypescript(
-            `: ${node.content.namespacedName}`
+            `: ${node.content.namespacedName}`,
           )} {
             return {
               ${node.content.fields
@@ -188,9 +188,9 @@ function writeProtobufSerializers(
          * @private
          */
         _writeMessage: function(${printIf(isEmpty, "_")}msg${printIfTypescript(
-          `: ${`Partial<${node.content.namespacedName}>`}`
+          `: ${`PartialDeep<${node.content.namespacedName}>`}`,
         )}, writer${printIfTypescript(`: BinaryWriter`)})${printIfTypescript(
-          `: BinaryWriter`
+          `: BinaryWriter`,
         )} {
           ${node.content.fields
             .map((field) => {
@@ -212,10 +212,10 @@ function writeProtobufSerializers(
                       ? toMapMessage(`msg.${field.name}`)
                       : `msg.${field.name}`
                   } ${
-                  field.write === "writeRepeatedMessage"
-                    ? printIfTypescript("as any")
-                    : ""
-                }, ${field.tsType}._writeMessage);`;
+                    field.write === "writeRepeatedMessage"
+                      ? printIfTypescript("as any")
+                      : ""
+                  }, ${field.tsType}._writeMessage);`;
               } else {
                 res += `writer.${field.write}(${field.index}, `;
                 if (field.tsType === "bigint") {
@@ -225,7 +225,7 @@ function writeProtobufSerializers(
                     }.map(x => x.toString() ${printIfTypescript("as any")})`;
                   } else {
                     res += `msg.${field.name}.toString() ${printIfTypescript(
-                      "as any"
+                      "as any",
                     )}`;
                   }
                 } else if (field.read === "readEnum") {
@@ -255,16 +255,16 @@ function writeProtobufSerializers(
         `;
         if (isEmpty) {
           result += `_readMessage: function(_msg${printIfTypescript(
-            `: ${`${node.content.namespacedName}`}`
+            `: ${`${node.content.namespacedName}`}`,
           )}, _reader${printIfTypescript(`: BinaryReader`)})${printIfTypescript(
-            `: ${`${node.content.namespacedName}`}`
+            `: ${`${node.content.namespacedName}`}`,
           )}{
             return _msg;`;
         } else {
           result += `_readMessage: function(msg${printIfTypescript(
-            `: ${`${node.content.namespacedName}`}`
+            `: ${`${node.content.namespacedName}`}`,
           )}, reader${printIfTypescript(`: BinaryReader`)})${printIfTypescript(
-            `: ${`${node.content.namespacedName}`}`
+            `: ${`${node.content.namespacedName}`}`,
           )}{
             while (reader.nextField()) {
               const field = reader.getFieldNumber();
@@ -277,12 +277,12 @@ function writeProtobufSerializers(
                       if (field.map) {
                         res += `
                         const map = {}${printIfTypescript(
-                          ` as ${field.tsType}`
+                          ` as ${field.tsType}`,
                         )};
                         reader.readMessage(map, ${field.tsType}._readMessage);
                         msg.${field.name}[map.key${printIf(
                           field.tsType !== "string",
-                          ".toString()"
+                          ".toString()",
                         )}] = map.value;
                       `;
                       } else if (field.repeated) {
@@ -290,7 +290,14 @@ function writeProtobufSerializers(
                         res += `reader.readMessage(m, ${field.tsType}._readMessage);`;
                         res += `msg.${field.name}.push(m);`;
                       } else {
-                        if (field.optional || node.content.isMap) {
+                        if (
+                          field.optional ||
+                          node.content.isMap ||
+                          cycleDetected(field.tsType, [
+                            ...parents,
+                            node.content.name,
+                          ])
+                        ) {
                           res += `msg.${field.name} = ${field.tsType}.initialize();`;
                         }
                         res += `reader.readMessage(msg.${field.name}, ${field.tsType}._readMessage);`;
@@ -368,7 +375,7 @@ function writeProtobufSerializers(
          */
         _fromInt: `;
         result += `function(i${printIfTypescript(
-          ": number"
+          ": number",
         )})${printIfTypescript(`: ${node.content.namespacedName}`)} {
           switch (i) {
         `;
@@ -377,12 +384,12 @@ function writeProtobufSerializers(
         uniqueBy(node.content.values, (x) => x.value).forEach(
           ({ name, value }) => {
             result += `case ${value}: { return '${name}'; }\n`;
-          }
+          },
         );
 
         result += `// unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
         default: { return i${printIfTypescript(
-          ` as unknown as ${node.content.namespacedName}`
+          ` as unknown as ${node.content.namespacedName}`,
         )}; }\n }\n },\n`;
 
         // from enum
@@ -392,7 +399,7 @@ function writeProtobufSerializers(
          */
         _toInt: `;
         result += `function(i${printIfTypescript(
-          `: ${node.content.namespacedName}`
+          `: ${node.content.namespacedName}`,
         )})${printIfTypescript(`: number`)} {
           switch (i) {
         `;
@@ -402,7 +409,7 @@ function writeProtobufSerializers(
 
         result += `// unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
         default: { return i${printIfTypescript(
-          ` as unknown as number`
+          ` as unknown as number`,
         )}; }\n }\n },\n`;
 
         result += `} ${printIfTypescript("as const")}${
@@ -442,12 +449,12 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
           `;
           if (isEmpty) {
             result += `encode: function(_msg${printIfTypescript(
-              `?: Partial<${node.content.namespacedName}>`
+              `?: PartialDeep<${node.content.namespacedName}>`,
             )})${printIfTypescript(`: string`)} {
               return "{}";`;
           } else {
             result += `encode: function(msg${printIfTypescript(
-              `: Partial<${node.content.namespacedName}>`
+              `: PartialDeep<${node.content.namespacedName}>`,
             )})${printIfTypescript(`: string`)} {
               return JSON.stringify(${
                 node.content.namespacedNameJSON
@@ -463,16 +470,16 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
       `;
           if (isEmpty) {
             result += `decode: function(_json${printIfTypescript(
-              `?: string`
+              `?: string`,
             )})${printIfTypescript(`: ${node.content.namespacedName}`)} {
           return {};`;
           } else {
             result += `decode: function(json${printIfTypescript(
-              `: string`
+              `: string`,
             )})${printIfTypescript(`: ${node.content.namespacedName}`)} {
         return ${node.content.namespacedNameJSON}._readMessage(${
-              node.content.namespacedNameJSON
-            }.initialize(), JSON.parse(json));`;
+          node.content.namespacedNameJSON
+        }.initialize(), JSON.parse(json));`;
           }
           result += "},\n\n";
 
@@ -484,7 +491,7 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
            } with all fields set to their default value.
            */
           initialize: function()${printIfTypescript(
-            `: ${node.content.namespacedName}`
+            `: ${node.content.namespacedName}`,
           )} {
             return {
               ${node.content.fields
@@ -522,13 +529,13 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
         `;
         if (isEmpty) {
           result += `_writeMessage: function(_msg${printIfTypescript(
-            `: ${`Partial<${node.content.namespacedName}>`}`
+            `: ${`PartialDeep<${node.content.namespacedName}>`}`,
           )})${printIfTypescript(`: Record<string, unknown>`)} {
           return {};
         `;
         } else {
           result += `_writeMessage: function(msg${printIfTypescript(
-            `: ${`Partial<${node.content.namespacedName}>`}`
+            `: ${`PartialDeep<${node.content.namespacedName}>`}`,
           )})${printIfTypescript(`: Record<string, unknown>`)} {
           const json${printIfTypescript(": Record<string, unknown>")} = {};
           ${node.content.fields
@@ -559,7 +566,7 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
                     res += `const ${name} = ${fromMapMessage(
                       `${toMapMessage(`msg.${field.name}`)}.map(${
                         field.tsTypeJSON
-                      }._writeMessage)`
+                      }._writeMessage)`,
                     )};`;
                   } else {
                     res += `const ${name} = ${field.tsTypeJSON}._writeMessage(msg.${field.name});`;
@@ -606,9 +613,9 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
          * @private
          */
         _readMessage: function(msg${printIfTypescript(
-          `: ${`${node.content.namespacedName}`}`
+          `: ${`${node.content.namespacedName}`}`,
         )}, ${printIf(isEmpty, "_")}json${printIfTypescript(
-          `: any`
+          `: any`,
         )})${printIfTypescript(`: ${`${node.content.namespacedName}`}`)}{
           ${node.content.fields
             .map((field) => {
@@ -629,7 +636,7 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
                   res += `msg.${field.name} = ${fromMapMessage(
                     `${toMapMessage(name)}.map(${
                       field.tsTypeJSON
-                    }._readMessage)`
+                    }._readMessage)`,
                   )};`;
                 } else if (field.repeated) {
                   res += `for (const item of ${name}) {`;
@@ -638,9 +645,13 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
                   res += `msg.${field.name}.push(m);`;
                   res += `}`;
                 } else {
-                  res += `const m = ${field.tsTypeJSON}.initialize();`;
-                  res += `${field.tsTypeJSON}._readMessage(m, ${name});`;
-                  res += `msg.${field.name} = m;`;
+                  if (
+                    field.optional ||
+                    cycleDetected(field.tsType, [...parents, node.content.name])
+                  ) {
+                    res += `msg.${field.name} = ${field.tsTypeJSON}.initialize();`;
+                  }
+                  res += `${field.tsTypeJSON}._readMessage(msg.${field.name}, ${name});`;
                 }
               } else if (field.tsType === "bigint") {
                 if (field.repeated) {
@@ -686,7 +697,7 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
          */
         _fromInt: `;
         result += `function(i${printIfTypescript(
-          ": number"
+          ": number",
         )})${printIfTypescript(`: ${node.content.namespacedName}`)} {
           switch (i) {
         `;
@@ -695,12 +706,12 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
         uniqueBy(node.content.values, (x) => x.value).forEach(
           ({ name, value }) => {
             result += `case ${value}: { return '${name}'; }\n`;
-          }
+          },
         );
 
         result += `// unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
         default: { return i${printIfTypescript(
-          ` as unknown as ${node.content.namespacedName}`
+          ` as unknown as ${node.content.namespacedName}`,
         )}; }\n }\n },\n`;
 
         // from enum
@@ -710,7 +721,7 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
          */
         _toInt: `;
         result += `function(i${printIfTypescript(
-          `: ${node.content.namespacedName}`
+          `: ${node.content.namespacedName}`,
         )})${printIfTypescript(`: number`)} {
           switch (i) {
         `;
@@ -720,7 +731,7 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
 
         result += `// unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
         default: { return i${printIfTypescript(
-          ` as unknown as number`
+          ` as unknown as number`,
         )}; }\n }\n },\n`;
 
         result += `} ${printIfTypescript("as const")}${
@@ -760,7 +771,7 @@ export function printHeading(heading: string): string {
   return `\
   //${"=".repeat(width)}//
   //${" ".repeat(Math.floor(padding))}${heading}${" ".repeat(
-    Math.ceil(padding)
+    Math.ceil(padding),
   )}//
   //${"=".repeat(width)}//
   
@@ -792,7 +803,7 @@ export function generate(
   fileDescriptorProto: FileDescriptorProto,
   identifierTable: IdentifierTable,
   options: Pick<UserConfig, "language" | "json" | "typescript">,
-  plugins: Plugin[]
+  plugins: Plugin[],
 ): string {
   config = {
     isTS: options.language === "typescript",
@@ -837,7 +848,7 @@ export function generate(
 
 ${printIf(
   config.isTS && hasSerializer,
-  `import type { ByteSource } from 'protoscript';`
+  `import type { ByteSource, PartialDeep } from 'protoscript';`,
 )}
 ${printIf(
   hasSerializer,
@@ -846,8 +857,8 @@ ${printIf(
   ${printIf(IMPORT_TRACKER.hasBytes, "encodeBase64Bytes,\n")}
   ${printIf(
     IMPORT_TRACKER.hasBytes,
-    "decodeBase64Bytes,\n"
-  )}} from 'protoscript';`
+    "decodeBase64Bytes,\n",
+  )}} from 'protoscript';`,
 )}
 ${printIf(pluginImports.length > 0, pluginImports.join("\n"))}
 ${imports
@@ -859,7 +870,7 @@ ${imports
 ${printIf(
   !!typeDefinitions,
   `${printIfTypescript(printHeading("Types"))}
-${typeDefinitions}`
+${typeDefinitions}`,
 )}
 ${printIf(pluginServices.length > 0, pluginServices.join("\n"))}
 ${printIf(
@@ -867,7 +878,7 @@ ${printIf(
   `${printHeading("Protobuf Encode / Decode")}
 ${protobufSerializers}
 ${printHeading("JSON Encode / Decode")}
-${jsonSerializers}`
+${jsonSerializers}`,
 )}
 `;
 }

@@ -17,7 +17,7 @@
   "scripts": {
     "build:commonjs": "esbuild src/index.ts --bundle --platform=node --target=es2020 --outfile=dist/cjs/index.cjs",
     "build:module": "tsc",
-    "build:wellknowntypes": "(pnpm --filter './well-known-types' exec protoscript) && cp ./well-known-types/google/protobuf/* ./src/runtime/well-known-types/",
+    "build:wellknowntypes": "(cd ./well-known-types && GENERATE_KNOWN_TYPES=1 pnpm protoscript) && cp ./well-known-types/google/protobuf/* ./src/runtime/well-known-types/",
     "clean": "rm -rf dist",
     "e2e:build": "pnpm --filter './e2e/*' run build",
     "e2e:protoscript": "pnpm --filter './e2e/*' exec protoscript",
@@ -29,6 +29,7 @@
     "package:copy:files": "cp ./LICENSE ./README.md dist/ && cp ./public.package.json dist/package.json",
     "package:prune": "find dist -name *test* -delete",
     "prepare": "husky install",
+    "regen": "pnpm build:wellknowntypes && pnpm examples:regen && pnpm e2e:protoscript",
     "test": "jest",
     "test:ci": "pnpm run e2e:setup && pnpm run test --coverage",
     "typecheck": "tsc --noEmit"
@@ -37,23 +38,23 @@
     "google-protobuf": "^3.21.2"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-env": "^7.22.9",
     "@babel/preset-typescript": "^7.22.5",
     "@types/google-protobuf": "^3.15.6",
-    "@types/jest": "^29.5.2",
-    "@types/node": "^20.3.1",
-    "@typescript-eslint/eslint-plugin": "^5.60.0",
-    "@typescript-eslint/parser": "^5.60.0",
-    "babel-loader": "^9.1.2",
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.4.4",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
+    "babel-loader": "^9.1.3",
     "codecov": "^3.8.3",
-    "esbuild": "^0.18.5",
-    "eslint": "^8.43.0",
+    "esbuild": "^0.18.16",
+    "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
     "husky": "^8.0.3",
-    "jest": "^29.5.0",
-    "prettier": "^2.8.8",
+    "jest": "^29.6.1",
+    "prettier": "^3.0.0",
     "prettier-package-json": "^2.8.0",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.6"
   },
-  "packageManager": "pnpm@7.17.0"
+  "packageManager": "pnpm@8.6.9"
 }

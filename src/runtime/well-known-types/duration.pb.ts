@@ -2,7 +2,7 @@
 // Source: google/protobuf/duration.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 //========================================//
@@ -69,7 +69,6 @@ import { BinaryReader, BinaryWriter } from "protoscript";
  * be expressed in JSON format as "3.000000001s", and 3 seconds and 1
  * microsecond should be expressed in JSON format as "3.000001s".
  *
- *
  */
 export interface Duration {
   /**
@@ -97,7 +96,7 @@ export const Duration = {
   /**
    * Serializes Duration to protobuf.
    */
-  encode: function (msg: Partial<Duration>): Uint8Array {
+  encode: function (msg: PartialDeep<Duration>): Uint8Array {
     return Duration._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -107,7 +106,7 @@ export const Duration = {
   decode: function (bytes: ByteSource): Duration {
     return Duration._readMessage(
       Duration.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -125,8 +124,8 @@ export const Duration = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Duration>,
-    writer: BinaryWriter
+    msg: PartialDeep<Duration>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.seconds) {
       writer.writeInt64String(1, msg.seconds.toString() as any);
@@ -170,7 +169,7 @@ export const DurationJSON = {
   /**
    * Serializes Duration to JSON.
    */
-  encode: function (msg: Partial<Duration>): string {
+  encode: function (msg: PartialDeep<Duration>): string {
     return JSON.stringify(DurationJSON._writeMessage(msg));
   },
 
@@ -180,7 +179,7 @@ export const DurationJSON = {
   decode: function (json: string): Duration {
     return DurationJSON._readMessage(
       DurationJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -197,7 +196,9 @@ export const DurationJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Duration>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<Duration>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.seconds) {
       json["seconds"] = msg.seconds.toString();

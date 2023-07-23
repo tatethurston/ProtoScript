@@ -603,7 +603,7 @@ describe("Serialization/Deserialization", () => {
 
       it("partial serialization", () => {
         expect(FooJSON.encode(partialMessage)).toMatchInlineSnapshot(
-          `"{"fieldOne":3}"`
+          `"{"fieldOne":3}"`,
         );
       });
 
@@ -613,7 +613,7 @@ describe("Serialization/Deserialization", () => {
 
       it("full serialization", () => {
         expect(FooJSON.encode(fullMessage)).toMatchInlineSnapshot(
-          `"{"fieldOne":3,"fieldTwo":{"foo":{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]}},"fieldThree":[{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]}],"fieldFour":{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]},"fieldFive":["1","2"],"fieldSix":"BAR","luckySeven":["BAR","FOO"],"fieldEight":"223372036854775807","fieldNine":"CAc=","fieldTen":["BA=="],"fieldEleven":{},"fieldThirteen":{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]}}"`
+          `"{"fieldOne":3,"fieldTwo":{"foo":{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]}},"fieldThree":[{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]}],"fieldFour":{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]},"fieldFive":["1","2"],"fieldSix":"BAR","luckySeven":["BAR","FOO"],"fieldEight":"223372036854775807","fieldNine":"CAc=","fieldTen":["BA=="],"fieldEleven":{},"fieldThirteen":{"fieldOne":"foo","fieldTwo":{"foo":"3","bar":"4"},"fieldThree":[1,2,3]}}"`,
         );
       });
     });

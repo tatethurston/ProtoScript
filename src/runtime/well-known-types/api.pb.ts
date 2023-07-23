@@ -2,7 +2,7 @@
 // Source: google/protobuf/api.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 import * as protoscript from "protoscript";
@@ -56,7 +56,6 @@ export interface Api {
    * `google.feature.v1`. For major versions 0 and 1, the suffix can
    * be omitted. Zero major versions must only be used for
    * experimental, non-GA interfaces.
-   *
    *
    */
   version: string;
@@ -157,7 +156,7 @@ export interface Method {
  * The mixin construct implies that all methods in `AccessControl` are
  * also declared with same name and request/response types in
  * `Storage`. A documentation generator or annotation processor will
- * see the effective `Storage.GetAcl` method after inheriting
+ * see the effective `Storage.GetAcl` method after inherting
  * documentation and annotations as follows:
  *
  *     service Storage {
@@ -209,7 +208,7 @@ export const Api = {
   /**
    * Serializes Api to protobuf.
    */
-  encode: function (msg: Partial<Api>): Uint8Array {
+  encode: function (msg: PartialDeep<Api>): Uint8Array {
     return Api._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -239,8 +238,8 @@ export const Api = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Api>,
-    writer: BinaryWriter
+    msg: PartialDeep<Api>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
@@ -252,7 +251,7 @@ export const Api = {
       writer.writeRepeatedMessage(
         3,
         msg.options as any,
-        protoscript.Option._writeMessage
+        protoscript.Option._writeMessage,
       );
     }
     if (msg.version) {
@@ -262,7 +261,7 @@ export const Api = {
       writer.writeMessage(
         5,
         msg.sourceContext,
-        protoscript.SourceContext._writeMessage
+        protoscript.SourceContext._writeMessage,
       );
     }
     if (msg.mixins?.length) {
@@ -304,7 +303,7 @@ export const Api = {
         case 5: {
           reader.readMessage(
             msg.sourceContext,
-            protoscript.SourceContext._readMessage
+            protoscript.SourceContext._readMessage,
           );
           break;
         }
@@ -332,7 +331,7 @@ export const Method = {
   /**
    * Serializes Method to protobuf.
    */
-  encode: function (msg: Partial<Method>): Uint8Array {
+  encode: function (msg: PartialDeep<Method>): Uint8Array {
     return Method._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -362,8 +361,8 @@ export const Method = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Method>,
-    writer: BinaryWriter
+    msg: PartialDeep<Method>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
@@ -384,7 +383,7 @@ export const Method = {
       writer.writeRepeatedMessage(
         6,
         msg.options as any,
-        protoscript.Option._writeMessage
+        protoscript.Option._writeMessage,
       );
     }
     if (msg.syntax && protoscript.Syntax._toInt(msg.syntax)) {
@@ -444,7 +443,7 @@ export const Mixin = {
   /**
    * Serializes Mixin to protobuf.
    */
-  encode: function (msg: Partial<Mixin>): Uint8Array {
+  encode: function (msg: PartialDeep<Mixin>): Uint8Array {
     return Mixin._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -469,8 +468,8 @@ export const Mixin = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Mixin>,
-    writer: BinaryWriter
+    msg: PartialDeep<Mixin>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
@@ -514,7 +513,7 @@ export const ApiJSON = {
   /**
    * Serializes Api to JSON.
    */
-  encode: function (msg: Partial<Api>): string {
+  encode: function (msg: PartialDeep<Api>): string {
     return JSON.stringify(ApiJSON._writeMessage(msg));
   },
 
@@ -543,7 +542,7 @@ export const ApiJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Api>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Api>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.name) {
       json["name"] = msg.name;
@@ -559,7 +558,7 @@ export const ApiJSON = {
     }
     if (msg.sourceContext) {
       const _sourceContext_ = protoscript.SourceContextJSON._writeMessage(
-        msg.sourceContext
+        msg.sourceContext,
       );
       if (Object.keys(_sourceContext_).length > 0) {
         json["sourceContext"] = _sourceContext_;
@@ -604,9 +603,10 @@ export const ApiJSON = {
     }
     const _sourceContext_ = json["sourceContext"] ?? json["source_context"];
     if (_sourceContext_) {
-      const m = protoscript.SourceContextJSON.initialize();
-      protoscript.SourceContextJSON._readMessage(m, _sourceContext_);
-      msg.sourceContext = m;
+      protoscript.SourceContextJSON._readMessage(
+        msg.sourceContext,
+        _sourceContext_,
+      );
     }
     const _mixins_ = json["mixins"];
     if (_mixins_) {
@@ -628,7 +628,7 @@ export const MethodJSON = {
   /**
    * Serializes Method to JSON.
    */
-  encode: function (msg: Partial<Method>): string {
+  encode: function (msg: PartialDeep<Method>): string {
     return JSON.stringify(MethodJSON._writeMessage(msg));
   },
 
@@ -657,7 +657,7 @@ export const MethodJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Method>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Method>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.name) {
       json["name"] = msg.name;
@@ -730,7 +730,7 @@ export const MixinJSON = {
   /**
    * Serializes Mixin to JSON.
    */
-  encode: function (msg: Partial<Mixin>): string {
+  encode: function (msg: PartialDeep<Mixin>): string {
     return JSON.stringify(MixinJSON._writeMessage(msg));
   },
 
@@ -754,7 +754,7 @@ export const MixinJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Mixin>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Mixin>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.name) {
       json["name"] = msg.name;

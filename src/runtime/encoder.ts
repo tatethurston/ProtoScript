@@ -278,7 +278,7 @@ export class BinaryEncoder {
    */
   writeInt64String(value: string) {
     assert(
-      (value as unknown as number) == Math.floor(value as unknown as number)
+      (value as unknown as number) == Math.floor(value as unknown as number),
     );
     assert(+value >= -TWO_TO_63 && +value < TWO_TO_63);
     splitHash64(decimalStringToHash64(value));
@@ -294,7 +294,7 @@ export class BinaryEncoder {
       value === Infinity ||
         value === -Infinity ||
         isNaN(value) ||
-        (value >= -FLOAT32_MAX && value <= FLOAT32_MAX)
+        (value >= -FLOAT32_MAX && value <= FLOAT32_MAX),
     );
     splitFloat32(value);
     this.writeUint32(split64Low);
@@ -309,7 +309,7 @@ export class BinaryEncoder {
       value === Infinity ||
         value === -Infinity ||
         isNaN(value) ||
-        (value >= -FLOAT64_MAX && value <= FLOAT64_MAX)
+        (value >= -FLOAT64_MAX && value <= FLOAT64_MAX),
     );
     splitFloat64(value);
     this.writeUint32(split64Low);

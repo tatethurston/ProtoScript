@@ -2,7 +2,7 @@
 // Source: google/protobuf/empty.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 //========================================//
@@ -29,7 +29,7 @@ export const Empty = {
   /**
    * Serializes Empty to protobuf.
    */
-  encode: function (_msg?: Partial<Empty>): Uint8Array {
+  encode: function (_msg?: PartialDeep<Empty>): Uint8Array {
     return new Uint8Array();
   },
 
@@ -51,8 +51,8 @@ export const Empty = {
    * @private
    */
   _writeMessage: function (
-    _msg: Partial<Empty>,
-    writer: BinaryWriter
+    _msg: PartialDeep<Empty>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     return writer;
   },
@@ -73,7 +73,7 @@ export const EmptyJSON = {
   /**
    * Serializes Empty to JSON.
    */
-  encode: function (_msg?: Partial<Empty>): string {
+  encode: function (_msg?: PartialDeep<Empty>): string {
     return "{}";
   },
 
@@ -94,7 +94,7 @@ export const EmptyJSON = {
   /**
    * @private
    */
-  _writeMessage: function (_msg: Partial<Empty>): Record<string, unknown> {
+  _writeMessage: function (_msg: PartialDeep<Empty>): Record<string, unknown> {
     return {};
   },
 

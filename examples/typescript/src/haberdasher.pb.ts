@@ -2,7 +2,7 @@
 // Source: src/haberdasher.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 import * as srcSize from "./size.pb";
@@ -34,7 +34,7 @@ export const Hat = {
   /**
    * Serializes Hat to protobuf.
    */
-  encode: function (msg: Partial<Hat>): Uint8Array {
+  encode: function (msg: PartialDeep<Hat>): Uint8Array {
     return Hat._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -60,8 +60,8 @@ export const Hat = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Hat>,
-    writer: BinaryWriter
+    msg: PartialDeep<Hat>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.size) {
       writer.writeMessage(1, msg.size, srcSize.Size._writeMessage);
@@ -112,7 +112,7 @@ export const HatJSON = {
   /**
    * Serializes Hat to JSON.
    */
-  encode: function (msg: Partial<Hat>): string {
+  encode: function (msg: PartialDeep<Hat>): string {
     return JSON.stringify(HatJSON._writeMessage(msg));
   },
 
@@ -137,7 +137,7 @@ export const HatJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Hat>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Hat>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.size) {
       const _size_ = srcSize.SizeJSON._writeMessage(msg.size);
@@ -160,9 +160,7 @@ export const HatJSON = {
   _readMessage: function (msg: Hat, json: any): Hat {
     const _size_ = json["size"];
     if (_size_) {
-      const m = srcSize.SizeJSON.initialize();
-      srcSize.SizeJSON._readMessage(m, _size_);
-      msg.size = m;
+      srcSize.SizeJSON._readMessage(msg.size, _size_);
     }
     const _color_ = json["color"];
     if (_color_) {

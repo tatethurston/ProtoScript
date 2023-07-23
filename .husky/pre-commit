@@ -2,4 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 pnpm run package:build
+pnpm run regen
 pnpm run lint:fix

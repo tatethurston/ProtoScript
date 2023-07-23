@@ -2,7 +2,7 @@
 // Source: google/protobuf/type.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 import * as protoscript from "protoscript";
@@ -14,7 +14,7 @@ import * as protoscript from "protoscript";
 /**
  * The syntax in which a protocol buffer element is defined.
  */
-export type Syntax = "SYNTAX_PROTO2" | "SYNTAX_PROTO3";
+export type Syntax = "SYNTAX_PROTO2" | "SYNTAX_PROTO3" | "SYNTAX_EDITIONS";
 
 /**
  * A protocol buffer message type.
@@ -44,6 +44,10 @@ export interface Type {
    * The source syntax.
    */
   syntax: Syntax;
+  /**
+   * The source edition string, only valid when syntax is SYNTAX_EDITIONS.
+   */
+  edition: string;
 }
 
 /**
@@ -153,6 +157,10 @@ export interface Enum {
    * The source syntax.
    */
   syntax: Syntax;
+  /**
+   * The source edition string, only valid when syntax is SYNTAX_EDITIONS.
+   */
+  edition: string;
 }
 
 /**
@@ -208,6 +216,10 @@ export const Syntax = {
    */
   SYNTAX_PROTO3: "SYNTAX_PROTO3",
   /**
+   * Syntax `editions`.
+   */
+  SYNTAX_EDITIONS: "SYNTAX_EDITIONS",
+  /**
    * @private
    */
   _fromInt: function (i: number): Syntax {
@@ -217,6 +229,9 @@ export const Syntax = {
       }
       case 1: {
         return "SYNTAX_PROTO3";
+      }
+      case 2: {
+        return "SYNTAX_EDITIONS";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -235,6 +250,9 @@ export const Syntax = {
       case "SYNTAX_PROTO3": {
         return 1;
       }
+      case "SYNTAX_EDITIONS": {
+        return 2;
+      }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
         return i as unknown as number;
@@ -247,7 +265,7 @@ export const Type = {
   /**
    * Serializes Type to protobuf.
    */
-  encode: function (msg: Partial<Type>): Uint8Array {
+  encode: function (msg: PartialDeep<Type>): Uint8Array {
     return Type._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -269,6 +287,7 @@ export const Type = {
       options: [],
       sourceContext: protoscript.SourceContext.initialize(),
       syntax: Syntax._fromInt(0),
+      edition: "",
     };
   },
 
@@ -276,8 +295,8 @@ export const Type = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Type>,
-    writer: BinaryWriter
+    msg: PartialDeep<Type>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
@@ -295,11 +314,14 @@ export const Type = {
       writer.writeMessage(
         5,
         msg.sourceContext,
-        protoscript.SourceContext._writeMessage
+        protoscript.SourceContext._writeMessage,
       );
     }
     if (msg.syntax && Syntax._toInt(msg.syntax)) {
       writer.writeEnum(6, Syntax._toInt(msg.syntax));
+    }
+    if (msg.edition) {
+      writer.writeString(7, msg.edition);
     }
     return writer;
   },
@@ -334,12 +356,16 @@ export const Type = {
         case 5: {
           reader.readMessage(
             msg.sourceContext,
-            protoscript.SourceContext._readMessage
+            protoscript.SourceContext._readMessage,
           );
           break;
         }
         case 6: {
           msg.syntax = Syntax._fromInt(reader.readEnum());
+          break;
+        }
+        case 7: {
+          msg.edition = reader.readString();
           break;
         }
         default: {
@@ -356,7 +382,7 @@ export const Field = {
   /**
    * Serializes Field to protobuf.
    */
-  encode: function (msg: Partial<Field>): Uint8Array {
+  encode: function (msg: PartialDeep<Field>): Uint8Array {
     return Field._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -389,8 +415,8 @@ export const Field = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Field>,
-    writer: BinaryWriter
+    msg: PartialDeep<Field>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.kind && Field.Kind._toInt(msg.kind)) {
       writer.writeEnum(1, Field.Kind._toInt(msg.kind));
@@ -768,7 +794,7 @@ export const Enum = {
   /**
    * Serializes Enum to protobuf.
    */
-  encode: function (msg: Partial<Enum>): Uint8Array {
+  encode: function (msg: PartialDeep<Enum>): Uint8Array {
     return Enum._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -789,6 +815,7 @@ export const Enum = {
       options: [],
       sourceContext: protoscript.SourceContext.initialize(),
       syntax: Syntax._fromInt(0),
+      edition: "",
     };
   },
 
@@ -796,8 +823,8 @@ export const Enum = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Enum>,
-    writer: BinaryWriter
+    msg: PartialDeep<Enum>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
@@ -806,7 +833,7 @@ export const Enum = {
       writer.writeRepeatedMessage(
         2,
         msg.enumvalue as any,
-        EnumValue._writeMessage
+        EnumValue._writeMessage,
       );
     }
     if (msg.options?.length) {
@@ -816,11 +843,14 @@ export const Enum = {
       writer.writeMessage(
         4,
         msg.sourceContext,
-        protoscript.SourceContext._writeMessage
+        protoscript.SourceContext._writeMessage,
       );
     }
     if (msg.syntax && Syntax._toInt(msg.syntax)) {
       writer.writeEnum(5, Syntax._toInt(msg.syntax));
+    }
+    if (msg.edition) {
+      writer.writeString(6, msg.edition);
     }
     return writer;
   },
@@ -851,12 +881,16 @@ export const Enum = {
         case 4: {
           reader.readMessage(
             msg.sourceContext,
-            protoscript.SourceContext._readMessage
+            protoscript.SourceContext._readMessage,
           );
           break;
         }
         case 5: {
           msg.syntax = Syntax._fromInt(reader.readEnum());
+          break;
+        }
+        case 6: {
+          msg.edition = reader.readString();
           break;
         }
         default: {
@@ -873,7 +907,7 @@ export const EnumValue = {
   /**
    * Serializes EnumValue to protobuf.
    */
-  encode: function (msg: Partial<EnumValue>): Uint8Array {
+  encode: function (msg: PartialDeep<EnumValue>): Uint8Array {
     return EnumValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -883,7 +917,7 @@ export const EnumValue = {
   decode: function (bytes: ByteSource): EnumValue {
     return EnumValue._readMessage(
       EnumValue.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -902,8 +936,8 @@ export const EnumValue = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<EnumValue>,
-    writer: BinaryWriter
+    msg: PartialDeep<EnumValue>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
@@ -952,7 +986,7 @@ export const Option = {
   /**
    * Serializes Option to protobuf.
    */
-  encode: function (msg: Partial<Option>): Uint8Array {
+  encode: function (msg: PartialDeep<Option>): Uint8Array {
     return Option._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -977,8 +1011,8 @@ export const Option = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Option>,
-    writer: BinaryWriter
+    msg: PartialDeep<Option>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
@@ -1028,6 +1062,10 @@ export const SyntaxJSON = {
    */
   SYNTAX_PROTO3: "SYNTAX_PROTO3",
   /**
+   * Syntax `editions`.
+   */
+  SYNTAX_EDITIONS: "SYNTAX_EDITIONS",
+  /**
    * @private
    */
   _fromInt: function (i: number): Syntax {
@@ -1037,6 +1075,9 @@ export const SyntaxJSON = {
       }
       case 1: {
         return "SYNTAX_PROTO3";
+      }
+      case 2: {
+        return "SYNTAX_EDITIONS";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -1055,6 +1096,9 @@ export const SyntaxJSON = {
       case "SYNTAX_PROTO3": {
         return 1;
       }
+      case "SYNTAX_EDITIONS": {
+        return 2;
+      }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
         return i as unknown as number;
@@ -1067,7 +1111,7 @@ export const TypeJSON = {
   /**
    * Serializes Type to JSON.
    */
-  encode: function (msg: Partial<Type>): string {
+  encode: function (msg: PartialDeep<Type>): string {
     return JSON.stringify(TypeJSON._writeMessage(msg));
   },
 
@@ -1089,13 +1133,14 @@ export const TypeJSON = {
       options: [],
       sourceContext: protoscript.SourceContextJSON.initialize(),
       syntax: Syntax._fromInt(0),
+      edition: "",
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Type>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Type>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.name) {
       json["name"] = msg.name;
@@ -1111,7 +1156,7 @@ export const TypeJSON = {
     }
     if (msg.sourceContext) {
       const _sourceContext_ = protoscript.SourceContextJSON._writeMessage(
-        msg.sourceContext
+        msg.sourceContext,
       );
       if (Object.keys(_sourceContext_).length > 0) {
         json["sourceContext"] = _sourceContext_;
@@ -1119,6 +1164,9 @@ export const TypeJSON = {
     }
     if (msg.syntax && SyntaxJSON._toInt(msg.syntax)) {
       json["syntax"] = msg.syntax;
+    }
+    if (msg.edition) {
+      json["edition"] = msg.edition;
     }
     return json;
   },
@@ -1153,13 +1201,18 @@ export const TypeJSON = {
     }
     const _sourceContext_ = json["sourceContext"] ?? json["source_context"];
     if (_sourceContext_) {
-      const m = protoscript.SourceContextJSON.initialize();
-      protoscript.SourceContextJSON._readMessage(m, _sourceContext_);
-      msg.sourceContext = m;
+      protoscript.SourceContextJSON._readMessage(
+        msg.sourceContext,
+        _sourceContext_,
+      );
     }
     const _syntax_ = json["syntax"];
     if (_syntax_) {
       msg.syntax = _syntax_;
+    }
+    const _edition_ = json["edition"];
+    if (_edition_) {
+      msg.edition = _edition_;
     }
     return msg;
   },
@@ -1169,7 +1222,7 @@ export const FieldJSON = {
   /**
    * Serializes Field to JSON.
    */
-  encode: function (msg: Partial<Field>): string {
+  encode: function (msg: PartialDeep<Field>): string {
     return JSON.stringify(FieldJSON._writeMessage(msg));
   },
 
@@ -1201,7 +1254,7 @@ export const FieldJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Field>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Field>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.kind && FieldJSON.Kind._toInt(msg.kind)) {
       json["kind"] = msg.kind;
@@ -1572,7 +1625,7 @@ export const EnumJSON = {
   /**
    * Serializes Enum to JSON.
    */
-  encode: function (msg: Partial<Enum>): string {
+  encode: function (msg: PartialDeep<Enum>): string {
     return JSON.stringify(EnumJSON._writeMessage(msg));
   },
 
@@ -1593,13 +1646,14 @@ export const EnumJSON = {
       options: [],
       sourceContext: protoscript.SourceContextJSON.initialize(),
       syntax: Syntax._fromInt(0),
+      edition: "",
     };
   },
 
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Enum>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Enum>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.name) {
       json["name"] = msg.name;
@@ -1612,7 +1666,7 @@ export const EnumJSON = {
     }
     if (msg.sourceContext) {
       const _sourceContext_ = protoscript.SourceContextJSON._writeMessage(
-        msg.sourceContext
+        msg.sourceContext,
       );
       if (Object.keys(_sourceContext_).length > 0) {
         json["sourceContext"] = _sourceContext_;
@@ -1620,6 +1674,9 @@ export const EnumJSON = {
     }
     if (msg.syntax && SyntaxJSON._toInt(msg.syntax)) {
       json["syntax"] = msg.syntax;
+    }
+    if (msg.edition) {
+      json["edition"] = msg.edition;
     }
     return json;
   },
@@ -1650,13 +1707,18 @@ export const EnumJSON = {
     }
     const _sourceContext_ = json["sourceContext"] ?? json["source_context"];
     if (_sourceContext_) {
-      const m = protoscript.SourceContextJSON.initialize();
-      protoscript.SourceContextJSON._readMessage(m, _sourceContext_);
-      msg.sourceContext = m;
+      protoscript.SourceContextJSON._readMessage(
+        msg.sourceContext,
+        _sourceContext_,
+      );
     }
     const _syntax_ = json["syntax"];
     if (_syntax_) {
       msg.syntax = _syntax_;
+    }
+    const _edition_ = json["edition"];
+    if (_edition_) {
+      msg.edition = _edition_;
     }
     return msg;
   },
@@ -1666,7 +1728,7 @@ export const EnumValueJSON = {
   /**
    * Serializes EnumValue to JSON.
    */
-  encode: function (msg: Partial<EnumValue>): string {
+  encode: function (msg: PartialDeep<EnumValue>): string {
     return JSON.stringify(EnumValueJSON._writeMessage(msg));
   },
 
@@ -1676,7 +1738,7 @@ export const EnumValueJSON = {
   decode: function (json: string): EnumValue {
     return EnumValueJSON._readMessage(
       EnumValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -1694,7 +1756,9 @@ export const EnumValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<EnumValue>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<EnumValue>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.name) {
       json["name"] = msg.name;
@@ -1736,7 +1800,7 @@ export const OptionJSON = {
   /**
    * Serializes Option to JSON.
    */
-  encode: function (msg: Partial<Option>): string {
+  encode: function (msg: PartialDeep<Option>): string {
     return JSON.stringify(OptionJSON._writeMessage(msg));
   },
 
@@ -1760,7 +1824,7 @@ export const OptionJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Option>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Option>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.name) {
       json["name"] = msg.name;
@@ -1784,9 +1848,7 @@ export const OptionJSON = {
     }
     const _value_ = json["value"];
     if (_value_) {
-      const m = protoscript.AnyJSON.initialize();
-      protoscript.AnyJSON._readMessage(m, _value_);
-      msg.value = m;
+      protoscript.AnyJSON._readMessage(msg.value, _value_);
     }
     return msg;
   },
