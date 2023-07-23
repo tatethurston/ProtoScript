@@ -2,7 +2,7 @@
 // Source: google/protobuf/wrappers.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import {
   BinaryReader,
   BinaryWriter,
@@ -130,7 +130,7 @@ export const DoubleValue = {
   /**
    * Serializes DoubleValue to protobuf.
    */
-  encode: function (msg: Partial<DoubleValue>): Uint8Array {
+  encode: function (msg: PartialDeep<DoubleValue>): Uint8Array {
     return DoubleValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -140,7 +140,7 @@ export const DoubleValue = {
   decode: function (bytes: ByteSource): DoubleValue {
     return DoubleValue._readMessage(
       DoubleValue.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -157,8 +157,8 @@ export const DoubleValue = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<DoubleValue>,
-    writer: BinaryWriter
+    msg: PartialDeep<DoubleValue>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.value) {
       writer.writeDouble(1, msg.value);
@@ -191,7 +191,7 @@ export const FloatValue = {
   /**
    * Serializes FloatValue to protobuf.
    */
-  encode: function (msg: Partial<FloatValue>): Uint8Array {
+  encode: function (msg: PartialDeep<FloatValue>): Uint8Array {
     return FloatValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -201,7 +201,7 @@ export const FloatValue = {
   decode: function (bytes: ByteSource): FloatValue {
     return FloatValue._readMessage(
       FloatValue.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -218,8 +218,8 @@ export const FloatValue = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<FloatValue>,
-    writer: BinaryWriter
+    msg: PartialDeep<FloatValue>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.value) {
       writer.writeFloat(1, msg.value);
@@ -252,7 +252,7 @@ export const Int64Value = {
   /**
    * Serializes Int64Value to protobuf.
    */
-  encode: function (msg: Partial<Int64Value>): Uint8Array {
+  encode: function (msg: PartialDeep<Int64Value>): Uint8Array {
     return Int64Value._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -262,7 +262,7 @@ export const Int64Value = {
   decode: function (bytes: ByteSource): Int64Value {
     return Int64Value._readMessage(
       Int64Value.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -279,8 +279,8 @@ export const Int64Value = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Int64Value>,
-    writer: BinaryWriter
+    msg: PartialDeep<Int64Value>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.value) {
       writer.writeInt64String(1, msg.value.toString() as any);
@@ -313,7 +313,7 @@ export const UInt64Value = {
   /**
    * Serializes UInt64Value to protobuf.
    */
-  encode: function (msg: Partial<UInt64Value>): Uint8Array {
+  encode: function (msg: PartialDeep<UInt64Value>): Uint8Array {
     return UInt64Value._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -323,7 +323,7 @@ export const UInt64Value = {
   decode: function (bytes: ByteSource): UInt64Value {
     return UInt64Value._readMessage(
       UInt64Value.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -340,8 +340,8 @@ export const UInt64Value = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<UInt64Value>,
-    writer: BinaryWriter
+    msg: PartialDeep<UInt64Value>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.value) {
       writer.writeUint64String(1, msg.value.toString() as any);
@@ -374,7 +374,7 @@ export const Int32Value = {
   /**
    * Serializes Int32Value to protobuf.
    */
-  encode: function (msg: Partial<Int32Value>): Uint8Array {
+  encode: function (msg: PartialDeep<Int32Value>): Uint8Array {
     return Int32Value._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -384,7 +384,7 @@ export const Int32Value = {
   decode: function (bytes: ByteSource): Int32Value {
     return Int32Value._readMessage(
       Int32Value.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -401,8 +401,8 @@ export const Int32Value = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Int32Value>,
-    writer: BinaryWriter
+    msg: PartialDeep<Int32Value>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.value) {
       writer.writeInt32(1, msg.value);
@@ -435,7 +435,7 @@ export const UInt32Value = {
   /**
    * Serializes UInt32Value to protobuf.
    */
-  encode: function (msg: Partial<UInt32Value>): Uint8Array {
+  encode: function (msg: PartialDeep<UInt32Value>): Uint8Array {
     return UInt32Value._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -445,7 +445,7 @@ export const UInt32Value = {
   decode: function (bytes: ByteSource): UInt32Value {
     return UInt32Value._readMessage(
       UInt32Value.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -462,8 +462,8 @@ export const UInt32Value = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<UInt32Value>,
-    writer: BinaryWriter
+    msg: PartialDeep<UInt32Value>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.value) {
       writer.writeUint32(1, msg.value);
@@ -496,7 +496,7 @@ export const BoolValue = {
   /**
    * Serializes BoolValue to protobuf.
    */
-  encode: function (msg: Partial<BoolValue>): Uint8Array {
+  encode: function (msg: PartialDeep<BoolValue>): Uint8Array {
     return BoolValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -506,7 +506,7 @@ export const BoolValue = {
   decode: function (bytes: ByteSource): BoolValue {
     return BoolValue._readMessage(
       BoolValue.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -523,8 +523,8 @@ export const BoolValue = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<BoolValue>,
-    writer: BinaryWriter
+    msg: PartialDeep<BoolValue>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.value) {
       writer.writeBool(1, msg.value);
@@ -557,7 +557,7 @@ export const StringValue = {
   /**
    * Serializes StringValue to protobuf.
    */
-  encode: function (msg: Partial<StringValue>): Uint8Array {
+  encode: function (msg: PartialDeep<StringValue>): Uint8Array {
     return StringValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -567,7 +567,7 @@ export const StringValue = {
   decode: function (bytes: ByteSource): StringValue {
     return StringValue._readMessage(
       StringValue.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -584,8 +584,8 @@ export const StringValue = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<StringValue>,
-    writer: BinaryWriter
+    msg: PartialDeep<StringValue>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.value) {
       writer.writeString(1, msg.value);
@@ -618,7 +618,7 @@ export const BytesValue = {
   /**
    * Serializes BytesValue to protobuf.
    */
-  encode: function (msg: Partial<BytesValue>): Uint8Array {
+  encode: function (msg: PartialDeep<BytesValue>): Uint8Array {
     return BytesValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -628,7 +628,7 @@ export const BytesValue = {
   decode: function (bytes: ByteSource): BytesValue {
     return BytesValue._readMessage(
       BytesValue.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -645,8 +645,8 @@ export const BytesValue = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<BytesValue>,
-    writer: BinaryWriter
+    msg: PartialDeep<BytesValue>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.value?.length) {
       writer.writeBytes(1, msg.value);
@@ -683,7 +683,7 @@ export const DoubleValueJSON = {
   /**
    * Serializes DoubleValue to JSON.
    */
-  encode: function (msg: Partial<DoubleValue>): string {
+  encode: function (msg: PartialDeep<DoubleValue>): string {
     return JSON.stringify(DoubleValueJSON._writeMessage(msg));
   },
 
@@ -693,7 +693,7 @@ export const DoubleValueJSON = {
   decode: function (json: string): DoubleValue {
     return DoubleValueJSON._readMessage(
       DoubleValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -709,7 +709,9 @@ export const DoubleValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<DoubleValue>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<DoubleValue>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
       json["value"] = msg.value;
@@ -733,7 +735,7 @@ export const FloatValueJSON = {
   /**
    * Serializes FloatValue to JSON.
    */
-  encode: function (msg: Partial<FloatValue>): string {
+  encode: function (msg: PartialDeep<FloatValue>): string {
     return JSON.stringify(FloatValueJSON._writeMessage(msg));
   },
 
@@ -743,7 +745,7 @@ export const FloatValueJSON = {
   decode: function (json: string): FloatValue {
     return FloatValueJSON._readMessage(
       FloatValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -759,7 +761,9 @@ export const FloatValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<FloatValue>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<FloatValue>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
       json["value"] = msg.value;
@@ -783,7 +787,7 @@ export const Int64ValueJSON = {
   /**
    * Serializes Int64Value to JSON.
    */
-  encode: function (msg: Partial<Int64Value>): string {
+  encode: function (msg: PartialDeep<Int64Value>): string {
     return JSON.stringify(Int64ValueJSON._writeMessage(msg));
   },
 
@@ -793,7 +797,7 @@ export const Int64ValueJSON = {
   decode: function (json: string): Int64Value {
     return Int64ValueJSON._readMessage(
       Int64ValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -809,7 +813,9 @@ export const Int64ValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Int64Value>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<Int64Value>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
       json["value"] = msg.value.toString();
@@ -833,7 +839,7 @@ export const UInt64ValueJSON = {
   /**
    * Serializes UInt64Value to JSON.
    */
-  encode: function (msg: Partial<UInt64Value>): string {
+  encode: function (msg: PartialDeep<UInt64Value>): string {
     return JSON.stringify(UInt64ValueJSON._writeMessage(msg));
   },
 
@@ -843,7 +849,7 @@ export const UInt64ValueJSON = {
   decode: function (json: string): UInt64Value {
     return UInt64ValueJSON._readMessage(
       UInt64ValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -859,7 +865,9 @@ export const UInt64ValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<UInt64Value>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<UInt64Value>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
       json["value"] = msg.value.toString();
@@ -883,7 +891,7 @@ export const Int32ValueJSON = {
   /**
    * Serializes Int32Value to JSON.
    */
-  encode: function (msg: Partial<Int32Value>): string {
+  encode: function (msg: PartialDeep<Int32Value>): string {
     return JSON.stringify(Int32ValueJSON._writeMessage(msg));
   },
 
@@ -893,7 +901,7 @@ export const Int32ValueJSON = {
   decode: function (json: string): Int32Value {
     return Int32ValueJSON._readMessage(
       Int32ValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -909,7 +917,9 @@ export const Int32ValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Int32Value>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<Int32Value>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
       json["value"] = msg.value;
@@ -933,7 +943,7 @@ export const UInt32ValueJSON = {
   /**
    * Serializes UInt32Value to JSON.
    */
-  encode: function (msg: Partial<UInt32Value>): string {
+  encode: function (msg: PartialDeep<UInt32Value>): string {
     return JSON.stringify(UInt32ValueJSON._writeMessage(msg));
   },
 
@@ -943,7 +953,7 @@ export const UInt32ValueJSON = {
   decode: function (json: string): UInt32Value {
     return UInt32ValueJSON._readMessage(
       UInt32ValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -959,7 +969,9 @@ export const UInt32ValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<UInt32Value>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<UInt32Value>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
       json["value"] = msg.value;
@@ -983,7 +995,7 @@ export const BoolValueJSON = {
   /**
    * Serializes BoolValue to JSON.
    */
-  encode: function (msg: Partial<BoolValue>): string {
+  encode: function (msg: PartialDeep<BoolValue>): string {
     return JSON.stringify(BoolValueJSON._writeMessage(msg));
   },
 
@@ -993,7 +1005,7 @@ export const BoolValueJSON = {
   decode: function (json: string): BoolValue {
     return BoolValueJSON._readMessage(
       BoolValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -1009,7 +1021,9 @@ export const BoolValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<BoolValue>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<BoolValue>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
       json["value"] = msg.value;
@@ -1033,7 +1047,7 @@ export const StringValueJSON = {
   /**
    * Serializes StringValue to JSON.
    */
-  encode: function (msg: Partial<StringValue>): string {
+  encode: function (msg: PartialDeep<StringValue>): string {
     return JSON.stringify(StringValueJSON._writeMessage(msg));
   },
 
@@ -1043,7 +1057,7 @@ export const StringValueJSON = {
   decode: function (json: string): StringValue {
     return StringValueJSON._readMessage(
       StringValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -1059,7 +1073,9 @@ export const StringValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<StringValue>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<StringValue>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
       json["value"] = msg.value;
@@ -1083,7 +1099,7 @@ export const BytesValueJSON = {
   /**
    * Serializes BytesValue to JSON.
    */
-  encode: function (msg: Partial<BytesValue>): string {
+  encode: function (msg: PartialDeep<BytesValue>): string {
     return JSON.stringify(BytesValueJSON._writeMessage(msg));
   },
 
@@ -1093,7 +1109,7 @@ export const BytesValueJSON = {
   decode: function (json: string): BytesValue {
     return BytesValueJSON._readMessage(
       BytesValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -1109,7 +1125,9 @@ export const BytesValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<BytesValue>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<BytesValue>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value?.length) {
       json["value"] = encodeBase64Bytes(msg.value);

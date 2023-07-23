@@ -37,7 +37,7 @@ export function fromZigzag64<T>(
   bitsLow: number,
   bitsHigh: number,
   // eslint-disable-next-line no-unused-vars
-  convert: (a: number, b: number) => T
+  convert: (a: number, b: number) => T,
 ): T {
   // 64 bit math is:
   //   signmask = (zigzag & 1) ? -1 : 0;
@@ -60,7 +60,7 @@ export function toZigzag64<T>(
   bitsLow: number,
   bitsHigh: number,
   // eslint-disable-next-line no-unused-vars
-  convert: (a: number, b: number) => T
+  convert: (a: number, b: number) => T,
 ): T {
   // See
   // https://engdoc.corp.google.com/eng/howto/protocolbuffers/developerguide/encoding.shtml?cl=head#types
@@ -405,7 +405,7 @@ export const joinInt64 = function (bitsLow: number, bitsHigh: number): number {
  */
 export const joinZigzag64 = function (
   bitsLow: number,
-  bitsHigh: number
+  bitsHigh: number,
 ): number {
   return fromZigzag64(bitsLow, bitsHigh, joinInt64);
 };
@@ -457,7 +457,7 @@ export function joinFloat32(bitsLow: number): number {
  */
 export const joinFloat64 = function (
   bitsLow: number,
-  bitsHigh: number
+  bitsHigh: number,
 ): number {
   const sign = (bitsHigh >> 31) * 2 + 1;
   const exp = (bitsHigh >>> 20) & 0x7ff;
@@ -485,7 +485,7 @@ export const joinFloat64 = function (
  */
 export const joinUnsignedDecimalString = function (
   bitsLow: number,
-  bitsHigh: number
+  bitsHigh: number,
 ): string {
   // Skip the expensive conversion if the number is small enough to use the
   // built-in conversions.
@@ -551,7 +551,7 @@ export const joinUnsignedDecimalString = function (
  */
 export const joinSignedDecimalString = function (
   bitsLow: number,
-  bitsHigh: number
+  bitsHigh: number,
 ): string {
   // If we're treating the input as a signed value and the high bit is set, do
   // a manual two's complement conversion before the decimal conversion.

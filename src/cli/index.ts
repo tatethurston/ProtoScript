@@ -8,7 +8,7 @@ const compiler = join(
   fileURLToPath(import.meta.url),
   "..",
   "..",
-  `compiler.${isWindows ? "cmd" : "js"}`
+  `compiler.${isWindows ? "cmd" : "js"}`,
 );
 
 void main({

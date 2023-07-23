@@ -2,7 +2,7 @@
 // Source: google/protobuf/source_context.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 //========================================//
@@ -29,10 +29,10 @@ export const SourceContext = {
   /**
    * Serializes SourceContext to protobuf.
    */
-  encode: function (msg: Partial<SourceContext>): Uint8Array {
+  encode: function (msg: PartialDeep<SourceContext>): Uint8Array {
     return SourceContext._writeMessage(
       msg,
-      new BinaryWriter()
+      new BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -42,7 +42,7 @@ export const SourceContext = {
   decode: function (bytes: ByteSource): SourceContext {
     return SourceContext._readMessage(
       SourceContext.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -59,8 +59,8 @@ export const SourceContext = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<SourceContext>,
-    writer: BinaryWriter
+    msg: PartialDeep<SourceContext>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.fileName) {
       writer.writeString(1, msg.fileName);
@@ -73,7 +73,7 @@ export const SourceContext = {
    */
   _readMessage: function (
     msg: SourceContext,
-    reader: BinaryReader
+    reader: BinaryReader,
   ): SourceContext {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -100,7 +100,7 @@ export const SourceContextJSON = {
   /**
    * Serializes SourceContext to JSON.
    */
-  encode: function (msg: Partial<SourceContext>): string {
+  encode: function (msg: PartialDeep<SourceContext>): string {
     return JSON.stringify(SourceContextJSON._writeMessage(msg));
   },
 
@@ -110,7 +110,7 @@ export const SourceContextJSON = {
   decode: function (json: string): SourceContext {
     return SourceContextJSON._readMessage(
       SourceContextJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -127,7 +127,7 @@ export const SourceContextJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<SourceContext>
+    msg: PartialDeep<SourceContext>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.fileName) {

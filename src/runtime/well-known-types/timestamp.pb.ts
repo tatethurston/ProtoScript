@@ -2,7 +2,7 @@
 // Source: google/protobuf/timestamp.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 //========================================//
@@ -60,7 +60,6 @@ import { BinaryReader, BinaryWriter } from "protoscript";
  *     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
  *         .setNanos((int) ((millis % 1000) * 1000000)).build();
  *
- *
  * Example 5: Compute Timestamp from Java `Instant.now()`.
  *
  *     Instant now = Instant.now();
@@ -68,7 +67,6 @@ import { BinaryReader, BinaryWriter } from "protoscript";
  *     Timestamp timestamp =
  *         Timestamp.newBuilder().setSeconds(now.getEpochSecond())
  *             .setNanos(now.getNano()).build();
- *
  *
  * Example 6: Compute Timestamp from current time in Python.
  *
@@ -99,9 +97,8 @@ import { BinaryReader, BinaryWriter } from "protoscript";
  * [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
  * the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
  * the Joda Time's [`ISODateTimeFormat.dateTime()`](
- * http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D
+ * http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
  * ) to obtain a formatter capable of generating timestamps in this format.
- *
  *
  */
 export interface Timestamp {
@@ -128,7 +125,7 @@ export const Timestamp = {
   /**
    * Serializes Timestamp to protobuf.
    */
-  encode: function (msg: Partial<Timestamp>): Uint8Array {
+  encode: function (msg: PartialDeep<Timestamp>): Uint8Array {
     return Timestamp._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -138,7 +135,7 @@ export const Timestamp = {
   decode: function (bytes: ByteSource): Timestamp {
     return Timestamp._readMessage(
       Timestamp.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -156,8 +153,8 @@ export const Timestamp = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Timestamp>,
-    writer: BinaryWriter
+    msg: PartialDeep<Timestamp>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.seconds) {
       writer.writeInt64String(1, msg.seconds.toString() as any);
@@ -201,7 +198,7 @@ export const TimestampJSON = {
   /**
    * Serializes Timestamp to JSON.
    */
-  encode: function (msg: Partial<Timestamp>): string {
+  encode: function (msg: PartialDeep<Timestamp>): string {
     return JSON.stringify(TimestampJSON._writeMessage(msg));
   },
 
@@ -211,7 +208,7 @@ export const TimestampJSON = {
   decode: function (json: string): Timestamp {
     return TimestampJSON._readMessage(
       TimestampJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -228,7 +225,9 @@ export const TimestampJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Timestamp>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<Timestamp>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.seconds) {
       json["seconds"] = msg.seconds.toString();

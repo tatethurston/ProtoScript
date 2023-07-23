@@ -43,3 +43,7 @@ As part of installation, husky pre-commit hooks are installed to run linters aga
 ### Publishing
 
 There are CI and publishing GitHub workflows in `./github/workflows`. These are named `ci.yml` and `publish.yml`.
+
+### Note
+
+`protoscript` package self referencing is used by the wellknowntypes. right now works in a surprising manner: the package is built into dist, but the source package.json has the same name as the package.json that will be generated into dist. This results in self referencing using the source directory when everything is built.

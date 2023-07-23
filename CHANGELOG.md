@@ -2,6 +2,10 @@
 
 ## v0.0.15
 
+- `encode` methods now accept partials for nested messages as well (`PartialDeep` instead of `Partial`). Previously, the types required that full messages were provided for any nested messages.
+
+## v0.0.15
+
 This release includes a number of bug fixes
 
 - Fix treeshaking for nested messages. Previously, there were cases where protobuf did not tree shake out of JSON only client usage. Thanks @noahseger!

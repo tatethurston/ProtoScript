@@ -2,7 +2,7 @@
 // Source: google/protobuf/field_mask.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 //========================================//
@@ -225,7 +225,7 @@ export const FieldMask = {
   /**
    * Serializes FieldMask to protobuf.
    */
-  encode: function (msg: Partial<FieldMask>): Uint8Array {
+  encode: function (msg: PartialDeep<FieldMask>): Uint8Array {
     return FieldMask._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -235,7 +235,7 @@ export const FieldMask = {
   decode: function (bytes: ByteSource): FieldMask {
     return FieldMask._readMessage(
       FieldMask.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -252,8 +252,8 @@ export const FieldMask = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<FieldMask>,
-    writer: BinaryWriter
+    msg: PartialDeep<FieldMask>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.paths?.length) {
       writer.writeRepeatedString(1, msg.paths);
@@ -290,7 +290,7 @@ export const FieldMaskJSON = {
   /**
    * Serializes FieldMask to JSON.
    */
-  encode: function (msg: Partial<FieldMask>): string {
+  encode: function (msg: PartialDeep<FieldMask>): string {
     return JSON.stringify(FieldMaskJSON._writeMessage(msg));
   },
 
@@ -300,7 +300,7 @@ export const FieldMaskJSON = {
   decode: function (json: string): FieldMask {
     return FieldMaskJSON._readMessage(
       FieldMaskJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -316,7 +316,9 @@ export const FieldMaskJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<FieldMask>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<FieldMask>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.paths?.length) {
       json["paths"] = msg.paths;

@@ -12,49 +12,49 @@ import { deserializeConfig } from "../cli/utils.js";
 const { CodeGeneratorRequest, CodeGeneratorResponse } = PluginPb;
 import { type Plugin } from "../plugin.js";
 
-export function compile(
+export async function compile(
   input: Uint8Array,
-  plugins: Plugin[] = []
-): CodeGeneratorResponseType {
+  plugins: Plugin[] = [],
+): Promise<CodeGeneratorResponseType> {
   const request = CodeGeneratorRequest.deserializeBinary(input);
   const options = deserializeConfig(request.getParameter() ?? "");
   const isTypescript = options.language === "typescript";
   const response = new CodeGeneratorResponse();
   response.setSupportedFeatures(
-    CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL
+    CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL,
   );
 
   const identifierTable = buildIdentifierTable(request);
 
-  function writeFile(name: string, content: string) {
+  async function writeFile(name: string, content: string) {
     const file = new CodeGeneratorResponse.File();
     file.setName(name);
     file.setContent(
-      format(content, { parser: isTypescript ? "typescript" : "babel" })
+      await format(content, { parser: isTypescript ? "typescript" : "babel" }),
     );
     response.addFile(file);
   }
 
-  request.getProtoFileList().forEach((fileDescriptorProto) => {
+  for (const fileDescriptorProto of request.getProtoFileList()) {
     const name = fileDescriptorProto.getName();
     if (!name) {
-      return;
+      continue;
     }
     if (!process.env.GENERATE_KNOWN_TYPES && KNOWN_TYPES.includes(name)) {
-      return;
+      continue;
     }
 
     const protobufTs = generate(
       fileDescriptorProto,
       identifierTable,
       options,
-      plugins
+      plugins,
     );
-    writeFile(
+    await writeFile(
       isTypescript ? getProtobufTSFileName(name) : getProtobufJSFileName(name),
-      protobufTs
+      protobufTs,
     );
-  });
+  }
 
   return response;
 }
@@ -77,6 +77,6 @@ function readStream(stream: NodeJS.ReadStream): Promise<Uint8Array> {
 
 export async function compiler(protocompile: typeof compile): Promise<void> {
   const input = await readStream(process.stdin);
-  const response = protocompile(input);
+  const response = await protocompile(input);
   process.stdout.write(response.serializeBinary());
 }

@@ -105,7 +105,7 @@ export class BinaryWriter {
   maybeWriteSerializedMessage(
     bytes: Uint8Array | null,
     start: number | null,
-    end: number | null
+    end: number | null,
   ) {
     if (bytes != null && start != null && end != null) {
       this.writeSerializedMessage(bytes, start, end);
@@ -565,7 +565,7 @@ export class BinaryWriter {
   writeMessage<MessageType>(
     field: number,
     value: MessageType | null,
-    writerCallback: (arg0: MessageType, arg1: BinaryWriter) => void
+    writerCallback: (arg0: MessageType, arg1: BinaryWriter) => void,
   ) {
     if (value == null) return;
     const bookmark = this.beginDelimited_(field);
@@ -579,7 +579,7 @@ export class BinaryWriter {
   writeMessageSet<MessageType>(
     field: number,
     value: MessageType | null,
-    writerCallback: (arg0: MessageType, arg1: BinaryWriter) => void
+    writerCallback: (arg0: MessageType, arg1: BinaryWriter) => void,
   ) {
     if (value == null) return;
     // The wire format for a message set is defined by
@@ -599,7 +599,7 @@ export class BinaryWriter {
   writeGroup<MessageType>(
     field: number,
     value: MessageType | null,
-    writerCallback: (arg0: MessageType, arg1: BinaryWriter) => void
+    writerCallback: (arg0: MessageType, arg1: BinaryWriter) => void,
   ) {
     if (value == null) return;
     this.writeFieldHeader_(field, WireType.START_GROUP);
@@ -694,7 +694,7 @@ export class BinaryWriter {
     field: number,
     value: Array<T> | null,
     lo: (arg0: T) => number,
-    hi: (arg0: T) => number
+    hi: (arg0: T) => number,
   ) {
     if (value == null) return;
     for (let i = 0; i < value.length; i++) {
@@ -709,7 +709,7 @@ export class BinaryWriter {
     field: number,
     value: Array<T> | null,
     lo: (arg0: T) => number,
-    hi: (arg0: T) => number
+    hi: (arg0: T) => number,
   ) {
     if (value == null) return;
     for (let i = 0; i < value.length; i++) {
@@ -724,7 +724,7 @@ export class BinaryWriter {
     field: number,
     value: Array<T> | null,
     lo: (arg0: T) => number,
-    hi: (arg0: T) => number
+    hi: (arg0: T) => number,
   ) {
     if (value == null) return;
     for (let i = 0; i < value.length; i++) {
@@ -958,7 +958,7 @@ export class BinaryWriter {
   writeRepeatedMessage<MessageType>(
     field: number,
     value: Array<MessageType> | null,
-    writerCallback: (arg0: MessageType, arg1: BinaryWriter) => any
+    writerCallback: (arg0: MessageType, arg1: BinaryWriter) => any,
   ) {
     if (value == null) return;
     for (let i = 0; i < value.length; i++) {
@@ -975,7 +975,7 @@ export class BinaryWriter {
   writeRepeatedGroup<MessageType>(
     field: number,
     value: Array<MessageType> | null,
-    writerCallback: (arg0: MessageType, arg1: BinaryWriter) => any
+    writerCallback: (arg0: MessageType, arg1: BinaryWriter) => any,
   ) {
     if (value == null) return;
     for (let i = 0; i < value.length; i++) {
@@ -1011,7 +1011,7 @@ export class BinaryWriter {
    * Writes an array of numbers to the buffer as a packed 32-bit int field.
    */
   writePackedInt32(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeSignedVarint32(value[i]);
@@ -1024,7 +1024,7 @@ export class BinaryWriter {
    * 32-bit int field.
    */
   writePackedInt32String(field: number, value: Array<string> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeSignedVarint32(parseInt(value[i], 10));
@@ -1036,7 +1036,7 @@ export class BinaryWriter {
    * Writes an array of numbers to the buffer as a packed 64-bit int field.
    */
   writePackedInt64(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeSignedVarint64(value[i]);
@@ -1051,7 +1051,7 @@ export class BinaryWriter {
     field: number,
     value: Array<T> | null,
     lo: (arg0: T) => number,
-    hi: (arg0: T) => number
+    hi: (arg0: T) => number,
   ) {
     if (value == null) return;
     const bookmark = this.beginDelimited_(field);
@@ -1068,7 +1068,7 @@ export class BinaryWriter {
     field: number,
     value: Array<T> | null,
     lo: (arg0: T) => number,
-    hi: (arg0: T) => number
+    hi: (arg0: T) => number,
   ) {
     if (value == null) return;
     const bookmark = this.beginDelimited_(field);
@@ -1085,7 +1085,7 @@ export class BinaryWriter {
     field: number,
     value: Array<T> | null,
     lo: (arg0: T) => number,
-    hi: (arg0: T) => number
+    hi: (arg0: T) => number,
   ) {
     if (value == null) return;
     const bookmark = this.beginDelimited_(field);
@@ -1103,7 +1103,7 @@ export class BinaryWriter {
    * 64-bit int field.
    */
   writePackedInt64String(field: number, value: Array<string> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       const num = Int64.fromString(value[i]);
@@ -1116,7 +1116,7 @@ export class BinaryWriter {
    * Writes an array numbers to the buffer as a packed unsigned 32-bit int field.
    */
   writePackedUint32(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeUnsignedVarint32(value[i]);
@@ -1129,7 +1129,7 @@ export class BinaryWriter {
    * unsigned 32-bit int field.
    */
   writePackedUint32String(field: number, value: Array<string> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeUnsignedVarint32(parseInt(value[i], 10));
@@ -1141,7 +1141,7 @@ export class BinaryWriter {
    * Writes an array numbers to the buffer as a packed unsigned 64-bit int field.
    */
   writePackedUint64(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeUnsignedVarint64(value[i]);
@@ -1154,7 +1154,7 @@ export class BinaryWriter {
    * unsigned 64-bit int field.
    */
   writePackedUint64String(field: number, value: Array<string> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       const num = UInt64.fromString(value[i]);
@@ -1167,7 +1167,7 @@ export class BinaryWriter {
    * Writes an array numbers to the buffer as a packed signed 32-bit int field.
    */
   writePackedSint32(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeZigzagVarint32(value[i]);
@@ -1179,7 +1179,7 @@ export class BinaryWriter {
    * Writes an array of numbers to the buffer as a packed signed 64-bit int field.
    */
   writePackedSint64(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeZigzagVarint64(value[i]);
@@ -1192,7 +1192,7 @@ export class BinaryWriter {
    * int field.
    */
   writePackedSint64String(field: number, value: Array<string> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeZigzagVarintHash64(decimalStringToHash64(value[i]));
@@ -1205,7 +1205,7 @@ export class BinaryWriter {
    * int field.
    */
   writePackedSintHash64(field: number, value: Array<string> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeZigzagVarintHash64(value[i]);
@@ -1217,7 +1217,7 @@ export class BinaryWriter {
    * Writes an array of numbers to the buffer as a packed fixed32 field.
    */
   writePackedFixed32(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     this.writeFieldHeader_(field, WireType.DELIMITED);
     this.encoder_.writeUnsignedVarint32(value.length * 4);
     for (let i = 0; i < value.length; i++) {
@@ -1229,7 +1229,7 @@ export class BinaryWriter {
    * Writes an array of numbers to the buffer as a packed fixed64 field.
    */
   writePackedFixed64(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     this.writeFieldHeader_(field, WireType.DELIMITED);
     this.encoder_.writeUnsignedVarint32(value.length * 8);
     for (let i = 0; i < value.length; i++) {
@@ -1242,7 +1242,7 @@ export class BinaryWriter {
    * fixed64 field.
    */
   writePackedFixed64String(field: number, value: Array<string> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     this.writeFieldHeader_(field, WireType.DELIMITED);
     this.encoder_.writeUnsignedVarint32(value.length * 8);
     for (let i = 0; i < value.length; i++) {
@@ -1255,7 +1255,7 @@ export class BinaryWriter {
    * Writes an array of numbers to the buffer as a packed sfixed32 field.
    */
   writePackedSfixed32(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     this.writeFieldHeader_(field, WireType.DELIMITED);
     this.encoder_.writeUnsignedVarint32(value.length * 4);
     for (let i = 0; i < value.length; i++) {
@@ -1267,7 +1267,7 @@ export class BinaryWriter {
    * Writes an array of numbers to the buffer as a packed sfixed64 field.
    */
   writePackedSfixed64(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     this.writeFieldHeader_(field, WireType.DELIMITED);
     this.encoder_.writeUnsignedVarint32(value.length * 8);
     for (let i = 0; i < value.length; i++) {
@@ -1279,7 +1279,7 @@ export class BinaryWriter {
    * Writes an array of numbers to the buffer as a packed sfixed64 field.
    */
   writePackedSfixed64String(field: number, value: Array<string> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     this.writeFieldHeader_(field, WireType.DELIMITED);
     this.encoder_.writeUnsignedVarint32(value.length * 8);
     for (let i = 0; i < value.length; i++) {
@@ -1291,7 +1291,7 @@ export class BinaryWriter {
    * Writes an array of numbers to the buffer as a packed float field.
    */
   writePackedFloat(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     this.writeFieldHeader_(field, WireType.DELIMITED);
     this.encoder_.writeUnsignedVarint32(value.length * 4);
     for (let i = 0; i < value.length; i++) {
@@ -1303,7 +1303,7 @@ export class BinaryWriter {
    * Writes an array of numbers to the buffer as a packed double field.
    */
   writePackedDouble(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     this.writeFieldHeader_(field, WireType.DELIMITED);
     this.encoder_.writeUnsignedVarint32(value.length * 8);
     for (let i = 0; i < value.length; i++) {
@@ -1315,7 +1315,7 @@ export class BinaryWriter {
    * Writes an array of booleans to the buffer as a packed bool field.
    */
   writePackedBool(field: number, value: Array<boolean> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     this.writeFieldHeader_(field, WireType.DELIMITED);
     this.encoder_.writeUnsignedVarint32(value.length);
     for (let i = 0; i < value.length; i++) {
@@ -1327,7 +1327,7 @@ export class BinaryWriter {
    * Writes an array of enums to the buffer as a packed enum field.
    */
   writePackedEnum(field: number, value: Array<number> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeEnum(value[i]);
@@ -1340,7 +1340,7 @@ export class BinaryWriter {
    * the buffer.
    */
   writePackedFixedHash64(field: number, value: Array<string> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     this.writeFieldHeader_(field, WireType.DELIMITED);
     this.encoder_.writeUnsignedVarint32(value.length * 8);
     for (let i = 0; i < value.length; i++) {
@@ -1353,7 +1353,7 @@ export class BinaryWriter {
    * the buffer.
    */
   writePackedVarintHash64(field: number, value: Array<string> | null) {
-    if (value == null || !value.length) return;
+    if (!value?.length) return;
     const bookmark = this.beginDelimited_(field);
     for (let i = 0; i < value.length; i++) {
       this.encoder_.writeVarintHash64(value[i]);

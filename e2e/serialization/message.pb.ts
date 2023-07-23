@@ -2,7 +2,7 @@
 // Source: message.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import {
   BinaryReader,
   BinaryWriter,
@@ -112,7 +112,7 @@ export const Foo = {
   /**
    * Serializes Foo to protobuf.
    */
-  encode: function (msg: Partial<Foo>): Uint8Array {
+  encode: function (msg: PartialDeep<Foo>): Uint8Array {
     return Foo._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -148,8 +148,8 @@ export const Foo = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Foo>,
-    writer: BinaryWriter
+    msg: PartialDeep<Foo>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.fieldOne != undefined) {
       writer.writeInt32(1, msg.fieldOne);
@@ -161,7 +161,7 @@ export const Foo = {
           key: key as any,
           value: value as any,
         })) as any,
-        Foo.FieldTwo._writeMessage
+        Foo.FieldTwo._writeMessage,
       );
     }
     if (msg.fieldThree?.length) {
@@ -173,7 +173,7 @@ export const Foo = {
     if (msg.fieldFive?.length) {
       writer.writePackedInt64String(
         5,
-        msg.fieldFive.map((x) => x.toString() as any)
+        msg.fieldFive.map((x) => x.toString() as any),
       );
     }
     if (msg.fieldSix && Baz._toInt(msg.fieldSix)) {
@@ -290,10 +290,10 @@ export const Foo = {
     /**
      * Serializes Foo.FooBar to protobuf.
      */
-    encode: function (msg: Partial<Foo.FooBar>): Uint8Array {
+    encode: function (msg: PartialDeep<Foo.FooBar>): Uint8Array {
       return Foo.FooBar._writeMessage(
         msg,
-        new BinaryWriter()
+        new BinaryWriter(),
       ).getResultBuffer();
     },
 
@@ -303,7 +303,7 @@ export const Foo = {
     decode: function (bytes: ByteSource): Foo.FooBar {
       return Foo.FooBar._readMessage(
         Foo.FooBar.initialize(),
-        new BinaryReader(bytes)
+        new BinaryReader(bytes),
       );
     },
 
@@ -322,8 +322,8 @@ export const Foo = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Foo.FooBar>,
-      writer: BinaryWriter
+      msg: PartialDeep<Foo.FooBar>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.fieldOne) {
         writer.writeString(1, msg.fieldOne);
@@ -335,7 +335,7 @@ export const Foo = {
             key: key as any,
             value: value as any,
           })) as any,
-          Foo.FooBar.FieldTwo._writeMessage
+          Foo.FooBar.FieldTwo._writeMessage,
         );
       }
       if (msg.fieldThree?.length) {
@@ -383,8 +383,8 @@ export const Foo = {
        * @private
        */
       _writeMessage: function (
-        msg: Partial<Foo.FooBar.FieldTwo>,
-        writer: BinaryWriter
+        msg: PartialDeep<Foo.FooBar.FieldTwo>,
+        writer: BinaryWriter,
       ): BinaryWriter {
         if (msg.key) {
           writer.writeString(1, msg.key);
@@ -400,7 +400,7 @@ export const Foo = {
        */
       _readMessage: function (
         msg: Foo.FooBar.FieldTwo,
-        reader: BinaryReader
+        reader: BinaryReader,
       ): Foo.FooBar.FieldTwo {
         while (reader.nextField()) {
           const field = reader.getFieldNumber();
@@ -429,8 +429,8 @@ export const Foo = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Foo.FieldTwo>,
-      writer: BinaryWriter
+      msg: PartialDeep<Foo.FieldTwo>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -446,7 +446,7 @@ export const Foo = {
      */
     _readMessage: function (
       msg: Foo.FieldTwo,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): Foo.FieldTwo {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -475,7 +475,7 @@ export const Bar = {
   /**
    * Serializes Bar to protobuf.
    */
-  encode: function (msg: Partial<Bar>): Uint8Array {
+  encode: function (msg: PartialDeep<Bar>): Uint8Array {
     return Bar._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -501,8 +501,8 @@ export const Bar = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Bar>,
-    writer: BinaryWriter
+    msg: PartialDeep<Bar>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.fieldOne) {
       writer.writeString(1, msg.fieldOne);
@@ -514,7 +514,7 @@ export const Bar = {
           key: key as any,
           value: value as any,
         })) as any,
-        Bar.FieldTwo._writeMessage
+        Bar.FieldTwo._writeMessage,
       );
     }
     if (msg.fieldThree?.length) {
@@ -562,8 +562,8 @@ export const Bar = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Bar.FieldTwo>,
-      writer: BinaryWriter
+      msg: PartialDeep<Bar.FieldTwo>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -579,7 +579,7 @@ export const Bar = {
      */
     _readMessage: function (
       msg: Bar.FieldTwo,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): Bar.FieldTwo {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -650,7 +650,7 @@ export const FooJSON = {
   /**
    * Serializes Foo to JSON.
    */
-  encode: function (msg: Partial<Foo>): string {
+  encode: function (msg: PartialDeep<Foo>): string {
     return JSON.stringify(FooJSON._writeMessage(msg));
   },
 
@@ -685,7 +685,7 @@ export const FooJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Foo>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Foo>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.fieldOne != undefined) {
       json["fieldOne"] = msg.fieldOne;
@@ -695,7 +695,7 @@ export const FooJSON = {
         Object.entries(msg.fieldTwo)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(FooJSON.FieldTwo._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_fieldTwo_).length > 0) {
         json["fieldTwo"] = _fieldTwo_;
@@ -757,7 +757,7 @@ export const FooJSON = {
         Object.entries(_fieldTwo_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(FooJSON.FieldTwo._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _fieldThree_ = json["fieldThree"] ?? json["field_three"];
@@ -770,9 +770,7 @@ export const FooJSON = {
     }
     const _fieldFour_ = json["fieldFour"] ?? json["field_four"];
     if (_fieldFour_) {
-      const m = FooJSON.FooBar.initialize();
-      FooJSON.FooBar._readMessage(m, _fieldFour_);
-      msg.fieldFour = m;
+      FooJSON.FooBar._readMessage(msg.fieldFour, _fieldFour_);
     }
     const _fieldFive_ = json["fieldFive"] ?? json["field_five"];
     if (_fieldFive_) {
@@ -801,21 +799,18 @@ export const FooJSON = {
     }
     const _fieldEleven_ = json["fieldEleven"] ?? json["field_eleven"];
     if (_fieldEleven_) {
-      const m = BarJSON.initialize();
-      BarJSON._readMessage(m, _fieldEleven_);
-      msg.fieldEleven = m;
+      msg.fieldEleven = BarJSON.initialize();
+      BarJSON._readMessage(msg.fieldEleven, _fieldEleven_);
     }
     const _fieldTwelve_ = json["fieldTwelve"] ?? json["field_twelve"];
     if (_fieldTwelve_) {
-      const m = BarJSON.initialize();
-      BarJSON._readMessage(m, _fieldTwelve_);
-      msg.fieldTwelve = m;
+      msg.fieldTwelve = BarJSON.initialize();
+      BarJSON._readMessage(msg.fieldTwelve, _fieldTwelve_);
     }
     const _fieldThirteen_ = json["fieldThirteen"] ?? json["field_thirteen"];
     if (_fieldThirteen_) {
-      const m = BarJSON.initialize();
-      BarJSON._readMessage(m, _fieldThirteen_);
-      msg.fieldThirteen = m;
+      msg.fieldThirteen = BarJSON.initialize();
+      BarJSON._readMessage(msg.fieldThirteen, _fieldThirteen_);
     }
     return msg;
   },
@@ -824,7 +819,7 @@ export const FooJSON = {
     /**
      * Serializes Foo.FooBar to JSON.
      */
-    encode: function (msg: Partial<Foo.FooBar>): string {
+    encode: function (msg: PartialDeep<Foo.FooBar>): string {
       return JSON.stringify(FooJSON.FooBar._writeMessage(msg));
     },
 
@@ -834,7 +829,7 @@ export const FooJSON = {
     decode: function (json: string): Foo.FooBar {
       return FooJSON.FooBar._readMessage(
         FooJSON.FooBar.initialize(),
-        JSON.parse(json)
+        JSON.parse(json),
       );
     },
 
@@ -853,7 +848,7 @@ export const FooJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Foo.FooBar>
+      msg: PartialDeep<Foo.FooBar>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.fieldOne) {
@@ -864,7 +859,7 @@ export const FooJSON = {
           Object.entries(msg.fieldTwo)
             .map(([key, value]) => ({ key: key as any, value: value as any }))
             .map(FooJSON.FooBar.FieldTwo._writeMessage)
-            .map(({ key, value }) => [key, value])
+            .map(({ key, value }) => [key, value]),
         );
         if (Object.keys(_fieldTwo_).length > 0) {
           json["fieldTwo"] = _fieldTwo_;
@@ -890,7 +885,7 @@ export const FooJSON = {
           Object.entries(_fieldTwo_)
             .map(([key, value]) => ({ key: key as any, value: value as any }))
             .map(FooJSON.FooBar.FieldTwo._readMessage)
-            .map(({ key, value }) => [key, value])
+            .map(({ key, value }) => [key, value]),
         );
       }
       const _fieldThree_ = json["fieldThree"] ?? json["field_three"];
@@ -905,7 +900,7 @@ export const FooJSON = {
        * @private
        */
       _writeMessage: function (
-        msg: Partial<Foo.FooBar.FieldTwo>
+        msg: PartialDeep<Foo.FooBar.FieldTwo>,
       ): Record<string, unknown> {
         const json: Record<string, unknown> = {};
         if (msg.key) {
@@ -922,7 +917,7 @@ export const FooJSON = {
        */
       _readMessage: function (
         msg: Foo.FooBar.FieldTwo,
-        json: any
+        json: any,
       ): Foo.FooBar.FieldTwo {
         const _key_ = json["key"];
         if (_key_) {
@@ -942,7 +937,7 @@ export const FooJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Foo.FieldTwo>
+      msg: PartialDeep<Foo.FieldTwo>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -967,9 +962,7 @@ export const FooJSON = {
       }
       const _value_ = json["value"];
       if (_value_) {
-        const m = BarJSON.initialize();
-        BarJSON._readMessage(m, _value_);
-        msg.value = m;
+        BarJSON._readMessage(msg.value, _value_);
       }
       return msg;
     },
@@ -980,7 +973,7 @@ export const BarJSON = {
   /**
    * Serializes Bar to JSON.
    */
-  encode: function (msg: Partial<Bar>): string {
+  encode: function (msg: PartialDeep<Bar>): string {
     return JSON.stringify(BarJSON._writeMessage(msg));
   },
 
@@ -1005,7 +998,7 @@ export const BarJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Bar>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Bar>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.fieldOne) {
       json["fieldOne"] = msg.fieldOne;
@@ -1015,7 +1008,7 @@ export const BarJSON = {
         Object.entries(msg.fieldTwo)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(BarJSON.FieldTwo._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_fieldTwo_).length > 0) {
         json["fieldTwo"] = _fieldTwo_;
@@ -1041,7 +1034,7 @@ export const BarJSON = {
         Object.entries(_fieldTwo_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(BarJSON.FieldTwo._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _fieldThree_ = json["fieldThree"] ?? json["field_three"];
@@ -1056,7 +1049,7 @@ export const BarJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Bar.FieldTwo>
+      msg: PartialDeep<Bar.FieldTwo>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {

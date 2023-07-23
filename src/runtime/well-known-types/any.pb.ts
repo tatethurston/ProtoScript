@@ -2,7 +2,7 @@
 // Source: google/protobuf/any.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import {
   BinaryReader,
   BinaryWriter,
@@ -39,8 +39,12 @@ import {
  *     if (any.is(Foo.class)) {
  *       foo = any.unpack(Foo.class);
  *     }
+ *     // or ...
+ *     if (any.isSameTypeAs(Foo.getDefaultInstance())) {
+ *       foo = any.unpack(Foo.getDefaultInstance());
+ *     }
  *
- * Example 3: Pack and unpack a message in Python.
+ *  Example 3: Pack and unpack a message in Python.
  *
  *     foo = Foo(...)
  *     any = Any()
@@ -50,7 +54,7 @@ import {
  *       any.Unpack(foo)
  *       ...
  *
- * Example 4: Pack and unpack a message in Go
+ *  Example 4: Pack and unpack a message in Go
  *
  *      foo := &pb.Foo{...}
  *      any, err := anypb.New(foo)
@@ -69,9 +73,8 @@ import {
  * in the type URL, for example "foo.bar.com/x/y.z" will yield type
  * name "y.z".
  *
- *
  * JSON
- *
+ * ====
  * The JSON representation of an `Any` value uses the regular
  * representation of the deserialized, embedded message, with an
  * additional field `@type` which contains the type URL. Example:
@@ -145,7 +148,7 @@ export const Any = {
   /**
    * Serializes Any to protobuf.
    */
-  encode: function (msg: Partial<Any>): Uint8Array {
+  encode: function (msg: PartialDeep<Any>): Uint8Array {
     return Any._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -170,8 +173,8 @@ export const Any = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Any>,
-    writer: BinaryWriter
+    msg: PartialDeep<Any>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.typeUrl) {
       writer.writeString(1, msg.typeUrl);
@@ -215,7 +218,7 @@ export const AnyJSON = {
   /**
    * Serializes Any to JSON.
    */
-  encode: function (msg: Partial<Any>): string {
+  encode: function (msg: PartialDeep<Any>): string {
     return JSON.stringify(AnyJSON._writeMessage(msg));
   },
 
@@ -239,7 +242,7 @@ export const AnyJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Any>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Any>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.typeUrl) {
       json["typeUrl"] = msg.typeUrl;

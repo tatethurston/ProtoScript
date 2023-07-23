@@ -2,7 +2,7 @@
 // Source: treeshaking.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 import * as protoscript from "protoscript";
@@ -40,10 +40,10 @@ export const TreeshakingTest = {
   /**
    * Serializes TreeshakingTest to protobuf.
    */
-  encode: function (msg: Partial<TreeshakingTest>): Uint8Array {
+  encode: function (msg: PartialDeep<TreeshakingTest>): Uint8Array {
     return TreeshakingTest._writeMessage(
       msg,
-      new BinaryWriter()
+      new BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -53,7 +53,7 @@ export const TreeshakingTest = {
   decode: function (bytes: ByteSource): TreeshakingTest {
     return TreeshakingTest._readMessage(
       TreeshakingTest.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -76,8 +76,8 @@ export const TreeshakingTest = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<TreeshakingTest>,
-    writer: BinaryWriter
+    msg: PartialDeep<TreeshakingTest>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.stringField) {
       writer.writeString(1, msg.stringField);
@@ -92,21 +92,21 @@ export const TreeshakingTest = {
       writer.writeRepeatedMessage(
         4,
         msg.repeatedMessageField as any,
-        NestedMessage._writeMessage
+        NestedMessage._writeMessage,
       );
     }
     if (msg.optionalMessageField != undefined) {
       writer.writeMessage(
         5,
         msg.optionalMessageField,
-        NestedMessage._writeMessage
+        NestedMessage._writeMessage,
       );
     }
     if (msg.timestampField) {
       writer.writeMessage(
         6,
         msg.timestampField,
-        protoscript.Timestamp._writeMessage
+        protoscript.Timestamp._writeMessage,
       );
     }
     if (msg.mapField) {
@@ -116,7 +116,7 @@ export const TreeshakingTest = {
           key: key as any,
           value: value as any,
         })) as any,
-        TreeshakingTest.MapField._writeMessage
+        TreeshakingTest.MapField._writeMessage,
       );
     }
     return writer;
@@ -127,7 +127,7 @@ export const TreeshakingTest = {
    */
   _readMessage: function (
     msg: TreeshakingTest,
-    reader: BinaryReader
+    reader: BinaryReader,
   ): TreeshakingTest {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -154,14 +154,14 @@ export const TreeshakingTest = {
           msg.optionalMessageField = NestedMessage.initialize();
           reader.readMessage(
             msg.optionalMessageField,
-            NestedMessage._readMessage
+            NestedMessage._readMessage,
           );
           break;
         }
         case 6: {
           reader.readMessage(
             msg.timestampField,
-            protoscript.Timestamp._readMessage
+            protoscript.Timestamp._readMessage,
           );
           break;
         }
@@ -185,8 +185,8 @@ export const TreeshakingTest = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TreeshakingTest.MapField>,
-      writer: BinaryWriter
+      msg: PartialDeep<TreeshakingTest.MapField>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -202,7 +202,7 @@ export const TreeshakingTest = {
      */
     _readMessage: function (
       msg: TreeshakingTest.MapField,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TreeshakingTest.MapField {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -230,10 +230,10 @@ export const NestedMessage = {
   /**
    * Serializes NestedMessage to protobuf.
    */
-  encode: function (msg: Partial<NestedMessage>): Uint8Array {
+  encode: function (msg: PartialDeep<NestedMessage>): Uint8Array {
     return NestedMessage._writeMessage(
       msg,
-      new BinaryWriter()
+      new BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -243,7 +243,7 @@ export const NestedMessage = {
   decode: function (bytes: ByteSource): NestedMessage {
     return NestedMessage._readMessage(
       NestedMessage.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -260,8 +260,8 @@ export const NestedMessage = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<NestedMessage>,
-    writer: BinaryWriter
+    msg: PartialDeep<NestedMessage>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.stringField != undefined) {
       writer.writeString(1, msg.stringField);
@@ -274,7 +274,7 @@ export const NestedMessage = {
    */
   _readMessage: function (
     msg: NestedMessage,
-    reader: BinaryReader
+    reader: BinaryReader,
   ): NestedMessage {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -301,7 +301,7 @@ export const TreeshakingTestJSON = {
   /**
    * Serializes TreeshakingTest to JSON.
    */
-  encode: function (msg: Partial<TreeshakingTest>): string {
+  encode: function (msg: PartialDeep<TreeshakingTest>): string {
     return JSON.stringify(TreeshakingTestJSON._writeMessage(msg));
   },
 
@@ -311,7 +311,7 @@ export const TreeshakingTestJSON = {
   decode: function (json: string): TreeshakingTest {
     return TreeshakingTestJSON._readMessage(
       TreeshakingTestJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -334,7 +334,7 @@ export const TreeshakingTestJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<TreeshakingTest>
+    msg: PartialDeep<TreeshakingTest>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.stringField) {
@@ -348,18 +348,18 @@ export const TreeshakingTestJSON = {
     }
     if (msg.repeatedMessageField?.length) {
       json["repeatedMessageField"] = msg.repeatedMessageField.map(
-        NestedMessageJSON._writeMessage
+        NestedMessageJSON._writeMessage,
       );
     }
     if (msg.optionalMessageField != undefined) {
       const _optionalMessageField_ = NestedMessageJSON._writeMessage(
-        msg.optionalMessageField
+        msg.optionalMessageField,
       );
       json["optionalMessageField"] = _optionalMessageField_;
     }
     if (msg.timestampField) {
       const _timestampField_ = protoscript.TimestampJSON._writeMessage(
-        msg.timestampField
+        msg.timestampField,
       );
       if (Object.keys(_timestampField_).length > 0) {
         json["timestampField"] = _timestampField_;
@@ -370,7 +370,7 @@ export const TreeshakingTestJSON = {
         Object.entries(msg.mapField)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TreeshakingTestJSON.MapField._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapField_).length > 0) {
         json["mapField"] = _mapField_;
@@ -408,15 +408,18 @@ export const TreeshakingTestJSON = {
     const _optionalMessageField_ =
       json["optionalMessageField"] ?? json["optional_message_field"];
     if (_optionalMessageField_) {
-      const m = NestedMessageJSON.initialize();
-      NestedMessageJSON._readMessage(m, _optionalMessageField_);
-      msg.optionalMessageField = m;
+      msg.optionalMessageField = NestedMessageJSON.initialize();
+      NestedMessageJSON._readMessage(
+        msg.optionalMessageField,
+        _optionalMessageField_,
+      );
     }
     const _timestampField_ = json["timestampField"] ?? json["timestamp_field"];
     if (_timestampField_) {
-      const m = protoscript.TimestampJSON.initialize();
-      protoscript.TimestampJSON._readMessage(m, _timestampField_);
-      msg.timestampField = m;
+      protoscript.TimestampJSON._readMessage(
+        msg.timestampField,
+        _timestampField_,
+      );
     }
     const _mapField_ = json["mapField"] ?? json["map_field"];
     if (_mapField_) {
@@ -424,7 +427,7 @@ export const TreeshakingTestJSON = {
         Object.entries(_mapField_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TreeshakingTestJSON.MapField._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     return msg;
@@ -435,7 +438,7 @@ export const TreeshakingTestJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TreeshakingTest.MapField>
+      msg: PartialDeep<TreeshakingTest.MapField>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -452,7 +455,7 @@ export const TreeshakingTestJSON = {
      */
     _readMessage: function (
       msg: TreeshakingTest.MapField,
-      json: any
+      json: any,
     ): TreeshakingTest.MapField {
       const _key_ = json["key"];
       if (_key_) {
@@ -471,7 +474,7 @@ export const NestedMessageJSON = {
   /**
    * Serializes NestedMessage to JSON.
    */
-  encode: function (msg: Partial<NestedMessage>): string {
+  encode: function (msg: PartialDeep<NestedMessage>): string {
     return JSON.stringify(NestedMessageJSON._writeMessage(msg));
   },
 
@@ -481,7 +484,7 @@ export const NestedMessageJSON = {
   decode: function (json: string): NestedMessage {
     return NestedMessageJSON._readMessage(
       NestedMessageJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -498,7 +501,7 @@ export const NestedMessageJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<NestedMessage>
+    msg: PartialDeep<NestedMessage>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.stringField != undefined) {

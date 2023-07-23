@@ -2,7 +2,7 @@
 // Source: proto/google/protobuf/test_messages_proto3.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import {
   BinaryReader,
   BinaryWriter,
@@ -438,10 +438,10 @@ export const TestAllTypesProto3 = {
   /**
    * Serializes TestAllTypesProto3 to protobuf.
    */
-  encode: function (msg: Partial<TestAllTypesProto3>): Uint8Array {
+  encode: function (msg: PartialDeep<TestAllTypesProto3>): Uint8Array {
     return TestAllTypesProto3._writeMessage(
       msg,
-      new BinaryWriter()
+      new BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -451,7 +451,7 @@ export const TestAllTypesProto3 = {
   decode: function (bytes: ByteSource): TestAllTypesProto3 {
     return TestAllTypesProto3._readMessage(
       TestAllTypesProto3.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -618,8 +618,8 @@ export const TestAllTypesProto3 = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<TestAllTypesProto3>,
-    writer: BinaryWriter
+    msg: PartialDeep<TestAllTypesProto3>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.optionalInt32) {
       writer.writeInt32(1, msg.optionalInt32);
@@ -670,14 +670,14 @@ export const TestAllTypesProto3 = {
       writer.writeMessage(
         18,
         msg.optionalNestedMessage,
-        TestAllTypesProto3.NestedMessage._writeMessage
+        TestAllTypesProto3.NestedMessage._writeMessage,
       );
     }
     if (msg.optionalForeignMessage) {
       writer.writeMessage(
         19,
         msg.optionalForeignMessage,
-        ForeignMessage._writeMessage
+        ForeignMessage._writeMessage,
       );
     }
     if (
@@ -686,7 +686,7 @@ export const TestAllTypesProto3 = {
     ) {
       writer.writeEnum(
         21,
-        TestAllTypesProto3.NestedEnum._toInt(msg.optionalNestedEnum)
+        TestAllTypesProto3.NestedEnum._toInt(msg.optionalNestedEnum),
       );
     }
     if (
@@ -701,7 +701,7 @@ export const TestAllTypesProto3 = {
     ) {
       writer.writeEnum(
         23,
-        TestAllTypesProto3.AliasedEnum._toInt(msg.optionalAliasedEnum)
+        TestAllTypesProto3.AliasedEnum._toInt(msg.optionalAliasedEnum),
       );
     }
     if (msg.optionalStringPiece) {
@@ -714,7 +714,7 @@ export const TestAllTypesProto3 = {
       writer.writeMessage(
         27,
         msg.recursiveMessage,
-        TestAllTypesProto3._writeMessage
+        TestAllTypesProto3._writeMessage,
       );
     }
     if (msg.repeatedInt32?.length) {
@@ -723,7 +723,7 @@ export const TestAllTypesProto3 = {
     if (msg.repeatedInt64?.length) {
       writer.writePackedInt64String(
         32,
-        msg.repeatedInt64.map((x) => x.toString() as any)
+        msg.repeatedInt64.map((x) => x.toString() as any),
       );
     }
     if (msg.repeatedUint32?.length) {
@@ -732,7 +732,7 @@ export const TestAllTypesProto3 = {
     if (msg.repeatedUint64?.length) {
       writer.writePackedUint64String(
         34,
-        msg.repeatedUint64.map((x) => x.toString() as any)
+        msg.repeatedUint64.map((x) => x.toString() as any),
       );
     }
     if (msg.repeatedSint32?.length) {
@@ -741,7 +741,7 @@ export const TestAllTypesProto3 = {
     if (msg.repeatedSint64?.length) {
       writer.writePackedSint64String(
         36,
-        msg.repeatedSint64.map((x) => x.toString() as any)
+        msg.repeatedSint64.map((x) => x.toString() as any),
       );
     }
     if (msg.repeatedFixed32?.length) {
@@ -750,7 +750,7 @@ export const TestAllTypesProto3 = {
     if (msg.repeatedFixed64?.length) {
       writer.writePackedFixed64String(
         38,
-        msg.repeatedFixed64.map((x) => x.toString() as any)
+        msg.repeatedFixed64.map((x) => x.toString() as any),
       );
     }
     if (msg.repeatedSfixed32?.length) {
@@ -759,7 +759,7 @@ export const TestAllTypesProto3 = {
     if (msg.repeatedSfixed64?.length) {
       writer.writePackedSfixed64String(
         40,
-        msg.repeatedSfixed64.map((x) => x.toString() as any)
+        msg.repeatedSfixed64.map((x) => x.toString() as any),
       );
     }
     if (msg.repeatedFloat?.length) {
@@ -781,26 +781,26 @@ export const TestAllTypesProto3 = {
       writer.writeRepeatedMessage(
         48,
         msg.repeatedNestedMessage as any,
-        TestAllTypesProto3.NestedMessage._writeMessage
+        TestAllTypesProto3.NestedMessage._writeMessage,
       );
     }
     if (msg.repeatedForeignMessage?.length) {
       writer.writeRepeatedMessage(
         49,
         msg.repeatedForeignMessage as any,
-        ForeignMessage._writeMessage
+        ForeignMessage._writeMessage,
       );
     }
     if (msg.repeatedNestedEnum?.length) {
       writer.writePackedEnum(
         51,
-        msg.repeatedNestedEnum.map(TestAllTypesProto3.NestedEnum._toInt)
+        msg.repeatedNestedEnum.map(TestAllTypesProto3.NestedEnum._toInt),
       );
     }
     if (msg.repeatedForeignEnum?.length) {
       writer.writePackedEnum(
         52,
-        msg.repeatedForeignEnum.map(ForeignEnum._toInt)
+        msg.repeatedForeignEnum.map(ForeignEnum._toInt),
       );
     }
     if (msg.repeatedStringPiece?.length) {
@@ -815,7 +815,7 @@ export const TestAllTypesProto3 = {
     if (msg.packedInt64?.length) {
       writer.writePackedInt64String(
         76,
-        msg.packedInt64.map((x) => x.toString() as any)
+        msg.packedInt64.map((x) => x.toString() as any),
       );
     }
     if (msg.packedUint32?.length) {
@@ -824,7 +824,7 @@ export const TestAllTypesProto3 = {
     if (msg.packedUint64?.length) {
       writer.writePackedUint64String(
         78,
-        msg.packedUint64.map((x) => x.toString() as any)
+        msg.packedUint64.map((x) => x.toString() as any),
       );
     }
     if (msg.packedSint32?.length) {
@@ -833,7 +833,7 @@ export const TestAllTypesProto3 = {
     if (msg.packedSint64?.length) {
       writer.writePackedSint64String(
         80,
-        msg.packedSint64.map((x) => x.toString() as any)
+        msg.packedSint64.map((x) => x.toString() as any),
       );
     }
     if (msg.packedFixed32?.length) {
@@ -842,7 +842,7 @@ export const TestAllTypesProto3 = {
     if (msg.packedFixed64?.length) {
       writer.writePackedFixed64String(
         82,
-        msg.packedFixed64.map((x) => x.toString() as any)
+        msg.packedFixed64.map((x) => x.toString() as any),
       );
     }
     if (msg.packedSfixed32?.length) {
@@ -851,7 +851,7 @@ export const TestAllTypesProto3 = {
     if (msg.packedSfixed64?.length) {
       writer.writePackedSfixed64String(
         84,
-        msg.packedSfixed64.map((x) => x.toString() as any)
+        msg.packedSfixed64.map((x) => x.toString() as any),
       );
     }
     if (msg.packedFloat?.length) {
@@ -866,7 +866,7 @@ export const TestAllTypesProto3 = {
     if (msg.packedNestedEnum?.length) {
       writer.writePackedEnum(
         88,
-        msg.packedNestedEnum.map(TestAllTypesProto3.NestedEnum._toInt)
+        msg.packedNestedEnum.map(TestAllTypesProto3.NestedEnum._toInt),
       );
     }
     if (msg.unpackedInt32?.length) {
@@ -875,7 +875,7 @@ export const TestAllTypesProto3 = {
     if (msg.unpackedInt64?.length) {
       writer.writePackedInt64String(
         90,
-        msg.unpackedInt64.map((x) => x.toString() as any)
+        msg.unpackedInt64.map((x) => x.toString() as any),
       );
     }
     if (msg.unpackedUint32?.length) {
@@ -884,7 +884,7 @@ export const TestAllTypesProto3 = {
     if (msg.unpackedUint64?.length) {
       writer.writePackedUint64String(
         92,
-        msg.unpackedUint64.map((x) => x.toString() as any)
+        msg.unpackedUint64.map((x) => x.toString() as any),
       );
     }
     if (msg.unpackedSint32?.length) {
@@ -893,7 +893,7 @@ export const TestAllTypesProto3 = {
     if (msg.unpackedSint64?.length) {
       writer.writePackedSint64String(
         94,
-        msg.unpackedSint64.map((x) => x.toString() as any)
+        msg.unpackedSint64.map((x) => x.toString() as any),
       );
     }
     if (msg.unpackedFixed32?.length) {
@@ -902,7 +902,7 @@ export const TestAllTypesProto3 = {
     if (msg.unpackedFixed64?.length) {
       writer.writePackedFixed64String(
         96,
-        msg.unpackedFixed64.map((x) => x.toString() as any)
+        msg.unpackedFixed64.map((x) => x.toString() as any),
       );
     }
     if (msg.unpackedSfixed32?.length) {
@@ -911,7 +911,7 @@ export const TestAllTypesProto3 = {
     if (msg.unpackedSfixed64?.length) {
       writer.writePackedSfixed64String(
         98,
-        msg.unpackedSfixed64.map((x) => x.toString() as any)
+        msg.unpackedSfixed64.map((x) => x.toString() as any),
       );
     }
     if (msg.unpackedFloat?.length) {
@@ -926,7 +926,7 @@ export const TestAllTypesProto3 = {
     if (msg.unpackedNestedEnum?.length) {
       writer.writePackedEnum(
         102,
-        msg.unpackedNestedEnum.map(TestAllTypesProto3.NestedEnum._toInt)
+        msg.unpackedNestedEnum.map(TestAllTypesProto3.NestedEnum._toInt),
       );
     }
     if (msg.mapInt32Int32) {
@@ -936,7 +936,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapInt32Int32._writeMessage
+        TestAllTypesProto3.MapInt32Int32._writeMessage,
       );
     }
     if (msg.mapInt64Int64) {
@@ -946,7 +946,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapInt64Int64._writeMessage
+        TestAllTypesProto3.MapInt64Int64._writeMessage,
       );
     }
     if (msg.mapUint32Uint32) {
@@ -956,7 +956,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapUint32Uint32._writeMessage
+        TestAllTypesProto3.MapUint32Uint32._writeMessage,
       );
     }
     if (msg.mapUint64Uint64) {
@@ -966,7 +966,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapUint64Uint64._writeMessage
+        TestAllTypesProto3.MapUint64Uint64._writeMessage,
       );
     }
     if (msg.mapSint32Sint32) {
@@ -976,7 +976,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapSint32Sint32._writeMessage
+        TestAllTypesProto3.MapSint32Sint32._writeMessage,
       );
     }
     if (msg.mapSint64Sint64) {
@@ -986,7 +986,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapSint64Sint64._writeMessage
+        TestAllTypesProto3.MapSint64Sint64._writeMessage,
       );
     }
     if (msg.mapFixed32Fixed32) {
@@ -996,7 +996,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapFixed32Fixed32._writeMessage
+        TestAllTypesProto3.MapFixed32Fixed32._writeMessage,
       );
     }
     if (msg.mapFixed64Fixed64) {
@@ -1006,7 +1006,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapFixed64Fixed64._writeMessage
+        TestAllTypesProto3.MapFixed64Fixed64._writeMessage,
       );
     }
     if (msg.mapSfixed32Sfixed32) {
@@ -1016,7 +1016,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapSfixed32Sfixed32._writeMessage
+        TestAllTypesProto3.MapSfixed32Sfixed32._writeMessage,
       );
     }
     if (msg.mapSfixed64Sfixed64) {
@@ -1026,7 +1026,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapSfixed64Sfixed64._writeMessage
+        TestAllTypesProto3.MapSfixed64Sfixed64._writeMessage,
       );
     }
     if (msg.mapInt32Float) {
@@ -1036,7 +1036,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapInt32Float._writeMessage
+        TestAllTypesProto3.MapInt32Float._writeMessage,
       );
     }
     if (msg.mapInt32Double) {
@@ -1046,7 +1046,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapInt32Double._writeMessage
+        TestAllTypesProto3.MapInt32Double._writeMessage,
       );
     }
     if (msg.mapBoolBool) {
@@ -1056,7 +1056,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapBoolBool._writeMessage
+        TestAllTypesProto3.MapBoolBool._writeMessage,
       );
     }
     if (msg.mapStringString) {
@@ -1066,7 +1066,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapStringString._writeMessage
+        TestAllTypesProto3.MapStringString._writeMessage,
       );
     }
     if (msg.mapStringBytes) {
@@ -1076,7 +1076,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapStringBytes._writeMessage
+        TestAllTypesProto3.MapStringBytes._writeMessage,
       );
     }
     if (msg.mapStringNestedMessage) {
@@ -1086,7 +1086,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapStringNestedMessage._writeMessage
+        TestAllTypesProto3.MapStringNestedMessage._writeMessage,
       );
     }
     if (msg.mapStringForeignMessage) {
@@ -1096,7 +1096,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapStringForeignMessage._writeMessage
+        TestAllTypesProto3.MapStringForeignMessage._writeMessage,
       );
     }
     if (msg.mapStringNestedEnum) {
@@ -1106,7 +1106,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapStringNestedEnum._writeMessage
+        TestAllTypesProto3.MapStringNestedEnum._writeMessage,
       );
     }
     if (msg.mapStringForeignEnum) {
@@ -1116,7 +1116,7 @@ export const TestAllTypesProto3 = {
           key: key as any,
           value: value as any,
         })) as any,
-        TestAllTypesProto3.MapStringForeignEnum._writeMessage
+        TestAllTypesProto3.MapStringForeignEnum._writeMessage,
       );
     }
     if (msg.oneofUint32 != undefined) {
@@ -1126,7 +1126,7 @@ export const TestAllTypesProto3 = {
       writer.writeMessage(
         112,
         msg.oneofNestedMessage,
-        TestAllTypesProto3.NestedMessage._writeMessage
+        TestAllTypesProto3.NestedMessage._writeMessage,
       );
     }
     if (msg.oneofString != undefined) {
@@ -1150,7 +1150,7 @@ export const TestAllTypesProto3 = {
     if (msg.oneofEnum != undefined) {
       writer.writeEnum(
         119,
-        TestAllTypesProto3.NestedEnum._toInt(msg.oneofEnum)
+        TestAllTypesProto3.NestedEnum._toInt(msg.oneofEnum),
       );
     }
     if (msg.oneofNullValue != undefined) {
@@ -1160,154 +1160,154 @@ export const TestAllTypesProto3 = {
       writer.writeMessage(
         201,
         msg.optionalBoolWrapper,
-        protoscript.BoolValue._writeMessage
+        protoscript.BoolValue._writeMessage,
       );
     }
     if (msg.optionalInt32Wrapper) {
       writer.writeMessage(
         202,
         msg.optionalInt32Wrapper,
-        protoscript.Int32Value._writeMessage
+        protoscript.Int32Value._writeMessage,
       );
     }
     if (msg.optionalInt64Wrapper) {
       writer.writeMessage(
         203,
         msg.optionalInt64Wrapper,
-        protoscript.Int64Value._writeMessage
+        protoscript.Int64Value._writeMessage,
       );
     }
     if (msg.optionalUint32Wrapper) {
       writer.writeMessage(
         204,
         msg.optionalUint32Wrapper,
-        protoscript.UInt32Value._writeMessage
+        protoscript.UInt32Value._writeMessage,
       );
     }
     if (msg.optionalUint64Wrapper) {
       writer.writeMessage(
         205,
         msg.optionalUint64Wrapper,
-        protoscript.UInt64Value._writeMessage
+        protoscript.UInt64Value._writeMessage,
       );
     }
     if (msg.optionalFloatWrapper) {
       writer.writeMessage(
         206,
         msg.optionalFloatWrapper,
-        protoscript.FloatValue._writeMessage
+        protoscript.FloatValue._writeMessage,
       );
     }
     if (msg.optionalDoubleWrapper) {
       writer.writeMessage(
         207,
         msg.optionalDoubleWrapper,
-        protoscript.DoubleValue._writeMessage
+        protoscript.DoubleValue._writeMessage,
       );
     }
     if (msg.optionalStringWrapper) {
       writer.writeMessage(
         208,
         msg.optionalStringWrapper,
-        protoscript.StringValue._writeMessage
+        protoscript.StringValue._writeMessage,
       );
     }
     if (msg.optionalBytesWrapper) {
       writer.writeMessage(
         209,
         msg.optionalBytesWrapper,
-        protoscript.BytesValue._writeMessage
+        protoscript.BytesValue._writeMessage,
       );
     }
     if (msg.repeatedBoolWrapper?.length) {
       writer.writeRepeatedMessage(
         211,
         msg.repeatedBoolWrapper as any,
-        protoscript.BoolValue._writeMessage
+        protoscript.BoolValue._writeMessage,
       );
     }
     if (msg.repeatedInt32Wrapper?.length) {
       writer.writeRepeatedMessage(
         212,
         msg.repeatedInt32Wrapper as any,
-        protoscript.Int32Value._writeMessage
+        protoscript.Int32Value._writeMessage,
       );
     }
     if (msg.repeatedInt64Wrapper?.length) {
       writer.writeRepeatedMessage(
         213,
         msg.repeatedInt64Wrapper as any,
-        protoscript.Int64Value._writeMessage
+        protoscript.Int64Value._writeMessage,
       );
     }
     if (msg.repeatedUint32Wrapper?.length) {
       writer.writeRepeatedMessage(
         214,
         msg.repeatedUint32Wrapper as any,
-        protoscript.UInt32Value._writeMessage
+        protoscript.UInt32Value._writeMessage,
       );
     }
     if (msg.repeatedUint64Wrapper?.length) {
       writer.writeRepeatedMessage(
         215,
         msg.repeatedUint64Wrapper as any,
-        protoscript.UInt64Value._writeMessage
+        protoscript.UInt64Value._writeMessage,
       );
     }
     if (msg.repeatedFloatWrapper?.length) {
       writer.writeRepeatedMessage(
         216,
         msg.repeatedFloatWrapper as any,
-        protoscript.FloatValue._writeMessage
+        protoscript.FloatValue._writeMessage,
       );
     }
     if (msg.repeatedDoubleWrapper?.length) {
       writer.writeRepeatedMessage(
         217,
         msg.repeatedDoubleWrapper as any,
-        protoscript.DoubleValue._writeMessage
+        protoscript.DoubleValue._writeMessage,
       );
     }
     if (msg.repeatedStringWrapper?.length) {
       writer.writeRepeatedMessage(
         218,
         msg.repeatedStringWrapper as any,
-        protoscript.StringValue._writeMessage
+        protoscript.StringValue._writeMessage,
       );
     }
     if (msg.repeatedBytesWrapper?.length) {
       writer.writeRepeatedMessage(
         219,
         msg.repeatedBytesWrapper as any,
-        protoscript.BytesValue._writeMessage
+        protoscript.BytesValue._writeMessage,
       );
     }
     if (msg.optionalDuration) {
       writer.writeMessage(
         301,
         msg.optionalDuration,
-        protoscript.Duration._writeMessage
+        protoscript.Duration._writeMessage,
       );
     }
     if (msg.optionalTimestamp) {
       writer.writeMessage(
         302,
         msg.optionalTimestamp,
-        protoscript.Timestamp._writeMessage
+        protoscript.Timestamp._writeMessage,
       );
     }
     if (msg.optionalFieldMask) {
       writer.writeMessage(
         303,
         msg.optionalFieldMask,
-        protoscript.FieldMask._writeMessage
+        protoscript.FieldMask._writeMessage,
       );
     }
     if (msg.optionalStruct) {
       writer.writeMessage(
         304,
         msg.optionalStruct,
-        protoscript.Struct._writeMessage
+        protoscript.Struct._writeMessage,
       );
     }
     if (msg.optionalAny) {
@@ -1317,7 +1317,7 @@ export const TestAllTypesProto3 = {
       writer.writeMessage(
         306,
         msg.optionalValue,
-        protoscript.Value._writeMessage
+        protoscript.Value._writeMessage,
       );
     }
     if (
@@ -1326,56 +1326,56 @@ export const TestAllTypesProto3 = {
     ) {
       writer.writeEnum(
         307,
-        protoscript.NullValue._toInt(msg.optionalNullValue)
+        protoscript.NullValue._toInt(msg.optionalNullValue),
       );
     }
     if (msg.repeatedDuration?.length) {
       writer.writeRepeatedMessage(
         311,
         msg.repeatedDuration as any,
-        protoscript.Duration._writeMessage
+        protoscript.Duration._writeMessage,
       );
     }
     if (msg.repeatedTimestamp?.length) {
       writer.writeRepeatedMessage(
         312,
         msg.repeatedTimestamp as any,
-        protoscript.Timestamp._writeMessage
+        protoscript.Timestamp._writeMessage,
       );
     }
     if (msg.repeatedFieldmask?.length) {
       writer.writeRepeatedMessage(
         313,
         msg.repeatedFieldmask as any,
-        protoscript.FieldMask._writeMessage
+        protoscript.FieldMask._writeMessage,
       );
     }
     if (msg.repeatedStruct?.length) {
       writer.writeRepeatedMessage(
         324,
         msg.repeatedStruct as any,
-        protoscript.Struct._writeMessage
+        protoscript.Struct._writeMessage,
       );
     }
     if (msg.repeatedAny?.length) {
       writer.writeRepeatedMessage(
         315,
         msg.repeatedAny as any,
-        protoscript.Any._writeMessage
+        protoscript.Any._writeMessage,
       );
     }
     if (msg.repeatedValue?.length) {
       writer.writeRepeatedMessage(
         316,
         msg.repeatedValue as any,
-        protoscript.Value._writeMessage
+        protoscript.Value._writeMessage,
       );
     }
     if (msg.repeatedListValue?.length) {
       writer.writeRepeatedMessage(
         317,
         msg.repeatedListValue as any,
-        protoscript.ListValue._writeMessage
+        protoscript.ListValue._writeMessage,
       );
     }
     if (msg.fieldname1) {
@@ -1440,7 +1440,7 @@ export const TestAllTypesProto3 = {
    */
   _readMessage: function (
     msg: TestAllTypesProto3,
-    reader: BinaryReader
+    reader: BinaryReader,
   ): TestAllTypesProto3 {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -1508,20 +1508,20 @@ export const TestAllTypesProto3 = {
         case 18: {
           reader.readMessage(
             msg.optionalNestedMessage,
-            TestAllTypesProto3.NestedMessage._readMessage
+            TestAllTypesProto3.NestedMessage._readMessage,
           );
           break;
         }
         case 19: {
           reader.readMessage(
             msg.optionalForeignMessage,
-            ForeignMessage._readMessage
+            ForeignMessage._readMessage,
           );
           break;
         }
         case 21: {
           msg.optionalNestedEnum = TestAllTypesProto3.NestedEnum._fromInt(
-            reader.readEnum()
+            reader.readEnum(),
           );
           break;
         }
@@ -1531,7 +1531,7 @@ export const TestAllTypesProto3 = {
         }
         case 23: {
           msg.optionalAliasedEnum = TestAllTypesProto3.AliasedEnum._fromInt(
-            reader.readEnum()
+            reader.readEnum(),
           );
           break;
         }
@@ -1544,9 +1544,10 @@ export const TestAllTypesProto3 = {
           break;
         }
         case 27: {
+          msg.recursiveMessage = TestAllTypesProto3.initialize();
           reader.readMessage(
             msg.recursiveMessage,
-            TestAllTypesProto3._readMessage
+            TestAllTypesProto3._readMessage,
           );
           break;
         }
@@ -1561,7 +1562,7 @@ export const TestAllTypesProto3 = {
         case 32: {
           if (reader.isDelimited()) {
             msg.repeatedInt64.push(
-              ...reader.readPackedInt64String().map(BigInt)
+              ...reader.readPackedInt64String().map(BigInt),
             );
           } else {
             msg.repeatedInt64.push(BigInt(reader.readInt64String()));
@@ -1579,7 +1580,7 @@ export const TestAllTypesProto3 = {
         case 34: {
           if (reader.isDelimited()) {
             msg.repeatedUint64.push(
-              ...reader.readPackedUint64String().map(BigInt)
+              ...reader.readPackedUint64String().map(BigInt),
             );
           } else {
             msg.repeatedUint64.push(BigInt(reader.readUint64String()));
@@ -1597,7 +1598,7 @@ export const TestAllTypesProto3 = {
         case 36: {
           if (reader.isDelimited()) {
             msg.repeatedSint64.push(
-              ...reader.readPackedSint64String().map(BigInt)
+              ...reader.readPackedSint64String().map(BigInt),
             );
           } else {
             msg.repeatedSint64.push(BigInt(reader.readSint64String()));
@@ -1615,7 +1616,7 @@ export const TestAllTypesProto3 = {
         case 38: {
           if (reader.isDelimited()) {
             msg.repeatedFixed64.push(
-              ...reader.readPackedFixed64String().map(BigInt)
+              ...reader.readPackedFixed64String().map(BigInt),
             );
           } else {
             msg.repeatedFixed64.push(BigInt(reader.readFixed64String()));
@@ -1633,7 +1634,7 @@ export const TestAllTypesProto3 = {
         case 40: {
           if (reader.isDelimited()) {
             msg.repeatedSfixed64.push(
-              ...reader.readPackedSfixed64String().map(BigInt)
+              ...reader.readPackedSfixed64String().map(BigInt),
             );
           } else {
             msg.repeatedSfixed64.push(BigInt(reader.readSfixed64String()));
@@ -1689,11 +1690,11 @@ export const TestAllTypesProto3 = {
             msg.repeatedNestedEnum.push(
               ...reader
                 .readPackedEnum()
-                .map(TestAllTypesProto3.NestedEnum._fromInt)
+                .map(TestAllTypesProto3.NestedEnum._fromInt),
             );
           } else {
             msg.repeatedNestedEnum.push(
-              TestAllTypesProto3.NestedEnum._fromInt(reader.readEnum())
+              TestAllTypesProto3.NestedEnum._fromInt(reader.readEnum()),
             );
           }
           break;
@@ -1701,11 +1702,11 @@ export const TestAllTypesProto3 = {
         case 52: {
           if (reader.isDelimited()) {
             msg.repeatedForeignEnum.push(
-              ...reader.readPackedEnum().map(ForeignEnum._fromInt)
+              ...reader.readPackedEnum().map(ForeignEnum._fromInt),
             );
           } else {
             msg.repeatedForeignEnum.push(
-              ForeignEnum._fromInt(reader.readEnum())
+              ForeignEnum._fromInt(reader.readEnum()),
             );
           }
           break;
@@ -1745,7 +1746,7 @@ export const TestAllTypesProto3 = {
         case 78: {
           if (reader.isDelimited()) {
             msg.packedUint64.push(
-              ...reader.readPackedUint64String().map(BigInt)
+              ...reader.readPackedUint64String().map(BigInt),
             );
           } else {
             msg.packedUint64.push(BigInt(reader.readUint64String()));
@@ -1763,7 +1764,7 @@ export const TestAllTypesProto3 = {
         case 80: {
           if (reader.isDelimited()) {
             msg.packedSint64.push(
-              ...reader.readPackedSint64String().map(BigInt)
+              ...reader.readPackedSint64String().map(BigInt),
             );
           } else {
             msg.packedSint64.push(BigInt(reader.readSint64String()));
@@ -1781,7 +1782,7 @@ export const TestAllTypesProto3 = {
         case 82: {
           if (reader.isDelimited()) {
             msg.packedFixed64.push(
-              ...reader.readPackedFixed64String().map(BigInt)
+              ...reader.readPackedFixed64String().map(BigInt),
             );
           } else {
             msg.packedFixed64.push(BigInt(reader.readFixed64String()));
@@ -1799,7 +1800,7 @@ export const TestAllTypesProto3 = {
         case 84: {
           if (reader.isDelimited()) {
             msg.packedSfixed64.push(
-              ...reader.readPackedSfixed64String().map(BigInt)
+              ...reader.readPackedSfixed64String().map(BigInt),
             );
           } else {
             msg.packedSfixed64.push(BigInt(reader.readSfixed64String()));
@@ -1835,11 +1836,11 @@ export const TestAllTypesProto3 = {
             msg.packedNestedEnum.push(
               ...reader
                 .readPackedEnum()
-                .map(TestAllTypesProto3.NestedEnum._fromInt)
+                .map(TestAllTypesProto3.NestedEnum._fromInt),
             );
           } else {
             msg.packedNestedEnum.push(
-              TestAllTypesProto3.NestedEnum._fromInt(reader.readEnum())
+              TestAllTypesProto3.NestedEnum._fromInt(reader.readEnum()),
             );
           }
           break;
@@ -1855,7 +1856,7 @@ export const TestAllTypesProto3 = {
         case 90: {
           if (reader.isDelimited()) {
             msg.unpackedInt64.push(
-              ...reader.readPackedInt64String().map(BigInt)
+              ...reader.readPackedInt64String().map(BigInt),
             );
           } else {
             msg.unpackedInt64.push(BigInt(reader.readInt64String()));
@@ -1873,7 +1874,7 @@ export const TestAllTypesProto3 = {
         case 92: {
           if (reader.isDelimited()) {
             msg.unpackedUint64.push(
-              ...reader.readPackedUint64String().map(BigInt)
+              ...reader.readPackedUint64String().map(BigInt),
             );
           } else {
             msg.unpackedUint64.push(BigInt(reader.readUint64String()));
@@ -1891,7 +1892,7 @@ export const TestAllTypesProto3 = {
         case 94: {
           if (reader.isDelimited()) {
             msg.unpackedSint64.push(
-              ...reader.readPackedSint64String().map(BigInt)
+              ...reader.readPackedSint64String().map(BigInt),
             );
           } else {
             msg.unpackedSint64.push(BigInt(reader.readSint64String()));
@@ -1909,7 +1910,7 @@ export const TestAllTypesProto3 = {
         case 96: {
           if (reader.isDelimited()) {
             msg.unpackedFixed64.push(
-              ...reader.readPackedFixed64String().map(BigInt)
+              ...reader.readPackedFixed64String().map(BigInt),
             );
           } else {
             msg.unpackedFixed64.push(BigInt(reader.readFixed64String()));
@@ -1927,7 +1928,7 @@ export const TestAllTypesProto3 = {
         case 98: {
           if (reader.isDelimited()) {
             msg.unpackedSfixed64.push(
-              ...reader.readPackedSfixed64String().map(BigInt)
+              ...reader.readPackedSfixed64String().map(BigInt),
             );
           } else {
             msg.unpackedSfixed64.push(BigInt(reader.readSfixed64String()));
@@ -1963,11 +1964,11 @@ export const TestAllTypesProto3 = {
             msg.unpackedNestedEnum.push(
               ...reader
                 .readPackedEnum()
-                .map(TestAllTypesProto3.NestedEnum._fromInt)
+                .map(TestAllTypesProto3.NestedEnum._fromInt),
             );
           } else {
             msg.unpackedNestedEnum.push(
-              TestAllTypesProto3.NestedEnum._fromInt(reader.readEnum())
+              TestAllTypesProto3.NestedEnum._fromInt(reader.readEnum()),
             );
           }
           break;
@@ -1976,7 +1977,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapInt32Int32;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapInt32Int32._readMessage
+            TestAllTypesProto3.MapInt32Int32._readMessage,
           );
           msg.mapInt32Int32[map.key.toString()] = map.value;
           break;
@@ -1985,7 +1986,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapInt64Int64;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapInt64Int64._readMessage
+            TestAllTypesProto3.MapInt64Int64._readMessage,
           );
           msg.mapInt64Int64[map.key.toString()] = map.value;
           break;
@@ -1994,7 +1995,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapUint32Uint32;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapUint32Uint32._readMessage
+            TestAllTypesProto3.MapUint32Uint32._readMessage,
           );
           msg.mapUint32Uint32[map.key.toString()] = map.value;
           break;
@@ -2003,7 +2004,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapUint64Uint64;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapUint64Uint64._readMessage
+            TestAllTypesProto3.MapUint64Uint64._readMessage,
           );
           msg.mapUint64Uint64[map.key.toString()] = map.value;
           break;
@@ -2012,7 +2013,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapSint32Sint32;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapSint32Sint32._readMessage
+            TestAllTypesProto3.MapSint32Sint32._readMessage,
           );
           msg.mapSint32Sint32[map.key.toString()] = map.value;
           break;
@@ -2021,7 +2022,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapSint64Sint64;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapSint64Sint64._readMessage
+            TestAllTypesProto3.MapSint64Sint64._readMessage,
           );
           msg.mapSint64Sint64[map.key.toString()] = map.value;
           break;
@@ -2030,7 +2031,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapFixed32Fixed32;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapFixed32Fixed32._readMessage
+            TestAllTypesProto3.MapFixed32Fixed32._readMessage,
           );
           msg.mapFixed32Fixed32[map.key.toString()] = map.value;
           break;
@@ -2039,7 +2040,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapFixed64Fixed64;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapFixed64Fixed64._readMessage
+            TestAllTypesProto3.MapFixed64Fixed64._readMessage,
           );
           msg.mapFixed64Fixed64[map.key.toString()] = map.value;
           break;
@@ -2048,7 +2049,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapSfixed32Sfixed32;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapSfixed32Sfixed32._readMessage
+            TestAllTypesProto3.MapSfixed32Sfixed32._readMessage,
           );
           msg.mapSfixed32Sfixed32[map.key.toString()] = map.value;
           break;
@@ -2057,7 +2058,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapSfixed64Sfixed64;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapSfixed64Sfixed64._readMessage
+            TestAllTypesProto3.MapSfixed64Sfixed64._readMessage,
           );
           msg.mapSfixed64Sfixed64[map.key.toString()] = map.value;
           break;
@@ -2066,7 +2067,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapInt32Float;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapInt32Float._readMessage
+            TestAllTypesProto3.MapInt32Float._readMessage,
           );
           msg.mapInt32Float[map.key.toString()] = map.value;
           break;
@@ -2075,7 +2076,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapInt32Double;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapInt32Double._readMessage
+            TestAllTypesProto3.MapInt32Double._readMessage,
           );
           msg.mapInt32Double[map.key.toString()] = map.value;
           break;
@@ -2090,7 +2091,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapStringString;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapStringString._readMessage
+            TestAllTypesProto3.MapStringString._readMessage,
           );
           msg.mapStringString[map.key.toString()] = map.value;
           break;
@@ -2099,7 +2100,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapStringBytes;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapStringBytes._readMessage
+            TestAllTypesProto3.MapStringBytes._readMessage,
           );
           msg.mapStringBytes[map.key.toString()] = map.value;
           break;
@@ -2108,7 +2109,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapStringNestedMessage;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapStringNestedMessage._readMessage
+            TestAllTypesProto3.MapStringNestedMessage._readMessage,
           );
           msg.mapStringNestedMessage[map.key.toString()] = map.value;
           break;
@@ -2117,7 +2118,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapStringForeignMessage;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapStringForeignMessage._readMessage
+            TestAllTypesProto3.MapStringForeignMessage._readMessage,
           );
           msg.mapStringForeignMessage[map.key.toString()] = map.value;
           break;
@@ -2126,7 +2127,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapStringNestedEnum;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapStringNestedEnum._readMessage
+            TestAllTypesProto3.MapStringNestedEnum._readMessage,
           );
           msg.mapStringNestedEnum[map.key.toString()] = map.value;
           break;
@@ -2135,7 +2136,7 @@ export const TestAllTypesProto3 = {
           const map = {} as TestAllTypesProto3.MapStringForeignEnum;
           reader.readMessage(
             map,
-            TestAllTypesProto3.MapStringForeignEnum._readMessage
+            TestAllTypesProto3.MapStringForeignEnum._readMessage,
           );
           msg.mapStringForeignEnum[map.key.toString()] = map.value;
           break;
@@ -2149,7 +2150,7 @@ export const TestAllTypesProto3 = {
             TestAllTypesProto3.NestedMessage.initialize();
           reader.readMessage(
             msg.oneofNestedMessage,
-            TestAllTypesProto3.NestedMessage._readMessage
+            TestAllTypesProto3.NestedMessage._readMessage,
           );
           break;
         }
@@ -2179,76 +2180,76 @@ export const TestAllTypesProto3 = {
         }
         case 119: {
           msg.oneofEnum = TestAllTypesProto3.NestedEnum._fromInt(
-            reader.readEnum()
+            reader.readEnum(),
           );
           break;
         }
         case 120: {
           msg.oneofNullValue = protoscript.NullValue._fromInt(
-            reader.readEnum()
+            reader.readEnum(),
           );
           break;
         }
         case 201: {
           reader.readMessage(
             msg.optionalBoolWrapper,
-            protoscript.BoolValue._readMessage
+            protoscript.BoolValue._readMessage,
           );
           break;
         }
         case 202: {
           reader.readMessage(
             msg.optionalInt32Wrapper,
-            protoscript.Int32Value._readMessage
+            protoscript.Int32Value._readMessage,
           );
           break;
         }
         case 203: {
           reader.readMessage(
             msg.optionalInt64Wrapper,
-            protoscript.Int64Value._readMessage
+            protoscript.Int64Value._readMessage,
           );
           break;
         }
         case 204: {
           reader.readMessage(
             msg.optionalUint32Wrapper,
-            protoscript.UInt32Value._readMessage
+            protoscript.UInt32Value._readMessage,
           );
           break;
         }
         case 205: {
           reader.readMessage(
             msg.optionalUint64Wrapper,
-            protoscript.UInt64Value._readMessage
+            protoscript.UInt64Value._readMessage,
           );
           break;
         }
         case 206: {
           reader.readMessage(
             msg.optionalFloatWrapper,
-            protoscript.FloatValue._readMessage
+            protoscript.FloatValue._readMessage,
           );
           break;
         }
         case 207: {
           reader.readMessage(
             msg.optionalDoubleWrapper,
-            protoscript.DoubleValue._readMessage
+            protoscript.DoubleValue._readMessage,
           );
           break;
         }
         case 208: {
           reader.readMessage(
             msg.optionalStringWrapper,
-            protoscript.StringValue._readMessage
+            protoscript.StringValue._readMessage,
           );
           break;
         }
         case 209: {
           reader.readMessage(
             msg.optionalBytesWrapper,
-            protoscript.BytesValue._readMessage
+            protoscript.BytesValue._readMessage,
           );
           break;
         }
@@ -2309,28 +2310,28 @@ export const TestAllTypesProto3 = {
         case 301: {
           reader.readMessage(
             msg.optionalDuration,
-            protoscript.Duration._readMessage
+            protoscript.Duration._readMessage,
           );
           break;
         }
         case 302: {
           reader.readMessage(
             msg.optionalTimestamp,
-            protoscript.Timestamp._readMessage
+            protoscript.Timestamp._readMessage,
           );
           break;
         }
         case 303: {
           reader.readMessage(
             msg.optionalFieldMask,
-            protoscript.FieldMask._readMessage
+            protoscript.FieldMask._readMessage,
           );
           break;
         }
         case 304: {
           reader.readMessage(
             msg.optionalStruct,
-            protoscript.Struct._readMessage
+            protoscript.Struct._readMessage,
           );
           break;
         }
@@ -2344,7 +2345,7 @@ export const TestAllTypesProto3 = {
         }
         case 307: {
           msg.optionalNullValue = protoscript.NullValue._fromInt(
-            reader.readEnum()
+            reader.readEnum(),
           );
           break;
         }
@@ -2587,11 +2588,11 @@ export const TestAllTypesProto3 = {
      * Serializes TestAllTypesProto3.NestedMessage to protobuf.
      */
     encode: function (
-      msg: Partial<TestAllTypesProto3.NestedMessage>
+      msg: PartialDeep<TestAllTypesProto3.NestedMessage>,
     ): Uint8Array {
       return TestAllTypesProto3.NestedMessage._writeMessage(
         msg,
-        new BinaryWriter()
+        new BinaryWriter(),
       ).getResultBuffer();
     },
 
@@ -2601,7 +2602,7 @@ export const TestAllTypesProto3 = {
     decode: function (bytes: ByteSource): TestAllTypesProto3.NestedMessage {
       return TestAllTypesProto3.NestedMessage._readMessage(
         TestAllTypesProto3.NestedMessage.initialize(),
-        new BinaryReader(bytes)
+        new BinaryReader(bytes),
       );
     },
 
@@ -2619,8 +2620,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.NestedMessage>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.NestedMessage>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.a) {
         writer.writeInt32(1, msg.a);
@@ -2629,7 +2630,7 @@ export const TestAllTypesProto3 = {
         writer.writeMessage(
           2,
           msg.corecursive,
-          TestAllTypesProto3._writeMessage
+          TestAllTypesProto3._writeMessage,
         );
       }
       return writer;
@@ -2640,7 +2641,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.NestedMessage,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.NestedMessage {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -2650,9 +2651,10 @@ export const TestAllTypesProto3 = {
             break;
           }
           case 2: {
+            msg.corecursive = TestAllTypesProto3.initialize();
             reader.readMessage(
               msg.corecursive,
-              TestAllTypesProto3._readMessage
+              TestAllTypesProto3._readMessage,
             );
             break;
           }
@@ -2671,8 +2673,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapInt32Int32>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapInt32Int32>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeInt32(1, msg.key);
@@ -2688,7 +2690,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapInt32Int32,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapInt32Int32 {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -2716,8 +2718,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapInt64Int64>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapInt64Int64>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeInt64String(1, msg.key.toString() as any);
@@ -2733,7 +2735,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapInt64Int64,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapInt64Int64 {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -2761,8 +2763,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapUint32Uint32>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapUint32Uint32>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeUint32(1, msg.key);
@@ -2778,7 +2780,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapUint32Uint32,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapUint32Uint32 {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -2806,8 +2808,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapUint64Uint64>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapUint64Uint64>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeUint64String(1, msg.key.toString() as any);
@@ -2823,7 +2825,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapUint64Uint64,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapUint64Uint64 {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -2851,8 +2853,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapSint32Sint32>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapSint32Sint32>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeSint32(1, msg.key);
@@ -2868,7 +2870,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapSint32Sint32,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapSint32Sint32 {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -2896,8 +2898,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapSint64Sint64>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapSint64Sint64>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeSint64String(1, msg.key.toString() as any);
@@ -2913,7 +2915,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapSint64Sint64,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapSint64Sint64 {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -2941,8 +2943,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapFixed32Fixed32>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapFixed32Fixed32>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeFixed32(1, msg.key);
@@ -2958,7 +2960,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapFixed32Fixed32,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapFixed32Fixed32 {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -2986,8 +2988,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapFixed64Fixed64>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapFixed64Fixed64>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeFixed64String(1, msg.key.toString() as any);
@@ -3003,7 +3005,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapFixed64Fixed64,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapFixed64Fixed64 {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3031,8 +3033,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapSfixed32Sfixed32>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapSfixed32Sfixed32>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeSfixed32(1, msg.key);
@@ -3048,7 +3050,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapSfixed32Sfixed32,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapSfixed32Sfixed32 {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3076,8 +3078,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapSfixed64Sfixed64>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapSfixed64Sfixed64>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeSfixed64String(1, msg.key.toString() as any);
@@ -3093,7 +3095,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapSfixed64Sfixed64,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapSfixed64Sfixed64 {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3121,8 +3123,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapInt32Float>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapInt32Float>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeInt32(1, msg.key);
@@ -3138,7 +3140,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapInt32Float,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapInt32Float {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3166,8 +3168,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapInt32Double>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapInt32Double>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeInt32(1, msg.key);
@@ -3183,7 +3185,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapInt32Double,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapInt32Double {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3211,8 +3213,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapBoolBool>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapBoolBool>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeBool(1, msg.key);
@@ -3228,7 +3230,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapBoolBool,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapBoolBool {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3256,8 +3258,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringString>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapStringString>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -3273,7 +3275,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringString,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapStringString {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3301,8 +3303,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringBytes>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapStringBytes>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -3318,7 +3320,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringBytes,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapStringBytes {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3346,8 +3348,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringNestedMessage>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapStringNestedMessage>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -3356,7 +3358,7 @@ export const TestAllTypesProto3 = {
         writer.writeMessage(
           2,
           msg.value,
-          TestAllTypesProto3.NestedMessage._writeMessage
+          TestAllTypesProto3.NestedMessage._writeMessage,
         );
       }
       return writer;
@@ -3367,7 +3369,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringNestedMessage,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapStringNestedMessage {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3380,7 +3382,7 @@ export const TestAllTypesProto3 = {
             msg.value = TestAllTypesProto3.NestedMessage.initialize();
             reader.readMessage(
               msg.value,
-              TestAllTypesProto3.NestedMessage._readMessage
+              TestAllTypesProto3.NestedMessage._readMessage,
             );
             break;
           }
@@ -3399,8 +3401,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringForeignMessage>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapStringForeignMessage>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -3416,7 +3418,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringForeignMessage,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapStringForeignMessage {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3445,8 +3447,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringNestedEnum>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapStringNestedEnum>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -3462,7 +3464,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringNestedEnum,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapStringNestedEnum {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3473,7 +3475,7 @@ export const TestAllTypesProto3 = {
           }
           case 2: {
             msg.value = TestAllTypesProto3.NestedEnum._fromInt(
-              reader.readEnum()
+              reader.readEnum(),
             );
             break;
           }
@@ -3492,8 +3494,8 @@ export const TestAllTypesProto3 = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringForeignEnum>,
-      writer: BinaryWriter
+      msg: PartialDeep<TestAllTypesProto3.MapStringForeignEnum>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -3509,7 +3511,7 @@ export const TestAllTypesProto3 = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringForeignEnum,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): TestAllTypesProto3.MapStringForeignEnum {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -3537,10 +3539,10 @@ export const ForeignMessage = {
   /**
    * Serializes ForeignMessage to protobuf.
    */
-  encode: function (msg: Partial<ForeignMessage>): Uint8Array {
+  encode: function (msg: PartialDeep<ForeignMessage>): Uint8Array {
     return ForeignMessage._writeMessage(
       msg,
-      new BinaryWriter()
+      new BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -3550,7 +3552,7 @@ export const ForeignMessage = {
   decode: function (bytes: ByteSource): ForeignMessage {
     return ForeignMessage._readMessage(
       ForeignMessage.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -3567,8 +3569,8 @@ export const ForeignMessage = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ForeignMessage>,
-    writer: BinaryWriter
+    msg: PartialDeep<ForeignMessage>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.c) {
       writer.writeInt32(1, msg.c);
@@ -3581,7 +3583,7 @@ export const ForeignMessage = {
    */
   _readMessage: function (
     msg: ForeignMessage,
-    reader: BinaryReader
+    reader: BinaryReader,
   ): ForeignMessage {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -3604,7 +3606,7 @@ export const NullHypothesisProto3 = {
   /**
    * Serializes NullHypothesisProto3 to protobuf.
    */
-  encode: function (_msg?: Partial<NullHypothesisProto3>): Uint8Array {
+  encode: function (_msg?: PartialDeep<NullHypothesisProto3>): Uint8Array {
     return new Uint8Array();
   },
 
@@ -3626,8 +3628,8 @@ export const NullHypothesisProto3 = {
    * @private
    */
   _writeMessage: function (
-    _msg: Partial<NullHypothesisProto3>,
-    writer: BinaryWriter
+    _msg: PartialDeep<NullHypothesisProto3>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     return writer;
   },
@@ -3637,7 +3639,7 @@ export const NullHypothesisProto3 = {
    */
   _readMessage: function (
     _msg: NullHypothesisProto3,
-    _reader: BinaryReader
+    _reader: BinaryReader,
   ): NullHypothesisProto3 {
     return _msg;
   },
@@ -3647,7 +3649,7 @@ export const EnumOnlyProto3 = {
   /**
    * Serializes EnumOnlyProto3 to protobuf.
    */
-  encode: function (_msg?: Partial<EnumOnlyProto3>): Uint8Array {
+  encode: function (_msg?: PartialDeep<EnumOnlyProto3>): Uint8Array {
     return new Uint8Array();
   },
 
@@ -3669,8 +3671,8 @@ export const EnumOnlyProto3 = {
    * @private
    */
   _writeMessage: function (
-    _msg: Partial<EnumOnlyProto3>,
-    writer: BinaryWriter
+    _msg: PartialDeep<EnumOnlyProto3>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     return writer;
   },
@@ -3680,7 +3682,7 @@ export const EnumOnlyProto3 = {
    */
   _readMessage: function (
     _msg: EnumOnlyProto3,
-    _reader: BinaryReader
+    _reader: BinaryReader,
   ): EnumOnlyProto3 {
     return _msg;
   },
@@ -3779,7 +3781,7 @@ export const TestAllTypesProto3JSON = {
   /**
    * Serializes TestAllTypesProto3 to JSON.
    */
-  encode: function (msg: Partial<TestAllTypesProto3>): string {
+  encode: function (msg: PartialDeep<TestAllTypesProto3>): string {
     return JSON.stringify(TestAllTypesProto3JSON._writeMessage(msg));
   },
 
@@ -3789,7 +3791,7 @@ export const TestAllTypesProto3JSON = {
   decode: function (json: string): TestAllTypesProto3 {
     return TestAllTypesProto3JSON._readMessage(
       TestAllTypesProto3JSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -3956,7 +3958,7 @@ export const TestAllTypesProto3JSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<TestAllTypesProto3>
+    msg: PartialDeep<TestAllTypesProto3>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.optionalInt32) {
@@ -4007,7 +4009,7 @@ export const TestAllTypesProto3JSON = {
     if (msg.optionalNestedMessage) {
       const _optionalNestedMessage_ =
         TestAllTypesProto3JSON.NestedMessage._writeMessage(
-          msg.optionalNestedMessage
+          msg.optionalNestedMessage,
         );
       if (Object.keys(_optionalNestedMessage_).length > 0) {
         json["optionalNestedMessage"] = _optionalNestedMessage_;
@@ -4015,7 +4017,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalForeignMessage) {
       const _optionalForeignMessage_ = ForeignMessageJSON._writeMessage(
-        msg.optionalForeignMessage
+        msg.optionalForeignMessage,
       );
       if (Object.keys(_optionalForeignMessage_).length > 0) {
         json["optionalForeignMessage"] = _optionalForeignMessage_;
@@ -4047,7 +4049,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.recursiveMessage) {
       const _recursiveMessage_ = TestAllTypesProto3JSON._writeMessage(
-        msg.recursiveMessage
+        msg.recursiveMessage,
       );
       if (Object.keys(_recursiveMessage_).length > 0) {
         json["recursiveMessage"] = _recursiveMessage_;
@@ -4100,12 +4102,12 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.repeatedNestedMessage?.length) {
       json["repeatedNestedMessage"] = msg.repeatedNestedMessage.map(
-        TestAllTypesProto3JSON.NestedMessage._writeMessage
+        TestAllTypesProto3JSON.NestedMessage._writeMessage,
       );
     }
     if (msg.repeatedForeignMessage?.length) {
       json["repeatedForeignMessage"] = msg.repeatedForeignMessage.map(
-        ForeignMessageJSON._writeMessage
+        ForeignMessageJSON._writeMessage,
       );
     }
     if (msg.repeatedNestedEnum?.length) {
@@ -4209,7 +4211,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapInt32Int32)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapInt32Int32._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapInt32Int32_).length > 0) {
         json["mapInt32Int32"] = _mapInt32Int32_;
@@ -4220,7 +4222,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapInt64Int64)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapInt64Int64._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapInt64Int64_).length > 0) {
         json["mapInt64Int64"] = _mapInt64Int64_;
@@ -4231,7 +4233,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapUint32Uint32)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapUint32Uint32._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapUint32Uint32_).length > 0) {
         json["mapUint32Uint32"] = _mapUint32Uint32_;
@@ -4242,7 +4244,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapUint64Uint64)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapUint64Uint64._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapUint64Uint64_).length > 0) {
         json["mapUint64Uint64"] = _mapUint64Uint64_;
@@ -4253,7 +4255,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapSint32Sint32)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapSint32Sint32._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapSint32Sint32_).length > 0) {
         json["mapSint32Sint32"] = _mapSint32Sint32_;
@@ -4264,7 +4266,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapSint64Sint64)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapSint64Sint64._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapSint64Sint64_).length > 0) {
         json["mapSint64Sint64"] = _mapSint64Sint64_;
@@ -4275,7 +4277,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapFixed32Fixed32)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapFixed32Fixed32._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapFixed32Fixed32_).length > 0) {
         json["mapFixed32Fixed32"] = _mapFixed32Fixed32_;
@@ -4286,7 +4288,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapFixed64Fixed64)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapFixed64Fixed64._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapFixed64Fixed64_).length > 0) {
         json["mapFixed64Fixed64"] = _mapFixed64Fixed64_;
@@ -4297,7 +4299,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapSfixed32Sfixed32)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapSfixed32Sfixed32._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapSfixed32Sfixed32_).length > 0) {
         json["mapSfixed32Sfixed32"] = _mapSfixed32Sfixed32_;
@@ -4308,7 +4310,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapSfixed64Sfixed64)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapSfixed64Sfixed64._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapSfixed64Sfixed64_).length > 0) {
         json["mapSfixed64Sfixed64"] = _mapSfixed64Sfixed64_;
@@ -4319,7 +4321,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapInt32Float)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapInt32Float._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapInt32Float_).length > 0) {
         json["mapInt32Float"] = _mapInt32Float_;
@@ -4330,7 +4332,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapInt32Double)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapInt32Double._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapInt32Double_).length > 0) {
         json["mapInt32Double"] = _mapInt32Double_;
@@ -4341,7 +4343,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapBoolBool)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapBoolBool._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapBoolBool_).length > 0) {
         json["mapBoolBool"] = _mapBoolBool_;
@@ -4352,7 +4354,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapStringString)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringString._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapStringString_).length > 0) {
         json["mapStringString"] = _mapStringString_;
@@ -4363,7 +4365,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapStringBytes)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringBytes._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapStringBytes_).length > 0) {
         json["mapStringBytes"] = _mapStringBytes_;
@@ -4374,7 +4376,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapStringNestedMessage)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringNestedMessage._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapStringNestedMessage_).length > 0) {
         json["mapStringNestedMessage"] = _mapStringNestedMessage_;
@@ -4385,7 +4387,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapStringForeignMessage)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringForeignMessage._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapStringForeignMessage_).length > 0) {
         json["mapStringForeignMessage"] = _mapStringForeignMessage_;
@@ -4396,7 +4398,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapStringNestedEnum)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringNestedEnum._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapStringNestedEnum_).length > 0) {
         json["mapStringNestedEnum"] = _mapStringNestedEnum_;
@@ -4407,7 +4409,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(msg.mapStringForeignEnum)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringForeignEnum._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_mapStringForeignEnum_).length > 0) {
         json["mapStringForeignEnum"] = _mapStringForeignEnum_;
@@ -4419,7 +4421,7 @@ export const TestAllTypesProto3JSON = {
     if (msg.oneofNestedMessage != undefined) {
       const _oneofNestedMessage_ =
         TestAllTypesProto3JSON.NestedMessage._writeMessage(
-          msg.oneofNestedMessage
+          msg.oneofNestedMessage,
         );
       json["oneofNestedMessage"] = _oneofNestedMessage_;
     }
@@ -4449,7 +4451,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalBoolWrapper) {
       const _optionalBoolWrapper_ = protoscript.BoolValueJSON._writeMessage(
-        msg.optionalBoolWrapper
+        msg.optionalBoolWrapper,
       );
       if (Object.keys(_optionalBoolWrapper_).length > 0) {
         json["optionalBoolWrapper"] = _optionalBoolWrapper_;
@@ -4457,7 +4459,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalInt32Wrapper) {
       const _optionalInt32Wrapper_ = protoscript.Int32ValueJSON._writeMessage(
-        msg.optionalInt32Wrapper
+        msg.optionalInt32Wrapper,
       );
       if (Object.keys(_optionalInt32Wrapper_).length > 0) {
         json["optionalInt32Wrapper"] = _optionalInt32Wrapper_;
@@ -4465,7 +4467,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalInt64Wrapper) {
       const _optionalInt64Wrapper_ = protoscript.Int64ValueJSON._writeMessage(
-        msg.optionalInt64Wrapper
+        msg.optionalInt64Wrapper,
       );
       if (Object.keys(_optionalInt64Wrapper_).length > 0) {
         json["optionalInt64Wrapper"] = _optionalInt64Wrapper_;
@@ -4473,7 +4475,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalUint32Wrapper) {
       const _optionalUint32Wrapper_ = protoscript.UInt32ValueJSON._writeMessage(
-        msg.optionalUint32Wrapper
+        msg.optionalUint32Wrapper,
       );
       if (Object.keys(_optionalUint32Wrapper_).length > 0) {
         json["optionalUint32Wrapper"] = _optionalUint32Wrapper_;
@@ -4481,7 +4483,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalUint64Wrapper) {
       const _optionalUint64Wrapper_ = protoscript.UInt64ValueJSON._writeMessage(
-        msg.optionalUint64Wrapper
+        msg.optionalUint64Wrapper,
       );
       if (Object.keys(_optionalUint64Wrapper_).length > 0) {
         json["optionalUint64Wrapper"] = _optionalUint64Wrapper_;
@@ -4489,7 +4491,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalFloatWrapper) {
       const _optionalFloatWrapper_ = protoscript.FloatValueJSON._writeMessage(
-        msg.optionalFloatWrapper
+        msg.optionalFloatWrapper,
       );
       if (Object.keys(_optionalFloatWrapper_).length > 0) {
         json["optionalFloatWrapper"] = _optionalFloatWrapper_;
@@ -4497,7 +4499,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalDoubleWrapper) {
       const _optionalDoubleWrapper_ = protoscript.DoubleValueJSON._writeMessage(
-        msg.optionalDoubleWrapper
+        msg.optionalDoubleWrapper,
       );
       if (Object.keys(_optionalDoubleWrapper_).length > 0) {
         json["optionalDoubleWrapper"] = _optionalDoubleWrapper_;
@@ -4505,7 +4507,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalStringWrapper) {
       const _optionalStringWrapper_ = protoscript.StringValueJSON._writeMessage(
-        msg.optionalStringWrapper
+        msg.optionalStringWrapper,
       );
       if (Object.keys(_optionalStringWrapper_).length > 0) {
         json["optionalStringWrapper"] = _optionalStringWrapper_;
@@ -4513,7 +4515,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalBytesWrapper) {
       const _optionalBytesWrapper_ = protoscript.BytesValueJSON._writeMessage(
-        msg.optionalBytesWrapper
+        msg.optionalBytesWrapper,
       );
       if (Object.keys(_optionalBytesWrapper_).length > 0) {
         json["optionalBytesWrapper"] = _optionalBytesWrapper_;
@@ -4521,52 +4523,52 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.repeatedBoolWrapper?.length) {
       json["repeatedBoolWrapper"] = msg.repeatedBoolWrapper.map(
-        protoscript.BoolValueJSON._writeMessage
+        protoscript.BoolValueJSON._writeMessage,
       );
     }
     if (msg.repeatedInt32Wrapper?.length) {
       json["repeatedInt32Wrapper"] = msg.repeatedInt32Wrapper.map(
-        protoscript.Int32ValueJSON._writeMessage
+        protoscript.Int32ValueJSON._writeMessage,
       );
     }
     if (msg.repeatedInt64Wrapper?.length) {
       json["repeatedInt64Wrapper"] = msg.repeatedInt64Wrapper.map(
-        protoscript.Int64ValueJSON._writeMessage
+        protoscript.Int64ValueJSON._writeMessage,
       );
     }
     if (msg.repeatedUint32Wrapper?.length) {
       json["repeatedUint32Wrapper"] = msg.repeatedUint32Wrapper.map(
-        protoscript.UInt32ValueJSON._writeMessage
+        protoscript.UInt32ValueJSON._writeMessage,
       );
     }
     if (msg.repeatedUint64Wrapper?.length) {
       json["repeatedUint64Wrapper"] = msg.repeatedUint64Wrapper.map(
-        protoscript.UInt64ValueJSON._writeMessage
+        protoscript.UInt64ValueJSON._writeMessage,
       );
     }
     if (msg.repeatedFloatWrapper?.length) {
       json["repeatedFloatWrapper"] = msg.repeatedFloatWrapper.map(
-        protoscript.FloatValueJSON._writeMessage
+        protoscript.FloatValueJSON._writeMessage,
       );
     }
     if (msg.repeatedDoubleWrapper?.length) {
       json["repeatedDoubleWrapper"] = msg.repeatedDoubleWrapper.map(
-        protoscript.DoubleValueJSON._writeMessage
+        protoscript.DoubleValueJSON._writeMessage,
       );
     }
     if (msg.repeatedStringWrapper?.length) {
       json["repeatedStringWrapper"] = msg.repeatedStringWrapper.map(
-        protoscript.StringValueJSON._writeMessage
+        protoscript.StringValueJSON._writeMessage,
       );
     }
     if (msg.repeatedBytesWrapper?.length) {
       json["repeatedBytesWrapper"] = msg.repeatedBytesWrapper.map(
-        protoscript.BytesValueJSON._writeMessage
+        protoscript.BytesValueJSON._writeMessage,
       );
     }
     if (msg.optionalDuration) {
       const _optionalDuration_ = protoscript.DurationJSON._writeMessage(
-        msg.optionalDuration
+        msg.optionalDuration,
       );
       if (Object.keys(_optionalDuration_).length > 0) {
         json["optionalDuration"] = _optionalDuration_;
@@ -4574,7 +4576,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalTimestamp) {
       const _optionalTimestamp_ = protoscript.TimestampJSON._writeMessage(
-        msg.optionalTimestamp
+        msg.optionalTimestamp,
       );
       if (Object.keys(_optionalTimestamp_).length > 0) {
         json["optionalTimestamp"] = _optionalTimestamp_;
@@ -4582,7 +4584,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalFieldMask) {
       const _optionalFieldMask_ = protoscript.FieldMaskJSON._writeMessage(
-        msg.optionalFieldMask
+        msg.optionalFieldMask,
       );
       if (Object.keys(_optionalFieldMask_).length > 0) {
         json["optionalFieldMask"] = _optionalFieldMask_;
@@ -4590,7 +4592,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalStruct) {
       const _optionalStruct_ = protoscript.StructJSON._writeMessage(
-        msg.optionalStruct
+        msg.optionalStruct,
       );
       if (Object.keys(_optionalStruct_).length > 0) {
         json["optionalStruct"] = _optionalStruct_;
@@ -4604,7 +4606,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.optionalValue) {
       const _optionalValue_ = protoscript.ValueJSON._writeMessage(
-        msg.optionalValue
+        msg.optionalValue,
       );
       if (Object.keys(_optionalValue_).length > 0) {
         json["optionalValue"] = _optionalValue_;
@@ -4618,37 +4620,37 @@ export const TestAllTypesProto3JSON = {
     }
     if (msg.repeatedDuration?.length) {
       json["repeatedDuration"] = msg.repeatedDuration.map(
-        protoscript.DurationJSON._writeMessage
+        protoscript.DurationJSON._writeMessage,
       );
     }
     if (msg.repeatedTimestamp?.length) {
       json["repeatedTimestamp"] = msg.repeatedTimestamp.map(
-        protoscript.TimestampJSON._writeMessage
+        protoscript.TimestampJSON._writeMessage,
       );
     }
     if (msg.repeatedFieldmask?.length) {
       json["repeatedFieldmask"] = msg.repeatedFieldmask.map(
-        protoscript.FieldMaskJSON._writeMessage
+        protoscript.FieldMaskJSON._writeMessage,
       );
     }
     if (msg.repeatedStruct?.length) {
       json["repeatedStruct"] = msg.repeatedStruct.map(
-        protoscript.StructJSON._writeMessage
+        protoscript.StructJSON._writeMessage,
       );
     }
     if (msg.repeatedAny?.length) {
       json["repeatedAny"] = msg.repeatedAny.map(
-        protoscript.AnyJSON._writeMessage
+        protoscript.AnyJSON._writeMessage,
       );
     }
     if (msg.repeatedValue?.length) {
       json["repeatedValue"] = msg.repeatedValue.map(
-        protoscript.ValueJSON._writeMessage
+        protoscript.ValueJSON._writeMessage,
       );
     }
     if (msg.repeatedListValue?.length) {
       json["repeatedListValue"] = msg.repeatedListValue.map(
-        protoscript.ListValueJSON._writeMessage
+        protoscript.ListValueJSON._writeMessage,
       );
     }
     if (msg.fieldname1) {
@@ -4713,7 +4715,7 @@ export const TestAllTypesProto3JSON = {
    */
   _readMessage: function (
     msg: TestAllTypesProto3,
-    json: any
+    json: any,
   ): TestAllTypesProto3 {
     const _optionalInt32_ = json["optionalInt32"] ?? json["optional_int32"];
     if (_optionalInt32_) {
@@ -4782,19 +4784,18 @@ export const TestAllTypesProto3JSON = {
     const _optionalNestedMessage_ =
       json["optionalNestedMessage"] ?? json["optional_nested_message"];
     if (_optionalNestedMessage_) {
-      const m = TestAllTypesProto3JSON.NestedMessage.initialize();
       TestAllTypesProto3JSON.NestedMessage._readMessage(
-        m,
-        _optionalNestedMessage_
+        msg.optionalNestedMessage,
+        _optionalNestedMessage_,
       );
-      msg.optionalNestedMessage = m;
     }
     const _optionalForeignMessage_ =
       json["optionalForeignMessage"] ?? json["optional_foreign_message"];
     if (_optionalForeignMessage_) {
-      const m = ForeignMessageJSON.initialize();
-      ForeignMessageJSON._readMessage(m, _optionalForeignMessage_);
-      msg.optionalForeignMessage = m;
+      ForeignMessageJSON._readMessage(
+        msg.optionalForeignMessage,
+        _optionalForeignMessage_,
+      );
     }
     const _optionalNestedEnum_ =
       json["optionalNestedEnum"] ?? json["optional_nested_enum"];
@@ -4823,9 +4824,11 @@ export const TestAllTypesProto3JSON = {
     const _recursiveMessage_ =
       json["recursiveMessage"] ?? json["recursive_message"];
     if (_recursiveMessage_) {
-      const m = TestAllTypesProto3JSON.initialize();
-      TestAllTypesProto3JSON._readMessage(m, _recursiveMessage_);
-      msg.recursiveMessage = m;
+      msg.recursiveMessage = TestAllTypesProto3JSON.initialize();
+      TestAllTypesProto3JSON._readMessage(
+        msg.recursiveMessage,
+        _recursiveMessage_,
+      );
     }
     const _repeatedInt32_ = json["repeatedInt32"] ?? json["repeated_int32"];
     if (_repeatedInt32_) {
@@ -5052,7 +5055,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapInt32Int32_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapInt32Int32._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapInt64Int64_ = json["mapInt64Int64"] ?? json["map_int64_int64"];
@@ -5061,7 +5064,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapInt64Int64_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapInt64Int64._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapUint32Uint32_ =
@@ -5071,7 +5074,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapUint32Uint32_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapUint32Uint32._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapUint64Uint64_ =
@@ -5081,7 +5084,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapUint64Uint64_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapUint64Uint64._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapSint32Sint32_ =
@@ -5091,7 +5094,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapSint32Sint32_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapSint32Sint32._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapSint64Sint64_ =
@@ -5101,7 +5104,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapSint64Sint64_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapSint64Sint64._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapFixed32Fixed32_ =
@@ -5111,7 +5114,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapFixed32Fixed32_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapFixed32Fixed32._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapFixed64Fixed64_ =
@@ -5121,7 +5124,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapFixed64Fixed64_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapFixed64Fixed64._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapSfixed32Sfixed32_ =
@@ -5131,7 +5134,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapSfixed32Sfixed32_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapSfixed32Sfixed32._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapSfixed64Sfixed64_ =
@@ -5141,7 +5144,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapSfixed64Sfixed64_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapSfixed64Sfixed64._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapInt32Float_ = json["mapInt32Float"] ?? json["map_int32_float"];
@@ -5150,7 +5153,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapInt32Float_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapInt32Float._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapInt32Double_ = json["mapInt32Double"] ?? json["map_int32_double"];
@@ -5159,7 +5162,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapInt32Double_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapInt32Double._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapBoolBool_ = json["mapBoolBool"] ?? json["map_bool_bool"];
@@ -5168,7 +5171,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapBoolBool_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapBoolBool._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapStringString_ =
@@ -5178,7 +5181,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapStringString_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringString._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapStringBytes_ = json["mapStringBytes"] ?? json["map_string_bytes"];
@@ -5187,7 +5190,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapStringBytes_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringBytes._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapStringNestedMessage_ =
@@ -5197,7 +5200,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapStringNestedMessage_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringNestedMessage._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapStringForeignMessage_ =
@@ -5207,7 +5210,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapStringForeignMessage_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringForeignMessage._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapStringNestedEnum_ =
@@ -5217,7 +5220,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapStringNestedEnum_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringNestedEnum._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _mapStringForeignEnum_ =
@@ -5227,7 +5230,7 @@ export const TestAllTypesProto3JSON = {
         Object.entries(_mapStringForeignEnum_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(TestAllTypesProto3JSON.MapStringForeignEnum._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     const _oneofUint32_ = json["oneofUint32"] ?? json["oneof_uint32"];
@@ -5237,12 +5240,12 @@ export const TestAllTypesProto3JSON = {
     const _oneofNestedMessage_ =
       json["oneofNestedMessage"] ?? json["oneof_nested_message"];
     if (_oneofNestedMessage_) {
-      const m = TestAllTypesProto3JSON.NestedMessage.initialize();
+      msg.oneofNestedMessage =
+        TestAllTypesProto3JSON.NestedMessage.initialize();
       TestAllTypesProto3JSON.NestedMessage._readMessage(
-        m,
-        _oneofNestedMessage_
+        msg.oneofNestedMessage,
+        _oneofNestedMessage_,
       );
-      msg.oneofNestedMessage = m;
     }
     const _oneofString_ = json["oneofString"] ?? json["oneof_string"];
     if (_oneofString_) {
@@ -5279,65 +5282,74 @@ export const TestAllTypesProto3JSON = {
     const _optionalBoolWrapper_ =
       json["optionalBoolWrapper"] ?? json["optional_bool_wrapper"];
     if (_optionalBoolWrapper_) {
-      const m = protoscript.BoolValueJSON.initialize();
-      protoscript.BoolValueJSON._readMessage(m, _optionalBoolWrapper_);
-      msg.optionalBoolWrapper = m;
+      protoscript.BoolValueJSON._readMessage(
+        msg.optionalBoolWrapper,
+        _optionalBoolWrapper_,
+      );
     }
     const _optionalInt32Wrapper_ =
       json["optionalInt32Wrapper"] ?? json["optional_int32_wrapper"];
     if (_optionalInt32Wrapper_) {
-      const m = protoscript.Int32ValueJSON.initialize();
-      protoscript.Int32ValueJSON._readMessage(m, _optionalInt32Wrapper_);
-      msg.optionalInt32Wrapper = m;
+      protoscript.Int32ValueJSON._readMessage(
+        msg.optionalInt32Wrapper,
+        _optionalInt32Wrapper_,
+      );
     }
     const _optionalInt64Wrapper_ =
       json["optionalInt64Wrapper"] ?? json["optional_int64_wrapper"];
     if (_optionalInt64Wrapper_) {
-      const m = protoscript.Int64ValueJSON.initialize();
-      protoscript.Int64ValueJSON._readMessage(m, _optionalInt64Wrapper_);
-      msg.optionalInt64Wrapper = m;
+      protoscript.Int64ValueJSON._readMessage(
+        msg.optionalInt64Wrapper,
+        _optionalInt64Wrapper_,
+      );
     }
     const _optionalUint32Wrapper_ =
       json["optionalUint32Wrapper"] ?? json["optional_uint32_wrapper"];
     if (_optionalUint32Wrapper_) {
-      const m = protoscript.UInt32ValueJSON.initialize();
-      protoscript.UInt32ValueJSON._readMessage(m, _optionalUint32Wrapper_);
-      msg.optionalUint32Wrapper = m;
+      protoscript.UInt32ValueJSON._readMessage(
+        msg.optionalUint32Wrapper,
+        _optionalUint32Wrapper_,
+      );
     }
     const _optionalUint64Wrapper_ =
       json["optionalUint64Wrapper"] ?? json["optional_uint64_wrapper"];
     if (_optionalUint64Wrapper_) {
-      const m = protoscript.UInt64ValueJSON.initialize();
-      protoscript.UInt64ValueJSON._readMessage(m, _optionalUint64Wrapper_);
-      msg.optionalUint64Wrapper = m;
+      protoscript.UInt64ValueJSON._readMessage(
+        msg.optionalUint64Wrapper,
+        _optionalUint64Wrapper_,
+      );
     }
     const _optionalFloatWrapper_ =
       json["optionalFloatWrapper"] ?? json["optional_float_wrapper"];
     if (_optionalFloatWrapper_) {
-      const m = protoscript.FloatValueJSON.initialize();
-      protoscript.FloatValueJSON._readMessage(m, _optionalFloatWrapper_);
-      msg.optionalFloatWrapper = m;
+      protoscript.FloatValueJSON._readMessage(
+        msg.optionalFloatWrapper,
+        _optionalFloatWrapper_,
+      );
     }
     const _optionalDoubleWrapper_ =
       json["optionalDoubleWrapper"] ?? json["optional_double_wrapper"];
     if (_optionalDoubleWrapper_) {
-      const m = protoscript.DoubleValueJSON.initialize();
-      protoscript.DoubleValueJSON._readMessage(m, _optionalDoubleWrapper_);
-      msg.optionalDoubleWrapper = m;
+      protoscript.DoubleValueJSON._readMessage(
+        msg.optionalDoubleWrapper,
+        _optionalDoubleWrapper_,
+      );
     }
     const _optionalStringWrapper_ =
       json["optionalStringWrapper"] ?? json["optional_string_wrapper"];
     if (_optionalStringWrapper_) {
-      const m = protoscript.StringValueJSON.initialize();
-      protoscript.StringValueJSON._readMessage(m, _optionalStringWrapper_);
-      msg.optionalStringWrapper = m;
+      protoscript.StringValueJSON._readMessage(
+        msg.optionalStringWrapper,
+        _optionalStringWrapper_,
+      );
     }
     const _optionalBytesWrapper_ =
       json["optionalBytesWrapper"] ?? json["optional_bytes_wrapper"];
     if (_optionalBytesWrapper_) {
-      const m = protoscript.BytesValueJSON.initialize();
-      protoscript.BytesValueJSON._readMessage(m, _optionalBytesWrapper_);
-      msg.optionalBytesWrapper = m;
+      protoscript.BytesValueJSON._readMessage(
+        msg.optionalBytesWrapper,
+        _optionalBytesWrapper_,
+      );
     }
     const _repeatedBoolWrapper_ =
       json["repeatedBoolWrapper"] ?? json["repeated_bool_wrapper"];
@@ -5423,41 +5435,38 @@ export const TestAllTypesProto3JSON = {
     const _optionalDuration_ =
       json["optionalDuration"] ?? json["optional_duration"];
     if (_optionalDuration_) {
-      const m = protoscript.DurationJSON.initialize();
-      protoscript.DurationJSON._readMessage(m, _optionalDuration_);
-      msg.optionalDuration = m;
+      protoscript.DurationJSON._readMessage(
+        msg.optionalDuration,
+        _optionalDuration_,
+      );
     }
     const _optionalTimestamp_ =
       json["optionalTimestamp"] ?? json["optional_timestamp"];
     if (_optionalTimestamp_) {
-      const m = protoscript.TimestampJSON.initialize();
-      protoscript.TimestampJSON._readMessage(m, _optionalTimestamp_);
-      msg.optionalTimestamp = m;
+      protoscript.TimestampJSON._readMessage(
+        msg.optionalTimestamp,
+        _optionalTimestamp_,
+      );
     }
     const _optionalFieldMask_ =
       json["optionalFieldMask"] ?? json["optional_field_mask"];
     if (_optionalFieldMask_) {
-      const m = protoscript.FieldMaskJSON.initialize();
-      protoscript.FieldMaskJSON._readMessage(m, _optionalFieldMask_);
-      msg.optionalFieldMask = m;
+      protoscript.FieldMaskJSON._readMessage(
+        msg.optionalFieldMask,
+        _optionalFieldMask_,
+      );
     }
     const _optionalStruct_ = json["optionalStruct"] ?? json["optional_struct"];
     if (_optionalStruct_) {
-      const m = protoscript.StructJSON.initialize();
-      protoscript.StructJSON._readMessage(m, _optionalStruct_);
-      msg.optionalStruct = m;
+      protoscript.StructJSON._readMessage(msg.optionalStruct, _optionalStruct_);
     }
     const _optionalAny_ = json["optionalAny"] ?? json["optional_any"];
     if (_optionalAny_) {
-      const m = protoscript.AnyJSON.initialize();
-      protoscript.AnyJSON._readMessage(m, _optionalAny_);
-      msg.optionalAny = m;
+      protoscript.AnyJSON._readMessage(msg.optionalAny, _optionalAny_);
     }
     const _optionalValue_ = json["optionalValue"] ?? json["optional_value"];
     if (_optionalValue_) {
-      const m = protoscript.ValueJSON.initialize();
-      protoscript.ValueJSON._readMessage(m, _optionalValue_);
-      msg.optionalValue = m;
+      protoscript.ValueJSON._readMessage(msg.optionalValue, _optionalValue_);
     }
     const _optionalNullValue_ =
       json["optionalNullValue"] ?? json["optional_null_value"];
@@ -5716,9 +5725,11 @@ export const TestAllTypesProto3JSON = {
     /**
      * Serializes TestAllTypesProto3.NestedMessage to JSON.
      */
-    encode: function (msg: Partial<TestAllTypesProto3.NestedMessage>): string {
+    encode: function (
+      msg: PartialDeep<TestAllTypesProto3.NestedMessage>,
+    ): string {
       return JSON.stringify(
-        TestAllTypesProto3JSON.NestedMessage._writeMessage(msg)
+        TestAllTypesProto3JSON.NestedMessage._writeMessage(msg),
       );
     },
 
@@ -5728,7 +5739,7 @@ export const TestAllTypesProto3JSON = {
     decode: function (json: string): TestAllTypesProto3.NestedMessage {
       return TestAllTypesProto3JSON.NestedMessage._readMessage(
         TestAllTypesProto3JSON.NestedMessage.initialize(),
-        JSON.parse(json)
+        JSON.parse(json),
       );
     },
 
@@ -5746,7 +5757,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.NestedMessage>
+      msg: PartialDeep<TestAllTypesProto3.NestedMessage>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.a) {
@@ -5754,7 +5765,7 @@ export const TestAllTypesProto3JSON = {
       }
       if (msg.corecursive) {
         const _corecursive_ = TestAllTypesProto3JSON._writeMessage(
-          msg.corecursive
+          msg.corecursive,
         );
         if (Object.keys(_corecursive_).length > 0) {
           json["corecursive"] = _corecursive_;
@@ -5768,7 +5779,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.NestedMessage,
-      json: any
+      json: any,
     ): TestAllTypesProto3.NestedMessage {
       const _a_ = json["a"];
       if (_a_) {
@@ -5776,9 +5787,8 @@ export const TestAllTypesProto3JSON = {
       }
       const _corecursive_ = json["corecursive"];
       if (_corecursive_) {
-        const m = TestAllTypesProto3JSON.initialize();
-        TestAllTypesProto3JSON._readMessage(m, _corecursive_);
-        msg.corecursive = m;
+        msg.corecursive = TestAllTypesProto3JSON.initialize();
+        TestAllTypesProto3JSON._readMessage(msg.corecursive, _corecursive_);
       }
       return msg;
     },
@@ -5789,7 +5799,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapInt32Int32>
+      msg: PartialDeep<TestAllTypesProto3.MapInt32Int32>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -5806,7 +5816,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapInt32Int32,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapInt32Int32 {
       const _key_ = json["key"];
       if (_key_) {
@@ -5825,7 +5835,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapInt64Int64>
+      msg: PartialDeep<TestAllTypesProto3.MapInt64Int64>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -5842,7 +5852,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapInt64Int64,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapInt64Int64 {
       const _key_ = json["key"];
       if (_key_) {
@@ -5861,7 +5871,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapUint32Uint32>
+      msg: PartialDeep<TestAllTypesProto3.MapUint32Uint32>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -5878,7 +5888,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapUint32Uint32,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapUint32Uint32 {
       const _key_ = json["key"];
       if (_key_) {
@@ -5897,7 +5907,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapUint64Uint64>
+      msg: PartialDeep<TestAllTypesProto3.MapUint64Uint64>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -5914,7 +5924,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapUint64Uint64,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapUint64Uint64 {
       const _key_ = json["key"];
       if (_key_) {
@@ -5933,7 +5943,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapSint32Sint32>
+      msg: PartialDeep<TestAllTypesProto3.MapSint32Sint32>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -5950,7 +5960,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapSint32Sint32,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapSint32Sint32 {
       const _key_ = json["key"];
       if (_key_) {
@@ -5969,7 +5979,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapSint64Sint64>
+      msg: PartialDeep<TestAllTypesProto3.MapSint64Sint64>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -5986,7 +5996,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapSint64Sint64,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapSint64Sint64 {
       const _key_ = json["key"];
       if (_key_) {
@@ -6005,7 +6015,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapFixed32Fixed32>
+      msg: PartialDeep<TestAllTypesProto3.MapFixed32Fixed32>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6022,7 +6032,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapFixed32Fixed32,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapFixed32Fixed32 {
       const _key_ = json["key"];
       if (_key_) {
@@ -6041,7 +6051,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapFixed64Fixed64>
+      msg: PartialDeep<TestAllTypesProto3.MapFixed64Fixed64>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6058,7 +6068,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapFixed64Fixed64,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapFixed64Fixed64 {
       const _key_ = json["key"];
       if (_key_) {
@@ -6077,7 +6087,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapSfixed32Sfixed32>
+      msg: PartialDeep<TestAllTypesProto3.MapSfixed32Sfixed32>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6094,7 +6104,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapSfixed32Sfixed32,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapSfixed32Sfixed32 {
       const _key_ = json["key"];
       if (_key_) {
@@ -6113,7 +6123,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapSfixed64Sfixed64>
+      msg: PartialDeep<TestAllTypesProto3.MapSfixed64Sfixed64>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6130,7 +6140,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapSfixed64Sfixed64,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapSfixed64Sfixed64 {
       const _key_ = json["key"];
       if (_key_) {
@@ -6149,7 +6159,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapInt32Float>
+      msg: PartialDeep<TestAllTypesProto3.MapInt32Float>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6166,7 +6176,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapInt32Float,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapInt32Float {
       const _key_ = json["key"];
       if (_key_) {
@@ -6185,7 +6195,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapInt32Double>
+      msg: PartialDeep<TestAllTypesProto3.MapInt32Double>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6202,7 +6212,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapInt32Double,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapInt32Double {
       const _key_ = json["key"];
       if (_key_) {
@@ -6221,7 +6231,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapBoolBool>
+      msg: PartialDeep<TestAllTypesProto3.MapBoolBool>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6238,7 +6248,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapBoolBool,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapBoolBool {
       const _key_ = json["key"];
       if (_key_) {
@@ -6257,7 +6267,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringString>
+      msg: PartialDeep<TestAllTypesProto3.MapStringString>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6274,7 +6284,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringString,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapStringString {
       const _key_ = json["key"];
       if (_key_) {
@@ -6293,7 +6303,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringBytes>
+      msg: PartialDeep<TestAllTypesProto3.MapStringBytes>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6310,7 +6320,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringBytes,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapStringBytes {
       const _key_ = json["key"];
       if (_key_) {
@@ -6329,7 +6339,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringNestedMessage>
+      msg: PartialDeep<TestAllTypesProto3.MapStringNestedMessage>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6337,7 +6347,7 @@ export const TestAllTypesProto3JSON = {
       }
       if (msg.value) {
         const _value_ = TestAllTypesProto3JSON.NestedMessage._writeMessage(
-          msg.value
+          msg.value,
         );
         if (Object.keys(_value_).length > 0) {
           json["value"] = _value_;
@@ -6351,7 +6361,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringNestedMessage,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapStringNestedMessage {
       const _key_ = json["key"];
       if (_key_) {
@@ -6359,9 +6369,7 @@ export const TestAllTypesProto3JSON = {
       }
       const _value_ = json["value"];
       if (_value_) {
-        const m = TestAllTypesProto3JSON.NestedMessage.initialize();
-        TestAllTypesProto3JSON.NestedMessage._readMessage(m, _value_);
-        msg.value = m;
+        TestAllTypesProto3JSON.NestedMessage._readMessage(msg.value, _value_);
       }
       return msg;
     },
@@ -6372,7 +6380,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringForeignMessage>
+      msg: PartialDeep<TestAllTypesProto3.MapStringForeignMessage>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6392,7 +6400,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringForeignMessage,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapStringForeignMessage {
       const _key_ = json["key"];
       if (_key_) {
@@ -6400,9 +6408,7 @@ export const TestAllTypesProto3JSON = {
       }
       const _value_ = json["value"];
       if (_value_) {
-        const m = ForeignMessageJSON.initialize();
-        ForeignMessageJSON._readMessage(m, _value_);
-        msg.value = m;
+        ForeignMessageJSON._readMessage(msg.value, _value_);
       }
       return msg;
     },
@@ -6413,7 +6419,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringNestedEnum>
+      msg: PartialDeep<TestAllTypesProto3.MapStringNestedEnum>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6430,7 +6436,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringNestedEnum,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapStringNestedEnum {
       const _key_ = json["key"];
       if (_key_) {
@@ -6449,7 +6455,7 @@ export const TestAllTypesProto3JSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<TestAllTypesProto3.MapStringForeignEnum>
+      msg: PartialDeep<TestAllTypesProto3.MapStringForeignEnum>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -6466,7 +6472,7 @@ export const TestAllTypesProto3JSON = {
      */
     _readMessage: function (
       msg: TestAllTypesProto3.MapStringForeignEnum,
-      json: any
+      json: any,
     ): TestAllTypesProto3.MapStringForeignEnum {
       const _key_ = json["key"];
       if (_key_) {
@@ -6485,7 +6491,7 @@ export const ForeignMessageJSON = {
   /**
    * Serializes ForeignMessage to JSON.
    */
-  encode: function (msg: Partial<ForeignMessage>): string {
+  encode: function (msg: PartialDeep<ForeignMessage>): string {
     return JSON.stringify(ForeignMessageJSON._writeMessage(msg));
   },
 
@@ -6495,7 +6501,7 @@ export const ForeignMessageJSON = {
   decode: function (json: string): ForeignMessage {
     return ForeignMessageJSON._readMessage(
       ForeignMessageJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -6512,7 +6518,7 @@ export const ForeignMessageJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ForeignMessage>
+    msg: PartialDeep<ForeignMessage>,
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.c) {
@@ -6537,7 +6543,7 @@ export const NullHypothesisProto3JSON = {
   /**
    * Serializes NullHypothesisProto3 to JSON.
    */
-  encode: function (_msg?: Partial<NullHypothesisProto3>): string {
+  encode: function (_msg?: PartialDeep<NullHypothesisProto3>): string {
     return "{}";
   },
 
@@ -6559,7 +6565,7 @@ export const NullHypothesisProto3JSON = {
    * @private
    */
   _writeMessage: function (
-    _msg: Partial<NullHypothesisProto3>
+    _msg: PartialDeep<NullHypothesisProto3>,
   ): Record<string, unknown> {
     return {};
   },
@@ -6569,7 +6575,7 @@ export const NullHypothesisProto3JSON = {
    */
   _readMessage: function (
     msg: NullHypothesisProto3,
-    _json: any
+    _json: any,
   ): NullHypothesisProto3 {
     return msg;
   },
@@ -6579,7 +6585,7 @@ export const EnumOnlyProto3JSON = {
   /**
    * Serializes EnumOnlyProto3 to JSON.
    */
-  encode: function (_msg?: Partial<EnumOnlyProto3>): string {
+  encode: function (_msg?: PartialDeep<EnumOnlyProto3>): string {
     return "{}";
   },
 
@@ -6601,7 +6607,7 @@ export const EnumOnlyProto3JSON = {
    * @private
    */
   _writeMessage: function (
-    _msg: Partial<EnumOnlyProto3>
+    _msg: PartialDeep<EnumOnlyProto3>,
   ): Record<string, unknown> {
     return {};
   },

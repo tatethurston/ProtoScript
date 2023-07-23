@@ -2,7 +2,7 @@
 // Source: google/protobuf/struct.proto
 /* eslint-disable */
 
-import type { ByteSource } from "protoscript";
+import type { ByteSource, PartialDeep } from "protoscript";
 import { BinaryReader, BinaryWriter } from "protoscript";
 
 //========================================//
@@ -13,7 +13,7 @@ import { BinaryReader, BinaryWriter } from "protoscript";
  * `NullValue` is a singleton enumeration to represent the null value for the
  * `Value` type union.
  *
- *  The JSON representation for `NullValue` is JSON `null`.
+ * The JSON representation for `NullValue` is JSON `null`.
  */
 export type NullValue = "NULL_VALUE";
 
@@ -131,7 +131,7 @@ export const Struct = {
   /**
    * Serializes Struct to protobuf.
    */
-  encode: function (msg: Partial<Struct>): Uint8Array {
+  encode: function (msg: PartialDeep<Struct>): Uint8Array {
     return Struct._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -155,8 +155,8 @@ export const Struct = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Struct>,
-    writer: BinaryWriter
+    msg: PartialDeep<Struct>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.fields) {
       writer.writeRepeatedMessage(
@@ -165,7 +165,7 @@ export const Struct = {
           key: key as any,
           value: value as any,
         })) as any,
-        Struct.Fields._writeMessage
+        Struct.Fields._writeMessage,
       );
     }
     return writer;
@@ -198,8 +198,8 @@ export const Struct = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Struct.Fields>,
-      writer: BinaryWriter
+      msg: PartialDeep<Struct.Fields>,
+      writer: BinaryWriter,
     ): BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
@@ -215,7 +215,7 @@ export const Struct = {
      */
     _readMessage: function (
       msg: Struct.Fields,
-      reader: BinaryReader
+      reader: BinaryReader,
     ): Struct.Fields {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -244,7 +244,7 @@ export const Value = {
   /**
    * Serializes Value to protobuf.
    */
-  encode: function (msg: Partial<Value>): Uint8Array {
+  encode: function (msg: PartialDeep<Value>): Uint8Array {
     return Value._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -273,8 +273,8 @@ export const Value = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Value>,
-    writer: BinaryWriter
+    msg: PartialDeep<Value>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.nullValue != undefined) {
       writer.writeEnum(1, NullValue._toInt(msg.nullValue));
@@ -344,7 +344,7 @@ export const ListValue = {
   /**
    * Serializes ListValue to protobuf.
    */
-  encode: function (msg: Partial<ListValue>): Uint8Array {
+  encode: function (msg: PartialDeep<ListValue>): Uint8Array {
     return ListValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
   },
 
@@ -354,7 +354,7 @@ export const ListValue = {
   decode: function (bytes: ByteSource): ListValue {
     return ListValue._readMessage(
       ListValue.initialize(),
-      new BinaryReader(bytes)
+      new BinaryReader(bytes),
     );
   },
 
@@ -371,8 +371,8 @@ export const ListValue = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<ListValue>,
-    writer: BinaryWriter
+    msg: PartialDeep<ListValue>,
+    writer: BinaryWriter,
   ): BinaryWriter {
     if (msg.values?.length) {
       writer.writeRepeatedMessage(1, msg.values as any, Value._writeMessage);
@@ -446,7 +446,7 @@ export const StructJSON = {
   /**
    * Serializes Struct to JSON.
    */
-  encode: function (msg: Partial<Struct>): string {
+  encode: function (msg: PartialDeep<Struct>): string {
     return JSON.stringify(StructJSON._writeMessage(msg));
   },
 
@@ -469,14 +469,14 @@ export const StructJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Struct>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Struct>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.fields) {
       const _fields_ = Object.fromEntries(
         Object.entries(msg.fields)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(StructJSON.Fields._writeMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
       if (Object.keys(_fields_).length > 0) {
         json["fields"] = _fields_;
@@ -495,7 +495,7 @@ export const StructJSON = {
         Object.entries(_fields_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
           .map(StructJSON.Fields._readMessage)
-          .map(({ key, value }) => [key, value])
+          .map(({ key, value }) => [key, value]),
       );
     }
     return msg;
@@ -506,7 +506,7 @@ export const StructJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Struct.Fields>
+      msg: PartialDeep<Struct.Fields>,
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -531,9 +531,7 @@ export const StructJSON = {
       }
       const _value_ = json["value"];
       if (_value_) {
-        const m = ValueJSON.initialize();
-        ValueJSON._readMessage(m, _value_);
-        msg.value = m;
+        ValueJSON._readMessage(msg.value, _value_);
       }
       return msg;
     },
@@ -544,7 +542,7 @@ export const ValueJSON = {
   /**
    * Serializes Value to JSON.
    */
-  encode: function (msg: Partial<Value>): string {
+  encode: function (msg: PartialDeep<Value>): string {
     return JSON.stringify(ValueJSON._writeMessage(msg));
   },
 
@@ -572,7 +570,7 @@ export const ValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<Value>): Record<string, unknown> {
+  _writeMessage: function (msg: PartialDeep<Value>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.nullValue != undefined) {
       json["nullValue"] = msg.nullValue;
@@ -619,15 +617,13 @@ export const ValueJSON = {
     }
     const _structValue_ = json["structValue"] ?? json["struct_value"];
     if (_structValue_) {
-      const m = StructJSON.initialize();
-      StructJSON._readMessage(m, _structValue_);
-      msg.structValue = m;
+      msg.structValue = StructJSON.initialize();
+      StructJSON._readMessage(msg.structValue, _structValue_);
     }
     const _listValue_ = json["listValue"] ?? json["list_value"];
     if (_listValue_) {
-      const m = ListValueJSON.initialize();
-      ListValueJSON._readMessage(m, _listValue_);
-      msg.listValue = m;
+      msg.listValue = ListValueJSON.initialize();
+      ListValueJSON._readMessage(msg.listValue, _listValue_);
     }
     return msg;
   },
@@ -637,7 +633,7 @@ export const ListValueJSON = {
   /**
    * Serializes ListValue to JSON.
    */
-  encode: function (msg: Partial<ListValue>): string {
+  encode: function (msg: PartialDeep<ListValue>): string {
     return JSON.stringify(ListValueJSON._writeMessage(msg));
   },
 
@@ -647,7 +643,7 @@ export const ListValueJSON = {
   decode: function (json: string): ListValue {
     return ListValueJSON._readMessage(
       ListValueJSON.initialize(),
-      JSON.parse(json)
+      JSON.parse(json),
     );
   },
 
@@ -663,7 +659,9 @@ export const ListValueJSON = {
   /**
    * @private
    */
-  _writeMessage: function (msg: Partial<ListValue>): Record<string, unknown> {
+  _writeMessage: function (
+    msg: PartialDeep<ListValue>,
+  ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.values?.length) {
       json["values"] = msg.values.map(ValueJSON._writeMessage);

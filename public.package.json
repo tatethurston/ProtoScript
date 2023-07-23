@@ -17,8 +17,8 @@
   "sideEffects": false,
   "types": "./index.d.ts",
   "dependencies": {
-    "google-protobuf": "^3.21.0",
-    "prettier": "^2.7.1"
+    "google-protobuf": "^3.21.2",
+    "prettier": "^3.0.0"
   },
   "keywords": ["protobuf", "protocol buffers", "typescript"],
   "exports": {

@@ -75,7 +75,7 @@ interface Descriptor {
 export function getDescriptor(
   field: FieldDescriptorProtoType,
   identifierTable: IdentifierTable,
-  fileDescriptorProto: FileDescriptorProto
+  fileDescriptorProto: FileDescriptorProto,
 ): Descriptor | undefined {
   const repeated =
     field.getLabel() === FieldDescriptorProto.Label.LABEL_REPEATED;
@@ -171,7 +171,7 @@ export function getDescriptor(
       let name = removePackagePrefix(
         _type,
         identifierTable,
-        fileDescriptorProto
+        fileDescriptorProto,
       );
       let jsonName = JSONName(name);
       if (
@@ -180,7 +180,7 @@ export function getDescriptor(
         const dep = getIdentifierEntryFromTable(
           _type,
           identifierTable,
-          fileDescriptorProto
+          fileDescriptorProto,
         );
         const moduleName = getModuleName(dep);
         name = moduleName + "." + name;
@@ -235,13 +235,13 @@ export function getDescriptor(
       let name = removePackagePrefix(
         _type,
         identifierTable,
-        fileDescriptorProto
+        fileDescriptorProto,
       );
       /* eslint-disable */
       const isMap =
         (
           identifierTable.find(
-            ({ namespacedIdentifier }) => _type === namespacedIdentifier
+            ({ namespacedIdentifier }) => _type === namespacedIdentifier,
           )?.descriptorProto as DescriptorProto
         )
           .getOptions()
@@ -257,7 +257,7 @@ export function getDescriptor(
         const dep = getIdentifierEntryFromTable(
           _type,
           identifierTable,
-          fileDescriptorProto
+          fileDescriptorProto,
         );
         const moduleName = getModuleName(dep);
         name = moduleName + "." + name;
@@ -432,7 +432,7 @@ function applyNamespace(
   name: string,
   { removeLeadingPeriod }: { removeLeadingPeriod: boolean } = {
     removeLeadingPeriod: false,
-  }
+  },
 ): string {
   let _namespace = namespacing + "." + name;
   if (removeLeadingPeriod && _namespace.startsWith(".")) {
@@ -457,7 +457,7 @@ export type IdentifierTable = {
  * '.protobuf_unittest_import.PublicImportMessage', 'google/protobuf/unittest_import_public.proto', 'protobuf_unittest_import', 'protobuf_unittest_import_public'
  */
 export function buildIdentifierTable(
-  request: CodeGeneratorRequest
+  request: CodeGeneratorRequest,
 ): IdentifierTable {
   const table: IdentifierTable = [];
 
@@ -471,7 +471,7 @@ export function buildIdentifierTable(
     function addEntry(
       namespacing: string,
       name: string,
-      descriptorProto: DescriptorProto | EnumDescriptorProto
+      descriptorProto: DescriptorProto | EnumDescriptorProto,
     ): void {
       table.push({
         namespacedIdentifier: applyNamespace(namespacing, name),
@@ -528,7 +528,7 @@ export function buildIdentifierTable(
     const publicImports = fileDescriptorProto
       .getDependencyList()
       .filter((_, idx) =>
-        fileDescriptorProto.getPublicDependencyList().includes(idx)
+        fileDescriptorProto.getPublicDependencyList().includes(idx),
       );
 
     const protoFilePath = fileDescriptorProto.getName();
@@ -626,11 +626,11 @@ export interface ParsedAst {
 function getIdentifierEntryFromTable(
   identifier: string,
   identifiers: IdentifierTable,
-  fileDescriptorProto: FileDescriptorProto
+  fileDescriptorProto: FileDescriptorProto,
 ): IdentifierTable[0] {
   const file = fileDescriptorProto.getName();
   const dependencyFiles = [file].concat(
-    fileDescriptorProto.getDependencyList()
+    fileDescriptorProto.getDependencyList(),
   );
 
   const dep = identifiers.find(({ namespacedIdentifier, file }) => {
@@ -661,12 +661,12 @@ function getImportForIdentifier(
   identifier: string,
   identifiers: IdentifierTable,
   fileDescriptorProto: FileDescriptorProto,
-  isTS: boolean
+  isTS: boolean,
 ): Import {
   const dep = getIdentifierEntryFromTable(
     identifier,
     identifiers,
-    fileDescriptorProto
+    fileDescriptorProto,
   );
   const sourceFile = fileDescriptorProto.getName() ?? "";
   const dependencyImportPath = dep.publicImport ?? dep.file;
@@ -684,7 +684,7 @@ function getImportForIdentifier(
      */
     isTS
       ? getProtobufTSFileNameImport(dependencyImportPath)
-      : getProtobufJSFileName(dependencyImportPath)
+      : getProtobufJSFileName(dependencyImportPath),
   );
 
   let path = getImportPath(importPath);
@@ -699,13 +699,13 @@ function getImportForIdentifier(
 function identifierIsDefinedInFile(
   identifier: string,
   identifierTable: IdentifierTable,
-  fileDescriptorProto: FileDescriptorProto
+  fileDescriptorProto: FileDescriptorProto,
 ): boolean {
   return (
     identifierTable.find(
       ({ namespacedIdentifier, file }) =>
         identifier === namespacedIdentifier &&
-        file === fileDescriptorProto.getName()
+        file === fileDescriptorProto.getName(),
     ) !== undefined
   );
 }
@@ -713,12 +713,12 @@ function identifierIsDefinedInFile(
 function removePackagePrefix(
   identifier: string,
   identifiers: IdentifierTable,
-  fileDescriptorProto: FileDescriptorProto
+  fileDescriptorProto: FileDescriptorProto,
 ): string {
   const dep = getIdentifierEntryFromTable(
     identifier,
     identifiers,
-    fileDescriptorProto
+    fileDescriptorProto,
   );
   const packagePrefix = "." + dep.package;
 
@@ -739,7 +739,7 @@ function isNotBlank<T>(x: T): x is NonNullable<T> {
 export function processTypes(
   fileDescriptorProto: FileDescriptorProto,
   identifierTable: IdentifierTable,
-  isTS: boolean
+  isTS: boolean,
 ): ParsedAst {
   const typeFile: ParsedAst = {
     packageName: fileDescriptorProto.getPackage(),
@@ -753,10 +753,10 @@ export function processTypes(
       identifier,
       identifierTable,
       fileDescriptorProto,
-      isTS
+      isTS,
     );
     const exisitingImport = typeFile.imports.find(
-      ({ path }) => path === _import.path
+      ({ path }) => path === _import.path,
     );
     if (exisitingImport) {
       if (!exisitingImport.identifiers.find((x) => x === _import.identifier)) {
@@ -819,7 +819,7 @@ export function processTypes(
           const descriptor = getDescriptor(
             value,
             identifierTable,
-            fileDescriptorProto
+            fileDescriptorProto,
           );
           if (!descriptor) {
             return;
@@ -851,7 +851,7 @@ export function processTypes(
       identifierIsDefinedInFile(
         identifier,
         identifierTable,
-        fileDescriptorProto
+        fileDescriptorProto,
       )
     ) {
       return;
@@ -862,7 +862,7 @@ export function processTypes(
 
   function walk(
     namespacing: string,
-    descriptorProto: DescriptorProto
+    descriptorProto: DescriptorProto,
   ): ProtoTypes[] {
     const types: ProtoTypes[] = [];
     const enums = descriptorProto.getEnumTypeList();
@@ -882,7 +882,7 @@ export function processTypes(
       if (messageName) {
         const children = walk(
           applyNamespace(namespacing, messageName),
-          descriptor
+          descriptor,
         );
         types.push({
           type: "message",
@@ -926,7 +926,7 @@ export function processTypes(
       let input = removePackagePrefix(
         intype,
         identifierTable,
-        fileDescriptorProto
+        fileDescriptorProto,
       );
       let inputJSON = JSONName(input);
       if (
@@ -935,7 +935,7 @@ export function processTypes(
         const dep = getIdentifierEntryFromTable(
           intype,
           identifierTable,
-          fileDescriptorProto
+          fileDescriptorProto,
         );
         const moduleName = getModuleName(dep);
         input = moduleName + "." + input;
@@ -946,20 +946,20 @@ export function processTypes(
       let output = removePackagePrefix(
         outtype,
         identifierTable,
-        fileDescriptorProto
+        fileDescriptorProto,
       );
       let outputJSON = JSONName(output);
       if (
         !identifierIsDefinedInFile(
           outtype,
           identifierTable,
-          fileDescriptorProto
+          fileDescriptorProto,
         )
       ) {
         const dep = getIdentifierEntryFromTable(
           outtype,
           identifierTable,
-          fileDescriptorProto
+          fileDescriptorProto,
         );
         const moduleName = getModuleName(dep);
         output = moduleName + "." + output;
