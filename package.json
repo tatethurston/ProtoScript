@@ -1,5 +1,5 @@
 {
-  "name": "protoscript",
+  "name": "protoscript-dev",
   "version": "0.0.1",
   "description": "A Protobuf runtime and code generation tool for JavaScript and TypeScript",
   "license": "MIT",
@@ -15,24 +15,18 @@
     }
   },
   "scripts": {
-    "build:commonjs": "esbuild src/index.ts --bundle --platform=node --target=es2020 --outfile=dist/cjs/index.cjs",
-    "build:module": "tsc",
-    "build:wellknowntypes": "(cd ./well-known-types && GENERATE_KNOWN_TYPES=1 pnpm protoscript) && cp ./well-known-types/google/protobuf/* ./src/runtime/well-known-types/",
-    "clean": "rm -rf dist",
+    "build:wellknowntypes": "(cd ./packages/well-known-types && GENERATE_KNOWN_TYPES=1 pnpm protoscript && cp google/protobuf/* ../protoscript/src/runtime/well-known-types/)",
     "e2e:build": "pnpm --filter './e2e/*' run build",
     "e2e:protoscript": "pnpm --filter './e2e/*' exec protoscript",
     "e2e:setup": "pnpm e2e:build && pnpm e2e:protoscript",
-    "examples:regen": "pnpm --filter './examples/*' exec protoscript && pnpm --filter './examples/*' exec tsc --noEmit",
-    "lint": "pnpm run typecheck && prettier --check . && prettier-package-json --list-different '{,example/,}package.json' && eslint .",
-    "lint:fix": "prettier --write . && prettier-package-json --write '{,example/}package.json' && eslint --fix .",
-    "package:build": "pnpm run clean && pnpm run build:commonjs && pnpm run build:module && chmod +x dist/compiler.js dist/cli/index.js && cp src/compiler.cmd dist/compiler.cmd && pnpm run package:prune && pnpm run package:copy:files",
-    "package:copy:files": "cp ./LICENSE ./README.md dist/ && cp ./public.package.json dist/package.json",
-    "package:prune": "find dist -name *test* -delete",
+    "examples:regen": "pnpm --filter './examples/*' exec protoscript",
+    "lint": "pnpm typecheck && prettier --check . && prettier-package-json --list-different '{,e2e/*,example/,packages/,}package.json' && eslint .",
+    "lint:fix": "prettier --write . && prettier-package-json --write '{,e2e/*,example/,packages/}package.json' && eslint --fix .",
     "prepare": "husky install",
     "regen": "pnpm build:wellknowntypes && pnpm examples:regen && pnpm e2e:protoscript",
     "test": "jest",
     "test:ci": "pnpm run e2e:setup && pnpm run test --coverage",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "pnpm --recursive run typecheck"
   },
   "dependencies": {
     "google-protobuf": "^3.21.2"

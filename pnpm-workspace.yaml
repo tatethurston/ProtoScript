@@ -1,5 +1,4 @@
 packages:
-  - "dist"
   - "examples/*"
   - "e2e/*"
-  - "well-known-types"
+  - "packages/*"

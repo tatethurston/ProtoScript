@@ -1,7 +1,11 @@
 {
   "name": "test-serialization",
+  "type": "module",
   "dependencies": {
     "protoscript": "workspace:*"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "esbuild": "^0.18.16"

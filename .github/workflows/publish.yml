@@ -14,7 +14,9 @@ jobs:
           cache: "pnpm"
           registry-url: "https://registry.npmjs.org"
       - run: pnpm install --frozen-lockfile
+      - run: cp README.md LICENSE CHANGELOG.md packages/protoscript
+      - run: cd packages/protoscript
       - run: pnpm package:build
-      - run: cd dist && npm publish
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

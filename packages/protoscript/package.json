@@ -1,0 +1,46 @@
+{
+  "name": "protoscript",
+  "version": "0.0.17",
+  "description": "A Protobuf runtime and code generation tool for JavaScript and TypeScript",
+  "license": "MIT",
+  "author": "Tate <tatethurston@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tatethurston/protoscript"
+  },
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/index.js",
+  "bin": {
+    "protoscript": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build:commonjs": "esbuild src/index.ts --bundle --platform=node --target=es2020 --outfile=dist/cjs/index.cjs --external:protoscript",
+    "build:module": "tsc",
+    "clean": "rm -rf dist",
+    "package:build": "pnpm run clean && pnpm run build:commonjs && pnpm run build:module && chmod +x dist/compiler.js dist/cli/index.js && cp src/compiler.cmd dist/compiler.cmd && pnpm run package:prune",
+    "package:prune": "find dist -name *test* -delete",
+    "typecheck": "tsc --noEmit"
+  },
+  "sideEffects": false,
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "google-protobuf": "^3.21.2",
+    "prettier": "^3.0.0"
+  },
+  "keywords": [
+    "protobuf",
+    "protocol buffers",
+    "typescript"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./dist/index.js",
+      "module": "./dist/index.js",
+      "require": "./dist/cjs/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./plugin": "./dist/plugin.js"
+  }
+}
