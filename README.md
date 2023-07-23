@@ -49,11 +49,13 @@ If you're looking for an RPC framework, you may be interested in [TwirpScript](h
 
 6. No additional runtime dependencies.
 
-## Interface Examples
+## Example
 
-If you have the following protobuf defined in `user.pb`:
+If you have the following protobuf defined in `user.proto`:
 
 ```protobuf
+syntax = "proto3";
+
 message User {
   string first_name = 1;
   string last_name = 2;
@@ -69,8 +71,6 @@ Using the generated `User` from ProtoScript will look like this:
 ```typescript
 import { User, UserJSON } from "./user.pb.js";
 
-let user: User;
-
 // protocol buffers
 const bytes = User.encode({
   firstName: "Homer",
@@ -85,8 +85,8 @@ const bytes = User.encode({
 });
 console.log(bytes);
 
-user = User.decode(bytes);
-console.log(user)
+const userFromBytes = User.decode(bytes);
+console.log(userFromBytes);
 
 // json
 const json = UserJSON.encode({
@@ -100,16 +100,15 @@ const json = UserJSON.encode({
     lastName: "Burns",
   },
 });
-console.log(json)
+console.log(json);
 
-user = UserJSON.decode(json);
-console.log(user);
+const userFromJSON = UserJSON.decode(json);
+console.log(userFromJSON);
 
 // ProtoScript generates and consumes plain JavaScript objects (POJOs) over classes. If you want to generate a full message
 // with default fields, you can use the #initialize method on the generated message class:
-
-user = User.initialize();
-console.log(user); 
+const user = User.initialize();
+console.log(user);
 ```
 
 ## Installation 📦
