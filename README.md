@@ -168,7 +168,7 @@ ProtoScript can be used with [Buf](https://docs.buf.build/introduction).
 version: v1
 plugins:
   - name: protoc-gen-protoscript
-    path: ./node_modules/protoscript/compiler.js
+    path: ./node_modules/protoscript/dist/compiler.js
     out: .
     opt:
       - language=typescript
