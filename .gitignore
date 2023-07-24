@@ -1,6 +1,5 @@
 **/dist/*
-!**/dist/package.json
 coverage
 node_modules
 todo.txt
-well-known-types/**/*.pb.ts
+packages/well-known-types/**/*.pb.ts

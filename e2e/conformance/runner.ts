@@ -59,7 +59,7 @@ function test(request: ConformanceRequest): ConformanceResponse {
     } else if (request.jsonPayload) {
       testMessage = TestAllTypesProto3JSON.decode(request.jsonPayload);
     } else {
-      return { runtimeError: `${request} not supported` };
+      return { runtimeError: "request not supported" };
     }
   } catch (err) {
     // > This string should be set to indicate parsing failed.  The string can

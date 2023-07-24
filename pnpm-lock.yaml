@@ -64,32 +64,23 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
 
-  dist:
-    dependencies:
-      google-protobuf:
-        specifier: ^3.21.2
-        version: 3.21.2
-      prettier:
-        specifier: ^3.0.0
-        version: 3.0.0
-
   e2e/conformance:
     dependencies:
       protoscript:
         specifier: workspace:*
-        version: link:../../dist
+        version: link:../../packages/protoscript
 
   e2e/serialization:
     dependencies:
       protoscript:
         specifier: workspace:*
-        version: link:../../dist
+        version: link:../../packages/protoscript
 
   e2e/treeshaking:
     dependencies:
       protoscript:
         specifier: workspace:*
-        version: link:../../dist
+        version: link:../../packages/protoscript
     devDependencies:
       esbuild:
         specifier: ^0.18.16
@@ -99,7 +90,7 @@ importers:
     dependencies:
       protoscript:
         specifier: workspace:*
-        version: link:../../dist
+        version: link:../../packages/protoscript
     devDependencies:
       google-closure-compiler:
         specifier: ^20230502.0.0
@@ -109,7 +100,7 @@ importers:
     dependencies:
       protoscript:
         specifier: workspace:*
-        version: link:../../dist
+        version: link:../../packages/protoscript
 
   examples/protoc:
     dependencies:
@@ -118,23 +109,32 @@ importers:
         version: 3.21.2
       protoscript:
         specifier: workspace:*
-        version: link:../../dist
+        version: link:../../packages/protoscript
 
   examples/typescript:
     dependencies:
       protoscript:
         specifier: workspace:*
-        version: link:../../dist
+        version: link:../../packages/protoscript
     devDependencies:
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
 
-  well-known-types:
+  packages/protoscript:
+    dependencies:
+      google-protobuf:
+        specifier: ^3.21.2
+        version: 3.21.2
+      prettier:
+        specifier: ^3.0.0
+        version: 3.0.0
+
+  packages/well-known-types:
     dependencies:
       protoscript:
         specifier: workspace:*
-        version: link:../dist
+        version: link:../protoscript
     devDependencies:
       typescript:
         specifier: ^5.1.6

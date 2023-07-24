@@ -20,9 +20,9 @@ jobs:
           node-version-file: ".nvmrc"
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
-      - run: pnpm package:build
+      - run: (cd packages/protoscript && pnpm package:build)
       # run again to link bin that is now available after package:build
-      - run: pnpm install
+      - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm test:ci && pnpm codecov --token=$CODECOV_TOKEN
         env:

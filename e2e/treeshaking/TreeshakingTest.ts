@@ -1,3 +1,3 @@
-import { TreeshakingTest } from "./treeshaking.pb";
+import { TreeshakingTest } from "./treeshaking.pb.js";
 
 export default TreeshakingTest.initialize();

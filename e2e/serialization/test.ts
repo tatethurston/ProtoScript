@@ -1,4 +1,3 @@
-import { describe, it } from "@jest/globals";
 import { Baz, Foo, FooJSON } from "./message.pb.js";
 
 const nestedMessage: Foo.FooBar = {
