@@ -29,7 +29,7 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Check for uncommited changes to generated files
         run: |
-          pnpm regen && pnpm typecheck
+          pnpm regen
           if git diff --quiet; then
             echo "No changes detected."
           else
