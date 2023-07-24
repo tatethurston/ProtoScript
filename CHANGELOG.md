@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.17
+
+- Omit `Uint8Array` from `PartialDeep` type. This fixes a type error for TypeScript users that use `bytes`.
+
 ## v0.0.16
 
 - `encode` methods now accept partials for nested messages as well (`PartialDeep` instead of `Partial`). Previously, the types required that full messages were provided for any nested messages.
