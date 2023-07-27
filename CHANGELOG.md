@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.18
+
+- Fix JSON deserializtion of recursive (self referencing) messages.
+- Fix generated TypeScript types for repeated recursive (self referencing) messages.
+
 ## v0.0.17
 
 - Omit `Uint8Array` from `PartialDeep` type. This fixes a type error for TypeScript users that use `bytes`.

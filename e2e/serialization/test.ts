@@ -37,7 +37,6 @@ const fullMessage: Foo = {
   ],
 
   fieldFour: nestedMessage,
-
   fieldFive: [1n, 2n],
   fieldSix: Baz.BAR,
   fieldSeven: [Baz.BAR, Baz.FOO],
@@ -51,6 +50,8 @@ const fullMessage: Foo = {
   },
   fieldTwelve: undefined,
   fieldThirteen: nestedMessage,
+  fieldFourteen: undefined,
+  fieldFifteen: [],
 };
 
 const partialMessage: Partial<Foo> = {
@@ -65,12 +66,14 @@ describe("Serialization/Deserialization", () => {
           {
             "fieldEight": 0n,
             "fieldEleven": undefined,
+            "fieldFifteen": [],
             "fieldFive": [],
             "fieldFour": {
               "fieldOne": "",
               "fieldThree": [],
               "fieldTwo": {},
             },
+            "fieldFourteen": undefined,
             "fieldNine": Uint8Array [],
             "fieldOne": undefined,
             "fieldSeven": [],
@@ -89,12 +92,14 @@ describe("Serialization/Deserialization", () => {
           {
             "fieldEight": 0n,
             "fieldEleven": undefined,
+            "fieldFifteen": [],
             "fieldFive": [],
             "fieldFour": {
               "fieldOne": "",
               "fieldThree": [],
               "fieldTwo": {},
             },
+            "fieldFourteen": undefined,
             "fieldNine": Uint8Array [],
             "fieldOne": 3,
             "fieldSeven": [],
@@ -113,12 +118,14 @@ describe("Serialization/Deserialization", () => {
           {
             "fieldEight": 0n,
             "fieldEleven": undefined,
+            "fieldFifteen": [],
             "fieldFive": [],
             "fieldFour": {
               "fieldOne": "",
               "fieldThree": [],
               "fieldTwo": {},
             },
+            "fieldFourteen": undefined,
             "fieldNine": Uint8Array [],
             "fieldOne": undefined,
             "fieldSeven": [],
@@ -141,6 +148,7 @@ describe("Serialization/Deserialization", () => {
               "fieldThree": [],
               "fieldTwo": {},
             },
+            "fieldFifteen": [],
             "fieldFive": [
               1n,
               2n,
@@ -157,6 +165,7 @@ describe("Serialization/Deserialization", () => {
                 "foo": 3n,
               },
             },
+            "fieldFourteen": undefined,
             "fieldNine": Uint8Array [
               8,
               7,
@@ -415,12 +424,14 @@ describe("Serialization/Deserialization", () => {
           {
             "fieldEight": 0n,
             "fieldEleven": undefined,
+            "fieldFifteen": [],
             "fieldFive": [],
             "fieldFour": {
               "fieldOne": "",
               "fieldThree": [],
               "fieldTwo": {},
             },
+            "fieldFourteen": undefined,
             "fieldNine": Uint8Array [],
             "fieldOne": undefined,
             "fieldSeven": [],
@@ -440,12 +451,14 @@ describe("Serialization/Deserialization", () => {
           {
             "fieldEight": 0n,
             "fieldEleven": undefined,
+            "fieldFifteen": [],
             "fieldFive": [],
             "fieldFour": {
               "fieldOne": "",
               "fieldThree": [],
               "fieldTwo": {},
             },
+            "fieldFourteen": undefined,
             "fieldNine": Uint8Array [],
             "fieldOne": 3,
             "fieldSeven": [],
@@ -465,12 +478,14 @@ describe("Serialization/Deserialization", () => {
           {
             "fieldEight": 0n,
             "fieldEleven": undefined,
+            "fieldFifteen": [],
             "fieldFive": [],
             "fieldFour": {
               "fieldOne": "",
               "fieldThree": [],
               "fieldTwo": {},
             },
+            "fieldFourteen": undefined,
             "fieldNine": Uint8Array [],
             "fieldOne": undefined,
             "fieldSeven": [],
@@ -494,6 +509,7 @@ describe("Serialization/Deserialization", () => {
               "fieldThree": [],
               "fieldTwo": {},
             },
+            "fieldFifteen": [],
             "fieldFive": [
               1n,
               2n,
@@ -510,6 +526,7 @@ describe("Serialization/Deserialization", () => {
                 "foo": "3",
               },
             },
+            "fieldFourteen": undefined,
             "fieldNine": Uint8Array [
               8,
               7,
@@ -575,12 +592,14 @@ describe("Serialization/Deserialization", () => {
           {
             "fieldEight": 0n,
             "fieldEleven": undefined,
+            "fieldFifteen": [],
             "fieldFive": [],
             "fieldFour": {
               "fieldOne": "",
               "fieldThree": [],
               "fieldTwo": {},
             },
+            "fieldFourteen": undefined,
             "fieldNine": Uint8Array [],
             "fieldOne": 3,
             "fieldSeven": [],
