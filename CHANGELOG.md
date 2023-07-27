@@ -12,7 +12,21 @@
 ## v0.0.16
 
 - `encode` methods now accept partials for nested messages as well (`PartialDeep` instead of `Partial`). Previously, the types required that full messages were provided for any nested messages.
+- Buf users will need to update their `buf.gen.yaml` path:
+  `buf.gen.yaml`
 
+  ```diff
+  version: v1
+  plugins:
+    - name: protoc-gen-protoscript
+  -    path: ./node_modules/protoscript/compiler.js
+  +    path: ./node_modules/protoscript/dist/compiler.js
+      out: .
+      opt:
+        - language=typescript
+      strategy: all
+  ```
+  
 ## v0.0.15
 
 This release includes a number of bug fixes
