@@ -4,3 +4,4 @@
 (cd packages/protoscript && pnpm run package:build)
 pnpm run regen
 pnpm run lint:fix
+pnpm run typecheck
