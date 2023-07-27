@@ -209,7 +209,7 @@ export const UserJSON = {
       firstName: "",
       lastName: "",
       active: false,
-      manager: UserJSON.initialize(),
+      manager: undefined,
       locations: [],
       projects: {},
     };

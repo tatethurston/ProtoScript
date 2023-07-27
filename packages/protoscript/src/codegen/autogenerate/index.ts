@@ -50,10 +50,10 @@ function writeTypes(types: ProtoTypes[], parents: string[]): string {
             result += `Record<string, ${tsType}['value'] | undefined>`;
           } else {
             result += tsType;
-            if (optional || mandatoryOptional) {
-              result += "| null | undefined";
-            } else if (repeated) {
+            if (repeated) {
               result += "[]";
+            } else if (optional || mandatoryOptional) {
+              result += "| null | undefined";
             }
           }
 
@@ -503,7 +503,7 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
                     return `${field.name}: [],`;
                   } else if (field.read === "readMessage" && !field.map) {
                     if (
-                      cycleDetected(field.tsTypeJSON, [
+                      cycleDetected(field.tsType, [
                         ...parents,
                         node.content.name,
                       ])

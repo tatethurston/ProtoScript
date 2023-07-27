@@ -30,6 +30,8 @@ export interface Foo {
   fieldEleven?: Bar | null | undefined;
   fieldTwelve?: Bar | null | undefined;
   fieldThirteen?: Bar | null | undefined;
+  fieldFourteen: Foo | null | undefined;
+  fieldFifteen: Foo[];
 }
 
 export declare namespace Foo {
@@ -141,6 +143,8 @@ export const Foo = {
       fieldEleven: undefined,
       fieldTwelve: undefined,
       fieldThirteen: undefined,
+      fieldFourteen: undefined,
+      fieldFifteen: [],
     };
   },
 
@@ -199,6 +203,16 @@ export const Foo = {
     }
     if (msg.fieldThirteen != undefined) {
       writer.writeMessage(13, msg.fieldThirteen, Bar._writeMessage);
+    }
+    if (msg.fieldFourteen) {
+      writer.writeMessage(14, msg.fieldFourteen, Foo._writeMessage);
+    }
+    if (msg.fieldFifteen?.length) {
+      writer.writeRepeatedMessage(
+        15,
+        msg.fieldFifteen as any,
+        Foo._writeMessage,
+      );
     }
     return writer;
   },
@@ -275,6 +289,17 @@ export const Foo = {
         case 13: {
           msg.fieldThirteen = Bar.initialize();
           reader.readMessage(msg.fieldThirteen, Bar._readMessage);
+          break;
+        }
+        case 14: {
+          msg.fieldFourteen = Foo.initialize();
+          reader.readMessage(msg.fieldFourteen, Foo._readMessage);
+          break;
+        }
+        case 15: {
+          const m = Foo.initialize();
+          reader.readMessage(m, Foo._readMessage);
+          msg.fieldFifteen.push(m);
           break;
         }
         default: {
@@ -679,6 +704,8 @@ export const FooJSON = {
       fieldEleven: undefined,
       fieldTwelve: undefined,
       fieldThirteen: undefined,
+      fieldFourteen: undefined,
+      fieldFifteen: [],
     };
   },
 
@@ -739,6 +766,15 @@ export const FooJSON = {
     if (msg.fieldThirteen != undefined) {
       const _fieldThirteen_ = BarJSON._writeMessage(msg.fieldThirteen);
       json["fieldThirteen"] = _fieldThirteen_;
+    }
+    if (msg.fieldFourteen) {
+      const _fieldFourteen_ = FooJSON._writeMessage(msg.fieldFourteen);
+      if (Object.keys(_fieldFourteen_).length > 0) {
+        json["fieldFourteen"] = _fieldFourteen_;
+      }
+    }
+    if (msg.fieldFifteen?.length) {
+      json["fieldFifteen"] = msg.fieldFifteen.map(FooJSON._writeMessage);
     }
     return json;
   },
@@ -811,6 +847,19 @@ export const FooJSON = {
     if (_fieldThirteen_) {
       msg.fieldThirteen = BarJSON.initialize();
       BarJSON._readMessage(msg.fieldThirteen, _fieldThirteen_);
+    }
+    const _fieldFourteen_ = json["fieldFourteen"] ?? json["field_fourteen"];
+    if (_fieldFourteen_) {
+      msg.fieldFourteen = FooJSON.initialize();
+      FooJSON._readMessage(msg.fieldFourteen, _fieldFourteen_);
+    }
+    const _fieldFifteen_ = json["fieldFifteen"] ?? json["field_fifteen"];
+    if (_fieldFifteen_) {
+      for (const item of _fieldFifteen_) {
+        const m = FooJSON.initialize();
+        FooJSON._readMessage(m, item);
+        msg.fieldFifteen.push(m);
+      }
     }
     return msg;
   },

@@ -3822,7 +3822,7 @@ export const TestAllTypesProto3JSON = {
       optionalAliasedEnum: TestAllTypesProto3.AliasedEnum._fromInt(0),
       optionalStringPiece: "",
       optionalCord: "",
-      recursiveMessage: TestAllTypesProto3JSON.initialize(),
+      recursiveMessage: undefined,
       repeatedInt32: [],
       repeatedInt64: [],
       repeatedUint32: [],
@@ -5749,7 +5749,7 @@ export const TestAllTypesProto3JSON = {
     initialize: function (): TestAllTypesProto3.NestedMessage {
       return {
         a: 0,
-        corecursive: TestAllTypesProto3JSON.initialize(),
+        corecursive: undefined,
       };
     },
 
