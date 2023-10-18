@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -34,14 +34,20 @@ export const User = {
    * Serializes User to protobuf.
    */
   encode: function (msg: PartialDeep<User>): Uint8Array {
-    return User._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return User._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes User from protobuf.
    */
   decode: function (bytes: ByteSource): User {
-    return User._readMessage(User.initialize(), new BinaryReader(bytes));
+    return User._readMessage(
+      User.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -63,8 +69,8 @@ export const User = {
    */
   _writeMessage: function (
     msg: PartialDeep<User>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.firstName) {
       writer.writeString(1, msg.firstName);
     }
@@ -96,7 +102,7 @@ export const User = {
   /**
    * @private
    */
-  _readMessage: function (msg: User, reader: BinaryReader): User {
+  _readMessage: function (msg: User, reader: protoscript.BinaryReader): User {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -142,8 +148,8 @@ export const User = {
      */
     _writeMessage: function (
       msg: PartialDeep<User.Projects>,
-      writer: BinaryWriter,
-    ): BinaryWriter {
+      writer: protoscript.BinaryWriter,
+    ): protoscript.BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
       }
@@ -158,7 +164,7 @@ export const User = {
      */
     _readMessage: function (
       msg: User.Projects,
-      reader: BinaryReader,
+      reader: protoscript.BinaryReader,
     ): User.Projects {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();

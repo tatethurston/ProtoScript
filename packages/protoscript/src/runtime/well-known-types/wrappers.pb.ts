@@ -3,12 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import {
-  BinaryReader,
-  BinaryWriter,
-  encodeBase64Bytes,
-  decodeBase64Bytes,
-} from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -131,7 +126,10 @@ export const DoubleValue = {
    * Serializes DoubleValue to protobuf.
    */
   encode: function (msg: PartialDeep<DoubleValue>): Uint8Array {
-    return DoubleValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return DoubleValue._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -140,7 +138,7 @@ export const DoubleValue = {
   decode: function (bytes: ByteSource): DoubleValue {
     return DoubleValue._readMessage(
       DoubleValue.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -158,8 +156,8 @@ export const DoubleValue = {
    */
   _writeMessage: function (
     msg: PartialDeep<DoubleValue>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.value) {
       writer.writeDouble(1, msg.value);
     }
@@ -169,7 +167,10 @@ export const DoubleValue = {
   /**
    * @private
    */
-  _readMessage: function (msg: DoubleValue, reader: BinaryReader): DoubleValue {
+  _readMessage: function (
+    msg: DoubleValue,
+    reader: protoscript.BinaryReader,
+  ): DoubleValue {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -192,7 +193,10 @@ export const FloatValue = {
    * Serializes FloatValue to protobuf.
    */
   encode: function (msg: PartialDeep<FloatValue>): Uint8Array {
-    return FloatValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return FloatValue._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -201,7 +205,7 @@ export const FloatValue = {
   decode: function (bytes: ByteSource): FloatValue {
     return FloatValue._readMessage(
       FloatValue.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -219,8 +223,8 @@ export const FloatValue = {
    */
   _writeMessage: function (
     msg: PartialDeep<FloatValue>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.value) {
       writer.writeFloat(1, msg.value);
     }
@@ -230,7 +234,10 @@ export const FloatValue = {
   /**
    * @private
    */
-  _readMessage: function (msg: FloatValue, reader: BinaryReader): FloatValue {
+  _readMessage: function (
+    msg: FloatValue,
+    reader: protoscript.BinaryReader,
+  ): FloatValue {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -253,7 +260,10 @@ export const Int64Value = {
    * Serializes Int64Value to protobuf.
    */
   encode: function (msg: PartialDeep<Int64Value>): Uint8Array {
-    return Int64Value._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Int64Value._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -262,7 +272,7 @@ export const Int64Value = {
   decode: function (bytes: ByteSource): Int64Value {
     return Int64Value._readMessage(
       Int64Value.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -280,8 +290,8 @@ export const Int64Value = {
    */
   _writeMessage: function (
     msg: PartialDeep<Int64Value>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.value) {
       writer.writeInt64String(1, msg.value.toString() as any);
     }
@@ -291,7 +301,10 @@ export const Int64Value = {
   /**
    * @private
    */
-  _readMessage: function (msg: Int64Value, reader: BinaryReader): Int64Value {
+  _readMessage: function (
+    msg: Int64Value,
+    reader: protoscript.BinaryReader,
+  ): Int64Value {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -314,7 +327,10 @@ export const UInt64Value = {
    * Serializes UInt64Value to protobuf.
    */
   encode: function (msg: PartialDeep<UInt64Value>): Uint8Array {
-    return UInt64Value._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return UInt64Value._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -323,7 +339,7 @@ export const UInt64Value = {
   decode: function (bytes: ByteSource): UInt64Value {
     return UInt64Value._readMessage(
       UInt64Value.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -341,8 +357,8 @@ export const UInt64Value = {
    */
   _writeMessage: function (
     msg: PartialDeep<UInt64Value>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.value) {
       writer.writeUint64String(1, msg.value.toString() as any);
     }
@@ -352,7 +368,10 @@ export const UInt64Value = {
   /**
    * @private
    */
-  _readMessage: function (msg: UInt64Value, reader: BinaryReader): UInt64Value {
+  _readMessage: function (
+    msg: UInt64Value,
+    reader: protoscript.BinaryReader,
+  ): UInt64Value {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -375,7 +394,10 @@ export const Int32Value = {
    * Serializes Int32Value to protobuf.
    */
   encode: function (msg: PartialDeep<Int32Value>): Uint8Array {
-    return Int32Value._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Int32Value._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -384,7 +406,7 @@ export const Int32Value = {
   decode: function (bytes: ByteSource): Int32Value {
     return Int32Value._readMessage(
       Int32Value.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -402,8 +424,8 @@ export const Int32Value = {
    */
   _writeMessage: function (
     msg: PartialDeep<Int32Value>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.value) {
       writer.writeInt32(1, msg.value);
     }
@@ -413,7 +435,10 @@ export const Int32Value = {
   /**
    * @private
    */
-  _readMessage: function (msg: Int32Value, reader: BinaryReader): Int32Value {
+  _readMessage: function (
+    msg: Int32Value,
+    reader: protoscript.BinaryReader,
+  ): Int32Value {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -436,7 +461,10 @@ export const UInt32Value = {
    * Serializes UInt32Value to protobuf.
    */
   encode: function (msg: PartialDeep<UInt32Value>): Uint8Array {
-    return UInt32Value._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return UInt32Value._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -445,7 +473,7 @@ export const UInt32Value = {
   decode: function (bytes: ByteSource): UInt32Value {
     return UInt32Value._readMessage(
       UInt32Value.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -463,8 +491,8 @@ export const UInt32Value = {
    */
   _writeMessage: function (
     msg: PartialDeep<UInt32Value>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.value) {
       writer.writeUint32(1, msg.value);
     }
@@ -474,7 +502,10 @@ export const UInt32Value = {
   /**
    * @private
    */
-  _readMessage: function (msg: UInt32Value, reader: BinaryReader): UInt32Value {
+  _readMessage: function (
+    msg: UInt32Value,
+    reader: protoscript.BinaryReader,
+  ): UInt32Value {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -497,7 +528,10 @@ export const BoolValue = {
    * Serializes BoolValue to protobuf.
    */
   encode: function (msg: PartialDeep<BoolValue>): Uint8Array {
-    return BoolValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return BoolValue._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -506,7 +540,7 @@ export const BoolValue = {
   decode: function (bytes: ByteSource): BoolValue {
     return BoolValue._readMessage(
       BoolValue.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -524,8 +558,8 @@ export const BoolValue = {
    */
   _writeMessage: function (
     msg: PartialDeep<BoolValue>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.value) {
       writer.writeBool(1, msg.value);
     }
@@ -535,7 +569,10 @@ export const BoolValue = {
   /**
    * @private
    */
-  _readMessage: function (msg: BoolValue, reader: BinaryReader): BoolValue {
+  _readMessage: function (
+    msg: BoolValue,
+    reader: protoscript.BinaryReader,
+  ): BoolValue {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -558,7 +595,10 @@ export const StringValue = {
    * Serializes StringValue to protobuf.
    */
   encode: function (msg: PartialDeep<StringValue>): Uint8Array {
-    return StringValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return StringValue._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -567,7 +607,7 @@ export const StringValue = {
   decode: function (bytes: ByteSource): StringValue {
     return StringValue._readMessage(
       StringValue.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -585,8 +625,8 @@ export const StringValue = {
    */
   _writeMessage: function (
     msg: PartialDeep<StringValue>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.value) {
       writer.writeString(1, msg.value);
     }
@@ -596,7 +636,10 @@ export const StringValue = {
   /**
    * @private
    */
-  _readMessage: function (msg: StringValue, reader: BinaryReader): StringValue {
+  _readMessage: function (
+    msg: StringValue,
+    reader: protoscript.BinaryReader,
+  ): StringValue {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -619,7 +662,10 @@ export const BytesValue = {
    * Serializes BytesValue to protobuf.
    */
   encode: function (msg: PartialDeep<BytesValue>): Uint8Array {
-    return BytesValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return BytesValue._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -628,7 +674,7 @@ export const BytesValue = {
   decode: function (bytes: ByteSource): BytesValue {
     return BytesValue._readMessage(
       BytesValue.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -646,8 +692,8 @@ export const BytesValue = {
    */
   _writeMessage: function (
     msg: PartialDeep<BytesValue>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.value?.length) {
       writer.writeBytes(1, msg.value);
     }
@@ -657,7 +703,10 @@ export const BytesValue = {
   /**
    * @private
    */
-  _readMessage: function (msg: BytesValue, reader: BinaryReader): BytesValue {
+  _readMessage: function (
+    msg: BytesValue,
+    reader: protoscript.BinaryReader,
+  ): BytesValue {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -725,7 +774,7 @@ export const DoubleValueJSON = {
   _readMessage: function (msg: DoubleValue, json: any): DoubleValue {
     const _value_ = json["value"];
     if (_value_) {
-      msg.value = _value_;
+      msg.value = protoscript.parseDouble(_value_);
     }
     return msg;
   },
@@ -777,7 +826,7 @@ export const FloatValueJSON = {
   _readMessage: function (msg: FloatValue, json: any): FloatValue {
     const _value_ = json["value"];
     if (_value_) {
-      msg.value = _value_;
+      msg.value = protoscript.parseDouble(_value_);
     }
     return msg;
   },
@@ -818,7 +867,7 @@ export const Int64ValueJSON = {
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
-      json["value"] = msg.value.toString();
+      json["value"] = String(msg.value);
     }
     return json;
   },
@@ -870,7 +919,7 @@ export const UInt64ValueJSON = {
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
-      json["value"] = msg.value.toString();
+      json["value"] = String(msg.value);
     }
     return json;
   },
@@ -933,7 +982,7 @@ export const Int32ValueJSON = {
   _readMessage: function (msg: Int32Value, json: any): Int32Value {
     const _value_ = json["value"];
     if (_value_) {
-      msg.value = _value_;
+      msg.value = protoscript.parseNumber(_value_);
     }
     return msg;
   },
@@ -985,7 +1034,7 @@ export const UInt32ValueJSON = {
   _readMessage: function (msg: UInt32Value, json: any): UInt32Value {
     const _value_ = json["value"];
     if (_value_) {
-      msg.value = _value_;
+      msg.value = protoscript.parseNumber(_value_);
     }
     return msg;
   },
@@ -1130,7 +1179,7 @@ export const BytesValueJSON = {
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value?.length) {
-      json["value"] = encodeBase64Bytes(msg.value);
+      json["value"] = protoscript.serializeBytes(msg.value);
     }
     return json;
   },
@@ -1141,7 +1190,7 @@ export const BytesValueJSON = {
   _readMessage: function (msg: BytesValue, json: any): BytesValue {
     const _value_ = json["value"];
     if (_value_) {
-      msg.value = decodeBase64Bytes(_value_);
+      msg.value = protoscript.parseBytes(_value_);
     }
     return msg;
   },

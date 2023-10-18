@@ -3,8 +3,6 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
-
 import * as protoscript from "protoscript";
 
 //========================================//
@@ -266,14 +264,20 @@ export const Type = {
    * Serializes Type to protobuf.
    */
   encode: function (msg: PartialDeep<Type>): Uint8Array {
-    return Type._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Type._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Type from protobuf.
    */
   decode: function (bytes: ByteSource): Type {
-    return Type._readMessage(Type.initialize(), new BinaryReader(bytes));
+    return Type._readMessage(
+      Type.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -296,8 +300,8 @@ export const Type = {
    */
   _writeMessage: function (
     msg: PartialDeep<Type>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
     }
@@ -329,7 +333,7 @@ export const Type = {
   /**
    * @private
    */
-  _readMessage: function (msg: Type, reader: BinaryReader): Type {
+  _readMessage: function (msg: Type, reader: protoscript.BinaryReader): Type {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -383,14 +387,20 @@ export const Field = {
    * Serializes Field to protobuf.
    */
   encode: function (msg: PartialDeep<Field>): Uint8Array {
-    return Field._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Field._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Field from protobuf.
    */
   decode: function (bytes: ByteSource): Field {
-    return Field._readMessage(Field.initialize(), new BinaryReader(bytes));
+    return Field._readMessage(
+      Field.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -416,8 +426,8 @@ export const Field = {
    */
   _writeMessage: function (
     msg: PartialDeep<Field>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.kind && Field.Kind._toInt(msg.kind)) {
       writer.writeEnum(1, Field.Kind._toInt(msg.kind));
     }
@@ -454,7 +464,7 @@ export const Field = {
   /**
    * @private
    */
-  _readMessage: function (msg: Field, reader: BinaryReader): Field {
+  _readMessage: function (msg: Field, reader: protoscript.BinaryReader): Field {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -795,14 +805,20 @@ export const Enum = {
    * Serializes Enum to protobuf.
    */
   encode: function (msg: PartialDeep<Enum>): Uint8Array {
-    return Enum._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Enum._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Enum from protobuf.
    */
   decode: function (bytes: ByteSource): Enum {
-    return Enum._readMessage(Enum.initialize(), new BinaryReader(bytes));
+    return Enum._readMessage(
+      Enum.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -824,8 +840,8 @@ export const Enum = {
    */
   _writeMessage: function (
     msg: PartialDeep<Enum>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
     }
@@ -858,7 +874,7 @@ export const Enum = {
   /**
    * @private
    */
-  _readMessage: function (msg: Enum, reader: BinaryReader): Enum {
+  _readMessage: function (msg: Enum, reader: protoscript.BinaryReader): Enum {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -908,7 +924,10 @@ export const EnumValue = {
    * Serializes EnumValue to protobuf.
    */
   encode: function (msg: PartialDeep<EnumValue>): Uint8Array {
-    return EnumValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return EnumValue._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -917,7 +936,7 @@ export const EnumValue = {
   decode: function (bytes: ByteSource): EnumValue {
     return EnumValue._readMessage(
       EnumValue.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -937,8 +956,8 @@ export const EnumValue = {
    */
   _writeMessage: function (
     msg: PartialDeep<EnumValue>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
     }
@@ -954,7 +973,10 @@ export const EnumValue = {
   /**
    * @private
    */
-  _readMessage: function (msg: EnumValue, reader: BinaryReader): EnumValue {
+  _readMessage: function (
+    msg: EnumValue,
+    reader: protoscript.BinaryReader,
+  ): EnumValue {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -987,14 +1009,20 @@ export const Option = {
    * Serializes Option to protobuf.
    */
   encode: function (msg: PartialDeep<Option>): Uint8Array {
-    return Option._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Option._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Option from protobuf.
    */
   decode: function (bytes: ByteSource): Option {
-    return Option._readMessage(Option.initialize(), new BinaryReader(bytes));
+    return Option._readMessage(
+      Option.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -1012,8 +1040,8 @@ export const Option = {
    */
   _writeMessage: function (
     msg: PartialDeep<Option>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
     }
@@ -1026,7 +1054,10 @@ export const Option = {
   /**
    * @private
    */
-  _readMessage: function (msg: Option, reader: BinaryReader): Option {
+  _readMessage: function (
+    msg: Option,
+    reader: protoscript.BinaryReader,
+  ): Option {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -1208,7 +1239,7 @@ export const TypeJSON = {
     }
     const _syntax_ = json["syntax"];
     if (_syntax_) {
-      msg.syntax = _syntax_;
+      msg.syntax = Syntax._fromInt(_syntax_);
     }
     const _edition_ = json["edition"];
     if (_edition_) {
@@ -1295,15 +1326,15 @@ export const FieldJSON = {
   _readMessage: function (msg: Field, json: any): Field {
     const _kind_ = json["kind"];
     if (_kind_) {
-      msg.kind = _kind_;
+      msg.kind = Field.Kind._fromInt(_kind_);
     }
     const _cardinality_ = json["cardinality"];
     if (_cardinality_) {
-      msg.cardinality = _cardinality_;
+      msg.cardinality = Field.Cardinality._fromInt(_cardinality_);
     }
     const _number_ = json["number"];
     if (_number_) {
-      msg.number = _number_;
+      msg.number = protoscript.parseNumber(_number_);
     }
     const _name_ = json["name"];
     if (_name_) {
@@ -1315,7 +1346,7 @@ export const FieldJSON = {
     }
     const _oneofIndex_ = json["oneofIndex"] ?? json["oneof_index"];
     if (_oneofIndex_) {
-      msg.oneofIndex = _oneofIndex_;
+      msg.oneofIndex = protoscript.parseNumber(_oneofIndex_);
     }
     const _packed_ = json["packed"];
     if (_packed_) {
@@ -1714,7 +1745,7 @@ export const EnumJSON = {
     }
     const _syntax_ = json["syntax"];
     if (_syntax_) {
-      msg.syntax = _syntax_;
+      msg.syntax = Syntax._fromInt(_syntax_);
     }
     const _edition_ = json["edition"];
     if (_edition_) {
@@ -1782,7 +1813,7 @@ export const EnumValueJSON = {
     }
     const _number_ = json["number"];
     if (_number_) {
-      msg.number = _number_;
+      msg.number = protoscript.parseNumber(_number_);
     }
     const _options_ = json["options"];
     if (_options_) {

@@ -3,12 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import {
-  BinaryReader,
-  BinaryWriter,
-  encodeBase64Bytes,
-  decodeBase64Bytes,
-} from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -299,7 +294,10 @@ export const FailureSet = {
    * Serializes FailureSet to protobuf.
    */
   encode: function (msg: PartialDeep<FailureSet>): Uint8Array {
-    return FailureSet._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return FailureSet._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -308,7 +306,7 @@ export const FailureSet = {
   decode: function (bytes: ByteSource): FailureSet {
     return FailureSet._readMessage(
       FailureSet.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -326,8 +324,8 @@ export const FailureSet = {
    */
   _writeMessage: function (
     msg: PartialDeep<FailureSet>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.failure?.length) {
       writer.writeRepeatedString(1, msg.failure);
     }
@@ -337,7 +335,10 @@ export const FailureSet = {
   /**
    * @private
    */
-  _readMessage: function (msg: FailureSet, reader: BinaryReader): FailureSet {
+  _readMessage: function (
+    msg: FailureSet,
+    reader: protoscript.BinaryReader,
+  ): FailureSet {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -362,7 +363,7 @@ export const ConformanceRequest = {
   encode: function (msg: PartialDeep<ConformanceRequest>): Uint8Array {
     return ConformanceRequest._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -372,7 +373,7 @@ export const ConformanceRequest = {
   decode: function (bytes: ByteSource): ConformanceRequest {
     return ConformanceRequest._readMessage(
       ConformanceRequest.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -398,8 +399,8 @@ export const ConformanceRequest = {
    */
   _writeMessage: function (
     msg: PartialDeep<ConformanceRequest>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.protobufPayload?.length) {
       writer.writeBytes(1, msg.protobufPayload);
     }
@@ -442,7 +443,7 @@ export const ConformanceRequest = {
    */
   _readMessage: function (
     msg: ConformanceRequest,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): ConformanceRequest {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -503,7 +504,7 @@ export const ConformanceResponse = {
   encode: function (msg: PartialDeep<ConformanceResponse>): Uint8Array {
     return ConformanceResponse._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -513,7 +514,7 @@ export const ConformanceResponse = {
   decode: function (bytes: ByteSource): ConformanceResponse {
     return ConformanceResponse._readMessage(
       ConformanceResponse.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -539,8 +540,8 @@ export const ConformanceResponse = {
    */
   _writeMessage: function (
     msg: PartialDeep<ConformanceResponse>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.parseError != undefined) {
       writer.writeString(1, msg.parseError);
     }
@@ -576,7 +577,7 @@ export const ConformanceResponse = {
    */
   _readMessage: function (
     msg: ConformanceResponse,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): ConformanceResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -634,7 +635,7 @@ export const JspbEncodingConfig = {
   encode: function (msg: PartialDeep<JspbEncodingConfig>): Uint8Array {
     return JspbEncodingConfig._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -644,7 +645,7 @@ export const JspbEncodingConfig = {
   decode: function (bytes: ByteSource): JspbEncodingConfig {
     return JspbEncodingConfig._readMessage(
       JspbEncodingConfig.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -662,8 +663,8 @@ export const JspbEncodingConfig = {
    */
   _writeMessage: function (
     msg: PartialDeep<JspbEncodingConfig>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.useJspbArrayAnyFormat) {
       writer.writeBool(1, msg.useJspbArrayAnyFormat);
     }
@@ -675,7 +676,7 @@ export const JspbEncodingConfig = {
    */
   _readMessage: function (
     msg: JspbEncodingConfig,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): JspbEncodingConfig {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -935,7 +936,7 @@ export const ConformanceRequestJSON = {
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.protobufPayload?.length) {
-      json["protobufPayload"] = encodeBase64Bytes(msg.protobufPayload);
+      json["protobufPayload"] = protoscript.serializeBytes(msg.protobufPayload);
     }
     if (msg.jsonPayload != undefined) {
       json["jsonPayload"] = msg.jsonPayload;
@@ -982,7 +983,7 @@ export const ConformanceRequestJSON = {
     const _protobufPayload_ =
       json["protobufPayload"] ?? json["protobuf_payload"];
     if (_protobufPayload_) {
-      msg.protobufPayload = decodeBase64Bytes(_protobufPayload_);
+      msg.protobufPayload = protoscript.parseBytes(_protobufPayload_);
     }
     const _jsonPayload_ = json["jsonPayload"] ?? json["json_payload"];
     if (_jsonPayload_) {
@@ -999,7 +1000,7 @@ export const ConformanceRequestJSON = {
     const _requestedOutputFormat_ =
       json["requestedOutputFormat"] ?? json["requested_output_format"];
     if (_requestedOutputFormat_) {
-      msg.requestedOutputFormat = _requestedOutputFormat_;
+      msg.requestedOutputFormat = WireFormat._fromInt(_requestedOutputFormat_);
     }
     const _messageType_ = json["messageType"] ?? json["message_type"];
     if (_messageType_) {
@@ -1007,7 +1008,7 @@ export const ConformanceRequestJSON = {
     }
     const _testCategory_ = json["testCategory"] ?? json["test_category"];
     if (_testCategory_) {
-      msg.testCategory = _testCategory_;
+      msg.testCategory = TestCategory._fromInt(_testCategory_);
     }
     const _jspbEncodingOptions_ =
       json["jspbEncodingOptions"] ?? json["jspb_encoding_options"];
@@ -1081,7 +1082,7 @@ export const ConformanceResponseJSON = {
       json["runtimeError"] = msg.runtimeError;
     }
     if (msg.protobufPayload?.length) {
-      json["protobufPayload"] = encodeBase64Bytes(msg.protobufPayload);
+      json["protobufPayload"] = protoscript.serializeBytes(msg.protobufPayload);
     }
     if (msg.jsonPayload != undefined) {
       json["jsonPayload"] = msg.jsonPayload;
@@ -1124,7 +1125,7 @@ export const ConformanceResponseJSON = {
     const _protobufPayload_ =
       json["protobufPayload"] ?? json["protobuf_payload"];
     if (_protobufPayload_) {
-      msg.protobufPayload = decodeBase64Bytes(_protobufPayload_);
+      msg.protobufPayload = protoscript.parseBytes(_protobufPayload_);
     }
     const _jsonPayload_ = json["jsonPayload"] ?? json["json_payload"];
     if (_jsonPayload_) {

@@ -3,8 +3,6 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
-
 import * as protoscript from "protoscript";
 
 //========================================//
@@ -43,7 +41,7 @@ export const TreeshakingTest = {
   encode: function (msg: PartialDeep<TreeshakingTest>): Uint8Array {
     return TreeshakingTest._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -53,7 +51,7 @@ export const TreeshakingTest = {
   decode: function (bytes: ByteSource): TreeshakingTest {
     return TreeshakingTest._readMessage(
       TreeshakingTest.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -77,8 +75,8 @@ export const TreeshakingTest = {
    */
   _writeMessage: function (
     msg: PartialDeep<TreeshakingTest>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.stringField) {
       writer.writeString(1, msg.stringField);
     }
@@ -127,7 +125,7 @@ export const TreeshakingTest = {
    */
   _readMessage: function (
     msg: TreeshakingTest,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): TreeshakingTest {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -186,8 +184,8 @@ export const TreeshakingTest = {
      */
     _writeMessage: function (
       msg: PartialDeep<TreeshakingTest.MapField>,
-      writer: BinaryWriter,
-    ): BinaryWriter {
+      writer: protoscript.BinaryWriter,
+    ): protoscript.BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
       }
@@ -202,7 +200,7 @@ export const TreeshakingTest = {
      */
     _readMessage: function (
       msg: TreeshakingTest.MapField,
-      reader: BinaryReader,
+      reader: protoscript.BinaryReader,
     ): TreeshakingTest.MapField {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -233,7 +231,7 @@ export const NestedMessage = {
   encode: function (msg: PartialDeep<NestedMessage>): Uint8Array {
     return NestedMessage._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -243,7 +241,7 @@ export const NestedMessage = {
   decode: function (bytes: ByteSource): NestedMessage {
     return NestedMessage._readMessage(
       NestedMessage.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -261,8 +259,8 @@ export const NestedMessage = {
    */
   _writeMessage: function (
     msg: PartialDeep<NestedMessage>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.stringField != undefined) {
       writer.writeString(1, msg.stringField);
     }
@@ -274,7 +272,7 @@ export const NestedMessage = {
    */
   _readMessage: function (
     msg: NestedMessage,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): NestedMessage {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
@@ -357,13 +355,14 @@ export const TreeshakingTestJSON = {
       );
       json["optionalMessageField"] = _optionalMessageField_;
     }
-    if (msg.timestampField) {
-      const _timestampField_ = protoscript.TimestampJSON._writeMessage(
+    if (
+      msg.timestampField &&
+      msg.timestampField.seconds &&
+      msg.timestampField.nanos
+    ) {
+      json["timestampField"] = protoscript.serializeTimestamp(
         msg.timestampField,
       );
-      if (Object.keys(_timestampField_).length > 0) {
-        json["timestampField"] = _timestampField_;
-      }
     }
     if (msg.mapField) {
       const _mapField_ = Object.fromEntries(
@@ -416,10 +415,7 @@ export const TreeshakingTestJSON = {
     }
     const _timestampField_ = json["timestampField"] ?? json["timestamp_field"];
     if (_timestampField_) {
-      protoscript.TimestampJSON._readMessage(
-        msg.timestampField,
-        _timestampField_,
-      );
+      msg.timestampField = protoscript.parseTimestamp(_timestampField_);
     }
     const _mapField_ = json["mapField"] ?? json["map_field"];
     if (_mapField_) {

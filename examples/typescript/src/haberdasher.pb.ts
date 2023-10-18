@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
+import * as protoscript from "protoscript";
 
 import * as srcSize from "./size.pb";
 
@@ -35,14 +35,20 @@ export const Hat = {
    * Serializes Hat to protobuf.
    */
   encode: function (msg: PartialDeep<Hat>): Uint8Array {
-    return Hat._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Hat._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Hat from protobuf.
    */
   decode: function (bytes: ByteSource): Hat {
-    return Hat._readMessage(Hat.initialize(), new BinaryReader(bytes));
+    return Hat._readMessage(
+      Hat.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -61,8 +67,8 @@ export const Hat = {
    */
   _writeMessage: function (
     msg: PartialDeep<Hat>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.size) {
       writer.writeMessage(1, msg.size, srcSize.Size._writeMessage);
     }
@@ -78,7 +84,7 @@ export const Hat = {
   /**
    * @private
    */
-  _readMessage: function (msg: Hat, reader: BinaryReader): Hat {
+  _readMessage: function (msg: Hat, reader: protoscript.BinaryReader): Hat {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {

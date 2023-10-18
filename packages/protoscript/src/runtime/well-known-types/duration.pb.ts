@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -97,7 +97,10 @@ export const Duration = {
    * Serializes Duration to protobuf.
    */
   encode: function (msg: PartialDeep<Duration>): Uint8Array {
-    return Duration._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Duration._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -106,7 +109,7 @@ export const Duration = {
   decode: function (bytes: ByteSource): Duration {
     return Duration._readMessage(
       Duration.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -125,8 +128,8 @@ export const Duration = {
    */
   _writeMessage: function (
     msg: PartialDeep<Duration>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.seconds) {
       writer.writeInt64String(1, msg.seconds.toString() as any);
     }
@@ -139,7 +142,10 @@ export const Duration = {
   /**
    * @private
    */
-  _readMessage: function (msg: Duration, reader: BinaryReader): Duration {
+  _readMessage: function (
+    msg: Duration,
+    reader: protoscript.BinaryReader,
+  ): Duration {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -201,7 +207,7 @@ export const DurationJSON = {
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.seconds) {
-      json["seconds"] = msg.seconds.toString();
+      json["seconds"] = String(msg.seconds);
     }
     if (msg.nanos) {
       json["nanos"] = msg.nanos;
@@ -219,7 +225,7 @@ export const DurationJSON = {
     }
     const _nanos_ = json["nanos"];
     if (_nanos_) {
-      msg.nanos = _nanos_;
+      msg.nanos = protoscript.parseNumber(_nanos_);
     }
     return msg;
   },

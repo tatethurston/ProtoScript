@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -52,15 +52,18 @@ export const Empty = {
    */
   _writeMessage: function (
     _msg: PartialDeep<Empty>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     return writer;
   },
 
   /**
    * @private
    */
-  _readMessage: function (_msg: Empty, _reader: BinaryReader): Empty {
+  _readMessage: function (
+    _msg: Empty,
+    _reader: protoscript.BinaryReader,
+  ): Empty {
     return _msg;
   },
 };

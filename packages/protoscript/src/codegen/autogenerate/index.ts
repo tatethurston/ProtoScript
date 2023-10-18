@@ -10,11 +10,9 @@ import {
   uniqueBy,
 } from "../utils.js";
 
-const DEFAULT_IMPORT_TRACKER = {
-  hasBytes: false,
-};
-
-let IMPORT_TRACKER: typeof DEFAULT_IMPORT_TRACKER;
+const TIMESTAMP = "protoscript.Timestamp";
+const DURATION = "protoscript.Duration";
+const WELL_KNOWN_TYPES = [TIMESTAMP, DURATION];
 
 function writeTypes(types: ProtoTypes[], parents: string[]): string {
   let result = "";
@@ -119,7 +117,7 @@ function writeProtobufSerializers(
             )})${printIfTypescript(`: Uint8Array`)} {
             return ${
               node.content.namespacedName
-            }._writeMessage(msg, new BinaryWriter()).getResultBuffer();`;
+            }._writeMessage(msg, new protoscript.BinaryWriter()).getResultBuffer();`;
           }
           result += "},\n\n";
 
@@ -140,7 +138,7 @@ function writeProtobufSerializers(
             )})${printIfTypescript(`: ${node.content.namespacedName}`)} {
             return ${node.content.namespacedName}._readMessage(${
               node.content.namespacedName
-            }.initialize(), new BinaryReader(bytes));`;
+            }.initialize(), new protoscript.BinaryReader(bytes));`;
           }
           result += "},\n\n";
 
@@ -189,9 +187,9 @@ function writeProtobufSerializers(
          */
         _writeMessage: function(${printIf(isEmpty, "_")}msg${printIfTypescript(
           `: ${`PartialDeep<${node.content.namespacedName}>`}`,
-        )}, writer${printIfTypescript(`: BinaryWriter`)})${printIfTypescript(
-          `: BinaryWriter`,
-        )} {
+        )}, writer${printIfTypescript(
+          `: protoscript.BinaryWriter`,
+        )})${printIfTypescript(`: protoscript.BinaryWriter`)} {
           ${node.content.fields
             .map((field) => {
               let res = "";
@@ -256,16 +254,16 @@ function writeProtobufSerializers(
         if (isEmpty) {
           result += `_readMessage: function(_msg${printIfTypescript(
             `: ${`${node.content.namespacedName}`}`,
-          )}, _reader${printIfTypescript(`: BinaryReader`)})${printIfTypescript(
-            `: ${`${node.content.namespacedName}`}`,
-          )}{
+          )}, _reader${printIfTypescript(
+            `: protoscript.BinaryReader`,
+          )})${printIfTypescript(`: ${`${node.content.namespacedName}`}`)}{
             return _msg;`;
         } else {
           result += `_readMessage: function(msg${printIfTypescript(
             `: ${`${node.content.namespacedName}`}`,
-          )}, reader${printIfTypescript(`: BinaryReader`)})${printIfTypescript(
-            `: ${`${node.content.namespacedName}`}`,
-          )}{
+          )}, reader${printIfTypescript(
+            `: protoscript.BinaryReader`,
+          )})${printIfTypescript(`: ${`${node.content.namespacedName}`}`)}{
             while (reader.nextField()) {
               const field = reader.getFieldNumber();
               switch (field) {
@@ -552,12 +550,17 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
                   res += `if (msg.${field.name} != undefined) {`;
                 } else if (field.read === "readEnum") {
                   res += `if (msg.${field.name} && ${field.tsTypeJSON}._toInt(msg.${field.name})) {`;
+                } else if ([DURATION, TIMESTAMP].includes(field.tsType)) {
+                  res += `if (msg.${field.name} && msg.${field.name}.seconds && msg.${field.name}.nanos) {`;
                 } else {
                   res += `if (msg.${field.name}) {`;
                 }
               }
 
-              if (field.read === "readMessage") {
+              if (
+                field.read === "readMessage" &&
+                !WELL_KNOWN_TYPES.includes(field.tsType)
+              ) {
                 if (field.repeated) {
                   res += `${setField} = msg.${field.name}.map(${field.tsTypeJSON}._writeMessage)`;
                 } else {
@@ -579,21 +582,68 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
                     res += `}`;
                   }
                 }
-              } else if (field.tsType === "bigint") {
-                if (field.repeated) {
-                  res += `${setField} = msg.${field.name}.map(x => x.toString());`;
-                } else {
-                  res += `${setField} = msg.${field.name}.toString();`;
-                }
-              } else if (field.read === "readBytes") {
-                IMPORT_TRACKER.hasBytes = true;
-                if (field.repeated) {
-                  res += `${setField} = msg.${field.name}.map(encodeBase64Bytes);`;
-                } else {
-                  res += `${setField} = encodeBase64Bytes(msg.${field.name});`;
-                }
               } else {
-                res += `${setField} = msg.${field.name};`;
+                let serializer: string;
+                switch (field.read) {
+                  case "readEnum":
+                  case "readBool":
+                  case "readString": {
+                    serializer = "identity";
+                    break;
+                  }
+                  case "readBytes": {
+                    serializer = "protoscript.serializeBytes";
+                    break;
+                  }
+                  case "readInt32":
+                  case "readFixed32":
+                  case "readUint32": {
+                    serializer = "identity";
+                    break;
+                  }
+                  case "readInt64String":
+                  case "readFixed64String":
+                  case "readUint64String": {
+                    serializer = "String";
+                    break;
+                  }
+                  case "readFloat":
+                  case "readDouble": {
+                    serializer = "identity";
+                    break;
+                  }
+                  case "readMessage": {
+                    switch (field.tsType) {
+                      case TIMESTAMP: {
+                        serializer = "protoscript.serializeTimestamp";
+                        break;
+                      }
+                      case DURATION: {
+                        serializer = "protoscript.serializeDuration";
+                        break;
+                      }
+                      default: {
+                        serializer = "identity";
+                        break;
+                      }
+                    }
+                    break;
+                  }
+                  default: {
+                    serializer = "identity";
+                    break;
+                  }
+                }
+
+                if (serializer === "identity") {
+                  res += `${setField} = msg.${field.name};`;
+                } else {
+                  if (field.repeated) {
+                    res += `${setField} = msg.${field.name}.map(${serializer});`;
+                  } else {
+                    res += `${setField} = ${serializer}(msg.${field.name});`;
+                  }
+                }
               }
 
               if (!config.json.emitFieldsWithDefaultValues) {
@@ -631,7 +681,11 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
 
               res += `const ${name} = ${getField};`;
               res += `if (${name}) {`;
-              if (field.read === "readMessage") {
+
+              if (
+                field.read === "readMessage" &&
+                !WELL_KNOWN_TYPES.includes(field.tsType)
+              ) {
                 if (field.map) {
                   res += `msg.${field.name} = ${fromMapMessage(
                     `${toMapMessage(name)}.map(${
@@ -653,20 +707,70 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
                   }
                   res += `${field.tsTypeJSON}._readMessage(msg.${field.name}, ${name});`;
                 }
-              } else if (field.tsType === "bigint") {
-                if (field.repeated) {
-                  res += `msg.${field.name} = ${name}.map(BigInt);`;
-                } else {
-                  res += `msg.${field.name} = BigInt(${name});`;
-                }
-              } else if (field.read === "readBytes") {
-                if (field.repeated) {
-                  res += `msg.${field.name} = ${name}.map(decodeBase64Bytes);`;
-                } else {
-                  res += `msg.${field.name} = decodeBase64Bytes(${name});`;
-                }
               } else {
-                res += `msg.${field.name} = ${name};`;
+                let parser: string;
+                switch (field.read) {
+                  case "readEnum": {
+                    parser = `${field.tsType}._fromInt`;
+                    break;
+                  }
+                  case "readBool":
+                  case "readString": {
+                    parser = "identity";
+                    break;
+                  }
+                  case "readBytes": {
+                    parser = "protoscript.parseBytes";
+                    break;
+                  }
+                  case "readInt32":
+                  case "readFixed32":
+                  case "readUint32": {
+                    parser = "protoscript.parseNumber";
+                    break;
+                  }
+                  case "readInt64String":
+                  case "readFixed64String":
+                  case "readUint64String": {
+                    parser = "BigInt";
+                    break;
+                  }
+                  case "readFloat":
+                  case "readDouble": {
+                    parser = "protoscript.parseDouble";
+                    break;
+                  }
+                  case "readMessage": {
+                    switch (field.tsType) {
+                      case TIMESTAMP: {
+                        parser = "protoscript.parseTimestamp";
+                        break;
+                      }
+                      case DURATION: {
+                        parser = "protoscript.parseDuration";
+                        break;
+                      }
+                      default: {
+                        parser = "identity";
+                        break;
+                      }
+                    }
+                    break;
+                  }
+                  default: {
+                    parser = "identity";
+                    break;
+                  }
+                }
+                if (parser === "identity") {
+                  res += `msg.${field.name} = ${name};`;
+                } else {
+                  if (field.repeated) {
+                    res += `msg.${field.name} = ${name}.map(${parser});`;
+                  } else {
+                    res += `msg.${field.name} = ${parser}(${name});`;
+                  }
+                }
               }
               res += "}";
               return res;
@@ -813,8 +917,6 @@ export function generate(
     typescript: options.typescript as any,
   };
 
-  IMPORT_TRACKER = { ...DEFAULT_IMPORT_TRACKER };
-
   const ast = processTypes(fileDescriptorProto, identifierTable, config.isTS);
   const { imports, types } = ast;
   const sourceFile = fileDescriptorProto.getName();
@@ -848,20 +950,12 @@ export function generate(
 
 ${printIf(
   config.isTS && hasSerializer,
-  `import type { ByteSource, PartialDeep } from 'protoscript';`,
+  `import type { ByteSource, PartialDeep } from "protoscript";`,
 )}
-${printIf(
-  hasSerializer,
-  `import {
-  ${printIf(hasSerializer, "BinaryReader,\nBinaryWriter,\n")}
-  ${printIf(IMPORT_TRACKER.hasBytes, "encodeBase64Bytes,\n")}
-  ${printIf(
-    IMPORT_TRACKER.hasBytes,
-    "decodeBase64Bytes,\n",
-  )}} from 'protoscript';`,
-)}
+${printIf(hasSerializer, `import * as protoscript from "protoscript";`)}
 ${printIf(pluginImports.length > 0, pluginImports.join("\n"))}
 ${imports
+  .filter(({ moduleName }) => moduleName !== "protoscript")
   .map(({ moduleName, path }) => {
     return `import * as ${moduleName} from '${path}';`;
   })

@@ -3,12 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import {
-  BinaryReader,
-  BinaryWriter,
-  encodeBase64Bytes,
-  decodeBase64Bytes,
-} from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -127,7 +122,8 @@ export interface Any {
    *
    * Note: this functionality is not currently available in the official
    * protobuf release, and it is not used for type URLs beginning with
-   * type.googleapis.com.
+   * type.googleapis.com. As of May 2023, there are no widely used type server
+   * implementations and no plans to implement one.
    *
    * Schemes other than `http`, `https` (or the empty scheme) might be
    * used with implementation specific semantics.
@@ -149,14 +145,20 @@ export const Any = {
    * Serializes Any to protobuf.
    */
   encode: function (msg: PartialDeep<Any>): Uint8Array {
-    return Any._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Any._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Any from protobuf.
    */
   decode: function (bytes: ByteSource): Any {
-    return Any._readMessage(Any.initialize(), new BinaryReader(bytes));
+    return Any._readMessage(
+      Any.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -174,8 +176,8 @@ export const Any = {
    */
   _writeMessage: function (
     msg: PartialDeep<Any>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.typeUrl) {
       writer.writeString(1, msg.typeUrl);
     }
@@ -188,7 +190,7 @@ export const Any = {
   /**
    * @private
    */
-  _readMessage: function (msg: Any, reader: BinaryReader): Any {
+  _readMessage: function (msg: Any, reader: protoscript.BinaryReader): Any {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -248,7 +250,7 @@ export const AnyJSON = {
       json["typeUrl"] = msg.typeUrl;
     }
     if (msg.value?.length) {
-      json["value"] = encodeBase64Bytes(msg.value);
+      json["value"] = protoscript.serializeBytes(msg.value);
     }
     return json;
   },
@@ -263,7 +265,7 @@ export const AnyJSON = {
     }
     const _value_ = json["value"];
     if (_value_) {
-      msg.value = decodeBase64Bytes(_value_);
+      msg.value = protoscript.parseBytes(_value_);
     }
     return msg;
   },

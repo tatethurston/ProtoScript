@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -132,14 +132,20 @@ export const Struct = {
    * Serializes Struct to protobuf.
    */
   encode: function (msg: PartialDeep<Struct>): Uint8Array {
-    return Struct._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Struct._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Struct from protobuf.
    */
   decode: function (bytes: ByteSource): Struct {
-    return Struct._readMessage(Struct.initialize(), new BinaryReader(bytes));
+    return Struct._readMessage(
+      Struct.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -156,8 +162,8 @@ export const Struct = {
    */
   _writeMessage: function (
     msg: PartialDeep<Struct>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.fields) {
       writer.writeRepeatedMessage(
         1,
@@ -174,7 +180,10 @@ export const Struct = {
   /**
    * @private
    */
-  _readMessage: function (msg: Struct, reader: BinaryReader): Struct {
+  _readMessage: function (
+    msg: Struct,
+    reader: protoscript.BinaryReader,
+  ): Struct {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -199,8 +208,8 @@ export const Struct = {
      */
     _writeMessage: function (
       msg: PartialDeep<Struct.Fields>,
-      writer: BinaryWriter,
-    ): BinaryWriter {
+      writer: protoscript.BinaryWriter,
+    ): protoscript.BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
       }
@@ -215,7 +224,7 @@ export const Struct = {
      */
     _readMessage: function (
       msg: Struct.Fields,
-      reader: BinaryReader,
+      reader: protoscript.BinaryReader,
     ): Struct.Fields {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -245,14 +254,20 @@ export const Value = {
    * Serializes Value to protobuf.
    */
   encode: function (msg: PartialDeep<Value>): Uint8Array {
-    return Value._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Value._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Value from protobuf.
    */
   decode: function (bytes: ByteSource): Value {
-    return Value._readMessage(Value.initialize(), new BinaryReader(bytes));
+    return Value._readMessage(
+      Value.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -274,8 +289,8 @@ export const Value = {
    */
   _writeMessage: function (
     msg: PartialDeep<Value>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.nullValue != undefined) {
       writer.writeEnum(1, NullValue._toInt(msg.nullValue));
     }
@@ -300,7 +315,7 @@ export const Value = {
   /**
    * @private
    */
-  _readMessage: function (msg: Value, reader: BinaryReader): Value {
+  _readMessage: function (msg: Value, reader: protoscript.BinaryReader): Value {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -345,7 +360,10 @@ export const ListValue = {
    * Serializes ListValue to protobuf.
    */
   encode: function (msg: PartialDeep<ListValue>): Uint8Array {
-    return ListValue._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return ListValue._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -354,7 +372,7 @@ export const ListValue = {
   decode: function (bytes: ByteSource): ListValue {
     return ListValue._readMessage(
       ListValue.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -372,8 +390,8 @@ export const ListValue = {
    */
   _writeMessage: function (
     msg: PartialDeep<ListValue>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.values?.length) {
       writer.writeRepeatedMessage(1, msg.values as any, Value._writeMessage);
     }
@@ -383,7 +401,10 @@ export const ListValue = {
   /**
    * @private
    */
-  _readMessage: function (msg: ListValue, reader: BinaryReader): ListValue {
+  _readMessage: function (
+    msg: ListValue,
+    reader: protoscript.BinaryReader,
+  ): ListValue {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -601,11 +622,11 @@ export const ValueJSON = {
   _readMessage: function (msg: Value, json: any): Value {
     const _nullValue_ = json["nullValue"] ?? json["null_value"];
     if (_nullValue_) {
-      msg.nullValue = _nullValue_;
+      msg.nullValue = NullValue._fromInt(_nullValue_);
     }
     const _numberValue_ = json["numberValue"] ?? json["number_value"];
     if (_numberValue_) {
-      msg.numberValue = _numberValue_;
+      msg.numberValue = protoscript.parseDouble(_numberValue_);
     }
     const _stringValue_ = json["stringValue"] ?? json["string_value"];
     if (_stringValue_) {

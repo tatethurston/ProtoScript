@@ -3,12 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import {
-  BinaryReader,
-  BinaryWriter,
-  encodeBase64Bytes,
-  decodeBase64Bytes,
-} from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -115,14 +110,20 @@ export const Foo = {
    * Serializes Foo to protobuf.
    */
   encode: function (msg: PartialDeep<Foo>): Uint8Array {
-    return Foo._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Foo._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Foo from protobuf.
    */
   decode: function (bytes: ByteSource): Foo {
-    return Foo._readMessage(Foo.initialize(), new BinaryReader(bytes));
+    return Foo._readMessage(
+      Foo.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -153,8 +154,8 @@ export const Foo = {
    */
   _writeMessage: function (
     msg: PartialDeep<Foo>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.fieldOne != undefined) {
       writer.writeInt32(1, msg.fieldOne);
     }
@@ -220,7 +221,7 @@ export const Foo = {
   /**
    * @private
    */
-  _readMessage: function (msg: Foo, reader: BinaryReader): Foo {
+  _readMessage: function (msg: Foo, reader: protoscript.BinaryReader): Foo {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -318,7 +319,7 @@ export const Foo = {
     encode: function (msg: PartialDeep<Foo.FooBar>): Uint8Array {
       return Foo.FooBar._writeMessage(
         msg,
-        new BinaryWriter(),
+        new protoscript.BinaryWriter(),
       ).getResultBuffer();
     },
 
@@ -328,7 +329,7 @@ export const Foo = {
     decode: function (bytes: ByteSource): Foo.FooBar {
       return Foo.FooBar._readMessage(
         Foo.FooBar.initialize(),
-        new BinaryReader(bytes),
+        new protoscript.BinaryReader(bytes),
       );
     },
 
@@ -348,8 +349,8 @@ export const Foo = {
      */
     _writeMessage: function (
       msg: PartialDeep<Foo.FooBar>,
-      writer: BinaryWriter,
-    ): BinaryWriter {
+      writer: protoscript.BinaryWriter,
+    ): protoscript.BinaryWriter {
       if (msg.fieldOne) {
         writer.writeString(1, msg.fieldOne);
       }
@@ -372,7 +373,10 @@ export const Foo = {
     /**
      * @private
      */
-    _readMessage: function (msg: Foo.FooBar, reader: BinaryReader): Foo.FooBar {
+    _readMessage: function (
+      msg: Foo.FooBar,
+      reader: protoscript.BinaryReader,
+    ): Foo.FooBar {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
         switch (field) {
@@ -409,8 +413,8 @@ export const Foo = {
        */
       _writeMessage: function (
         msg: PartialDeep<Foo.FooBar.FieldTwo>,
-        writer: BinaryWriter,
-      ): BinaryWriter {
+        writer: protoscript.BinaryWriter,
+      ): protoscript.BinaryWriter {
         if (msg.key) {
           writer.writeString(1, msg.key);
         }
@@ -425,7 +429,7 @@ export const Foo = {
        */
       _readMessage: function (
         msg: Foo.FooBar.FieldTwo,
-        reader: BinaryReader,
+        reader: protoscript.BinaryReader,
       ): Foo.FooBar.FieldTwo {
         while (reader.nextField()) {
           const field = reader.getFieldNumber();
@@ -455,8 +459,8 @@ export const Foo = {
      */
     _writeMessage: function (
       msg: PartialDeep<Foo.FieldTwo>,
-      writer: BinaryWriter,
-    ): BinaryWriter {
+      writer: protoscript.BinaryWriter,
+    ): protoscript.BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
       }
@@ -471,7 +475,7 @@ export const Foo = {
      */
     _readMessage: function (
       msg: Foo.FieldTwo,
-      reader: BinaryReader,
+      reader: protoscript.BinaryReader,
     ): Foo.FieldTwo {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -501,14 +505,20 @@ export const Bar = {
    * Serializes Bar to protobuf.
    */
   encode: function (msg: PartialDeep<Bar>): Uint8Array {
-    return Bar._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Bar._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Bar from protobuf.
    */
   decode: function (bytes: ByteSource): Bar {
-    return Bar._readMessage(Bar.initialize(), new BinaryReader(bytes));
+    return Bar._readMessage(
+      Bar.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -527,8 +537,8 @@ export const Bar = {
    */
   _writeMessage: function (
     msg: PartialDeep<Bar>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.fieldOne) {
       writer.writeString(1, msg.fieldOne);
     }
@@ -551,7 +561,7 @@ export const Bar = {
   /**
    * @private
    */
-  _readMessage: function (msg: Bar, reader: BinaryReader): Bar {
+  _readMessage: function (msg: Bar, reader: protoscript.BinaryReader): Bar {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -588,8 +598,8 @@ export const Bar = {
      */
     _writeMessage: function (
       msg: PartialDeep<Bar.FieldTwo>,
-      writer: BinaryWriter,
-    ): BinaryWriter {
+      writer: protoscript.BinaryWriter,
+    ): protoscript.BinaryWriter {
       if (msg.key) {
         writer.writeString(1, msg.key);
       }
@@ -604,7 +614,7 @@ export const Bar = {
      */
     _readMessage: function (
       msg: Bar.FieldTwo,
-      reader: BinaryReader,
+      reader: protoscript.BinaryReader,
     ): Bar.FieldTwo {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
@@ -738,7 +748,7 @@ export const FooJSON = {
       }
     }
     if (msg.fieldFive?.length) {
-      json["fieldFive"] = msg.fieldFive.map((x) => x.toString());
+      json["fieldFive"] = msg.fieldFive.map(String);
     }
     if (msg.fieldSix && BazJSON._toInt(msg.fieldSix)) {
       json["fieldSix"] = msg.fieldSix;
@@ -747,13 +757,13 @@ export const FooJSON = {
       json["luckySeven"] = msg.fieldSeven;
     }
     if (msg.fieldEight) {
-      json["fieldEight"] = msg.fieldEight.toString();
+      json["fieldEight"] = String(msg.fieldEight);
     }
     if (msg.fieldNine?.length) {
-      json["fieldNine"] = encodeBase64Bytes(msg.fieldNine);
+      json["fieldNine"] = protoscript.serializeBytes(msg.fieldNine);
     }
     if (msg.fieldTen?.length) {
-      json["fieldTen"] = msg.fieldTen.map(encodeBase64Bytes);
+      json["fieldTen"] = msg.fieldTen.map(protoscript.serializeBytes);
     }
     if (msg.fieldEleven != undefined) {
       const _fieldEleven_ = BarJSON._writeMessage(msg.fieldEleven);
@@ -785,7 +795,7 @@ export const FooJSON = {
   _readMessage: function (msg: Foo, json: any): Foo {
     const _fieldOne_ = json["fieldOne"] ?? json["field_one"];
     if (_fieldOne_) {
-      msg.fieldOne = _fieldOne_;
+      msg.fieldOne = protoscript.parseNumber(_fieldOne_);
     }
     const _fieldTwo_ = json["fieldTwo"] ?? json["field_two"];
     if (_fieldTwo_) {
@@ -814,12 +824,12 @@ export const FooJSON = {
     }
     const _fieldSix_ = json["fieldSix"] ?? json["field_six"];
     if (_fieldSix_) {
-      msg.fieldSix = _fieldSix_;
+      msg.fieldSix = Baz._fromInt(_fieldSix_);
     }
     const _fieldSeven_ =
       json["luckySeven"] ?? json["fieldSeven"] ?? json["field_seven"];
     if (_fieldSeven_) {
-      msg.fieldSeven = _fieldSeven_;
+      msg.fieldSeven = _fieldSeven_.map(Baz._fromInt);
     }
     const _fieldEight_ = json["fieldEight"] ?? json["field_eight"];
     if (_fieldEight_) {
@@ -827,11 +837,11 @@ export const FooJSON = {
     }
     const _fieldNine_ = json["fieldNine"] ?? json["field_nine"];
     if (_fieldNine_) {
-      msg.fieldNine = decodeBase64Bytes(_fieldNine_);
+      msg.fieldNine = protoscript.parseBytes(_fieldNine_);
     }
     const _fieldTen_ = json["fieldTen"] ?? json["field_ten"];
     if (_fieldTen_) {
-      msg.fieldTen = _fieldTen_.map(decodeBase64Bytes);
+      msg.fieldTen = _fieldTen_.map(protoscript.parseBytes);
     }
     const _fieldEleven_ = json["fieldEleven"] ?? json["field_eleven"];
     if (_fieldEleven_) {
@@ -939,7 +949,7 @@ export const FooJSON = {
       }
       const _fieldThree_ = json["fieldThree"] ?? json["field_three"];
       if (_fieldThree_) {
-        msg.fieldThree = _fieldThree_;
+        msg.fieldThree = _fieldThree_.map(protoscript.parseNumber);
       }
       return msg;
     },
@@ -956,7 +966,7 @@ export const FooJSON = {
           json["key"] = msg.key;
         }
         if (msg.value) {
-          json["value"] = msg.value.toString();
+          json["value"] = String(msg.value);
         }
         return json;
       },
@@ -1088,7 +1098,7 @@ export const BarJSON = {
     }
     const _fieldThree_ = json["fieldThree"] ?? json["field_three"];
     if (_fieldThree_) {
-      msg.fieldThree = _fieldThree_;
+      msg.fieldThree = _fieldThree_.map(protoscript.parseNumber);
     }
     return msg;
   },
@@ -1105,7 +1115,7 @@ export const BarJSON = {
         json["key"] = msg.key;
       }
       if (msg.value) {
-        json["value"] = msg.value.toString();
+        json["value"] = String(msg.value);
       }
       return json;
     },
