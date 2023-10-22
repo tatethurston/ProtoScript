@@ -1,0 +1,133 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+// import "google/protobuf/any.proto";
+import "google/protobuf/struct.proto";
+// import "google/protobuf/wrappers.proto";
+// import "google/protobuf/field_mask.proto";
+
+message Message {
+  string foo_bar = 1;
+  int64 g = 2;
+}
+
+enum Enum {
+  FOO_BAR = 0;
+  BAZ = 1;
+}
+
+message SampleMessage {
+  Message sample_message = 1;
+
+  Enum sample_enum = 2;
+
+  map<string, string> sample_map = 3;
+
+  repeated string sample_repeated = 4;
+
+  bool sample_bool = 5;
+
+  string sample_string = 6;
+
+  bytes sample_bytes = 7;
+
+  int32 sample_int32 = 8;
+  fixed32 sample_fixed32 = 9;
+  uint32 sample_uint32 = 10;
+
+  int64 sample_int64 = 11;
+  fixed64 sample_fixed64 = 12;
+  uint64 sample_uint64 = 13;
+
+  float sample_float = 14;
+  double sample_double = 15;
+
+  // TODO: Any
+  // google.protobuf.Any sample_any = 16;
+
+  google.protobuf.Timestamp sample_timestamp = 17;
+
+  google.protobuf.Duration sample_duration = 18;
+
+  google.protobuf.Struct sample_struct = 19;
+
+  // TODO: Wrapper Types
+  // google.protobuf.BoolValue sample_bool_wrapper = 20;
+  // google.protobuf.BytesValue sample_bytes_wrapper = 21;
+  // google.protobuf.Int32Value sample_int32_wrapper = 22;
+  // google.protobuf.Int64Value sample_int64_wrapper = 23;
+  // google.protobuf.UInt32Value sample_uint32_wrapper = 24;
+  // google.protobuf.UInt64Value sample_uint64_wrapper = 25;
+  // google.protobuf.StringValue sample_string_wrapper = 26;
+  // google.protobuf.DoubleValue sample_double_wrapper = 27;
+
+  // TODO: FieldMask
+  // google.protobuf.FieldMask sample_fieldmask = 28;
+
+  // TODO: Remaining Well Known Types
+  // ListValue	array	[foo, bar, ...]	
+  // Value	value		Any JSON value. Check google.protobuf.Value for details.
+  // NullValue	null		JSON null
+  // Empty	object	{}	An empty JSON object
+}
+
+message OptionalMessage {
+  optional string foo_bar = 1;
+  optional int64 g = 2;
+}
+
+message OptionalSampleMessage {
+  optional OptionalMessage sample_message = 1;
+
+  optional Enum sample_enum = 2;
+
+  map<string, string> sample_map = 3;
+
+  repeated string sample_repeated = 4;
+
+  optional bool sample_bool = 5;
+
+  optional string sample_string = 6;
+
+  optional bytes sample_bytes = 7;
+
+  optional int32 sample_int32 = 8;
+  optional fixed32 sample_fixed32 = 9;
+  optional uint32 sample_uint32 = 10;
+
+  optional int64 sample_int64 = 11;
+  optional fixed64 sample_fixed64 = 12;
+  optional uint64 sample_uint64 = 13;
+
+  optional float sample_float = 14;
+  optional double sample_double = 15;
+
+  // TODO: Any
+  // optional google.protobuf.Any sample_any = 16;
+
+  optional google.protobuf.Timestamp sample_timestamp = 17;
+
+  optional google.protobuf.Duration sample_duration = 18;
+
+  optional google.protobuf.Struct sample_struct = 19;
+
+  // TODO: Wrapper Types
+  // optional google.protobuf.BoolValue sample_bool_wrapper = 20;
+  // optional google.protobuf.BytesValue sample_bytes_wrapper = 21;
+  // optional google.protobuf.Int32Value sample_int32_wrapper = 22;
+  // optional google.protobuf.Int64Value sample_int64_wrapper = 23;
+  // optional google.protobuf.UInt32Value sample_uint32_wrapper = 24;
+  // optional google.protobuf.UInt64Value sample_uint64_wrapper = 25;
+  // optional google.protobuf.StringValue sample_string_wrapper = 26;
+  // optional google.protobuf.DoubleValue sample_double_wrapper = 27;
+
+  // TODO: FieldMask
+  // optional google.protobuf.FieldMask sample_fieldmask = 28;
+
+  // TODO: Remaining Well Known Types
+  // optional ListValue	array	[foo, bar, ...]	
+  // optional Value	value		Any JSON value. Check google.protobuf.Value for details.
+  // optional NullValue	null		JSON null
+  // optional Empty	object	{}	An empty JSON object
+}

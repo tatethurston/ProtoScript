@@ -2,7 +2,7 @@
 // Source: src/haberdasher.proto
 /* eslint-disable */
 
-import { BinaryReader, BinaryWriter } from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //        Protobuf Encode / Decode        //
@@ -13,14 +13,20 @@ export const Size = {
    * Serializes Size to protobuf.
    */
   encode: function (msg) {
-    return Size._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Size._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Size from protobuf.
    */
   decode: function (bytes) {
-    return Size._readMessage(Size.initialize(), new BinaryReader(bytes));
+    return Size._readMessage(
+      Size.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -68,14 +74,20 @@ export const Hat = {
    * Serializes Hat to protobuf.
    */
   encode: function (msg) {
-    return Hat._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Hat._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Hat from protobuf.
    */
   decode: function (bytes) {
-    return Hat._readMessage(Hat.initialize(), new BinaryReader(bytes));
+    return Hat._readMessage(
+      Hat.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -179,7 +191,7 @@ export const SizeJSON = {
   _readMessage: function (msg, json) {
     const _inches_ = json["inches"];
     if (_inches_) {
-      msg.inches = _inches_;
+      msg.inches = protoscript.parseNumber(_inches_);
     }
     return msg;
   },
@@ -234,7 +246,7 @@ export const HatJSON = {
   _readMessage: function (msg, json) {
     const _inches_ = json["inches"];
     if (_inches_) {
-      msg.inches = _inches_;
+      msg.inches = protoscript.parseNumber(_inches_);
     }
     const _color_ = json["color"];
     if (_color_) {

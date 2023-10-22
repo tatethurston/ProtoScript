@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -32,7 +32,7 @@ export const SourceContext = {
   encode: function (msg: PartialDeep<SourceContext>): Uint8Array {
     return SourceContext._writeMessage(
       msg,
-      new BinaryWriter(),
+      new protoscript.BinaryWriter(),
     ).getResultBuffer();
   },
 
@@ -42,7 +42,7 @@ export const SourceContext = {
   decode: function (bytes: ByteSource): SourceContext {
     return SourceContext._readMessage(
       SourceContext.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -60,8 +60,8 @@ export const SourceContext = {
    */
   _writeMessage: function (
     msg: PartialDeep<SourceContext>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.fileName) {
       writer.writeString(1, msg.fileName);
     }
@@ -73,7 +73,7 @@ export const SourceContext = {
    */
   _readMessage: function (
     msg: SourceContext,
-    reader: BinaryReader,
+    reader: protoscript.BinaryReader,
   ): SourceContext {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();

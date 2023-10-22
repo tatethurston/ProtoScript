@@ -3,8 +3,6 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
-
 import * as protoscript from "protoscript";
 
 //========================================//
@@ -209,14 +207,20 @@ export const Api = {
    * Serializes Api to protobuf.
    */
   encode: function (msg: PartialDeep<Api>): Uint8Array {
-    return Api._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Api._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Api from protobuf.
    */
   decode: function (bytes: ByteSource): Api {
-    return Api._readMessage(Api.initialize(), new BinaryReader(bytes));
+    return Api._readMessage(
+      Api.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -239,8 +243,8 @@ export const Api = {
    */
   _writeMessage: function (
     msg: PartialDeep<Api>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
     }
@@ -276,7 +280,7 @@ export const Api = {
   /**
    * @private
    */
-  _readMessage: function (msg: Api, reader: BinaryReader): Api {
+  _readMessage: function (msg: Api, reader: protoscript.BinaryReader): Api {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -332,14 +336,20 @@ export const Method = {
    * Serializes Method to protobuf.
    */
   encode: function (msg: PartialDeep<Method>): Uint8Array {
-    return Method._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Method._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Method from protobuf.
    */
   decode: function (bytes: ByteSource): Method {
-    return Method._readMessage(Method.initialize(), new BinaryReader(bytes));
+    return Method._readMessage(
+      Method.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -362,8 +372,8 @@ export const Method = {
    */
   _writeMessage: function (
     msg: PartialDeep<Method>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
     }
@@ -395,7 +405,10 @@ export const Method = {
   /**
    * @private
    */
-  _readMessage: function (msg: Method, reader: BinaryReader): Method {
+  _readMessage: function (
+    msg: Method,
+    reader: protoscript.BinaryReader,
+  ): Method {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -444,14 +457,20 @@ export const Mixin = {
    * Serializes Mixin to protobuf.
    */
   encode: function (msg: PartialDeep<Mixin>): Uint8Array {
-    return Mixin._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return Mixin._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
    * Deserializes Mixin from protobuf.
    */
   decode: function (bytes: ByteSource): Mixin {
-    return Mixin._readMessage(Mixin.initialize(), new BinaryReader(bytes));
+    return Mixin._readMessage(
+      Mixin.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
   },
 
   /**
@@ -469,8 +488,8 @@ export const Mixin = {
    */
   _writeMessage: function (
     msg: PartialDeep<Mixin>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.name) {
       writer.writeString(1, msg.name);
     }
@@ -483,7 +502,7 @@ export const Mixin = {
   /**
    * @private
    */
-  _readMessage: function (msg: Mixin, reader: BinaryReader): Mixin {
+  _readMessage: function (msg: Mixin, reader: protoscript.BinaryReader): Mixin {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -618,7 +637,7 @@ export const ApiJSON = {
     }
     const _syntax_ = json["syntax"];
     if (_syntax_) {
-      msg.syntax = _syntax_;
+      msg.syntax = protoscript.Syntax._fromInt(_syntax_);
     }
     return msg;
   },
@@ -720,7 +739,7 @@ export const MethodJSON = {
     }
     const _syntax_ = json["syntax"];
     if (_syntax_) {
-      msg.syntax = _syntax_;
+      msg.syntax = protoscript.Syntax._fromInt(_syntax_);
     }
     return msg;
   },

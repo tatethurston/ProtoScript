@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import type { ByteSource, PartialDeep } from "protoscript";
-import { BinaryReader, BinaryWriter } from "protoscript";
+import * as protoscript from "protoscript";
 
 //========================================//
 //                 Types                  //
@@ -226,7 +226,10 @@ export const FieldMask = {
    * Serializes FieldMask to protobuf.
    */
   encode: function (msg: PartialDeep<FieldMask>): Uint8Array {
-    return FieldMask._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+    return FieldMask._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
   },
 
   /**
@@ -235,7 +238,7 @@ export const FieldMask = {
   decode: function (bytes: ByteSource): FieldMask {
     return FieldMask._readMessage(
       FieldMask.initialize(),
-      new BinaryReader(bytes),
+      new protoscript.BinaryReader(bytes),
     );
   },
 
@@ -253,8 +256,8 @@ export const FieldMask = {
    */
   _writeMessage: function (
     msg: PartialDeep<FieldMask>,
-    writer: BinaryWriter,
-  ): BinaryWriter {
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
     if (msg.paths?.length) {
       writer.writeRepeatedString(1, msg.paths);
     }
@@ -264,7 +267,10 @@ export const FieldMask = {
   /**
    * @private
    */
-  _readMessage: function (msg: FieldMask, reader: BinaryReader): FieldMask {
+  _readMessage: function (
+    msg: FieldMask,
+    reader: protoscript.BinaryReader,
+  ): FieldMask {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {

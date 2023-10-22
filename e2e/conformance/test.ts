@@ -13,6 +13,7 @@ describe("Conformance", () => {
     const result = run(
       `./bin/conformance_test_runner \
         --enforce_recommended \
+        --failure_list ./expected_proto2_failing_tests.txt \
         --output_dir . \
         ./dist/runner.cjs`,
     );

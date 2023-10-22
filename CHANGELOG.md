@@ -2,6 +2,11 @@
 
 ## v0.0.18
 
+- Fix JSON serializtion for Timestamp and Duration well known types. See [#39](https://github.com/tatethurston/ProtoScript/issues/39).
+- Accept all value permutations as described by the Proto3 JSON spec when parsing JSON messages.
+
+## v0.0.18
+
 - Fix JSON deserializtion of recursive (self referencing) messages.
 - Fix generated TypeScript types for repeated recursive (self referencing) messages.
 
@@ -26,7 +31,7 @@
         - language=typescript
       strategy: all
   ```
-  
+
 ## v0.0.15
 
 This release includes a number of bug fixes
