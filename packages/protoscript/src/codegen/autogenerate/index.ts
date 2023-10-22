@@ -583,65 +583,13 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
                   }
                 }
               } else {
-                let serializer: string;
-                switch (field.read) {
-                  case "readEnum":
-                  case "readBool":
-                  case "readString": {
-                    serializer = "identity";
-                    break;
-                  }
-                  case "readBytes": {
-                    serializer = "protoscript.serializeBytes";
-                    break;
-                  }
-                  case "readInt32":
-                  case "readFixed32":
-                  case "readUint32": {
-                    serializer = "identity";
-                    break;
-                  }
-                  case "readInt64String":
-                  case "readFixed64String":
-                  case "readUint64String": {
-                    serializer = "String";
-                    break;
-                  }
-                  case "readFloat":
-                  case "readDouble": {
-                    serializer = "identity";
-                    break;
-                  }
-                  case "readMessage": {
-                    switch (field.tsType) {
-                      case TIMESTAMP: {
-                        serializer = "protoscript.serializeTimestamp";
-                        break;
-                      }
-                      case DURATION: {
-                        serializer = "protoscript.serializeDuration";
-                        break;
-                      }
-                      default: {
-                        serializer = "identity";
-                        break;
-                      }
-                    }
-                    break;
-                  }
-                  default: {
-                    serializer = "identity";
-                    break;
-                  }
-                }
-
-                if (serializer === "identity") {
+                if (field.jsonSerializer === "identity") {
                   res += `${setField} = msg.${field.name};`;
                 } else {
                   if (field.repeated) {
-                    res += `${setField} = msg.${field.name}.map(${serializer});`;
+                    res += `${setField} = msg.${field.name}.map(${field.jsonSerializer});`;
                   } else {
-                    res += `${setField} = ${serializer}(msg.${field.name});`;
+                    res += `${setField} = ${field.jsonSerializer}(msg.${field.name});`;
                   }
                 }
               }
@@ -708,67 +656,13 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
                   res += `${field.tsTypeJSON}._readMessage(msg.${field.name}, ${name});`;
                 }
               } else {
-                let parser: string;
-                switch (field.read) {
-                  case "readEnum": {
-                    parser = `${field.tsType}._fromInt`;
-                    break;
-                  }
-                  case "readBool":
-                  case "readString": {
-                    parser = "identity";
-                    break;
-                  }
-                  case "readBytes": {
-                    parser = "protoscript.parseBytes";
-                    break;
-                  }
-                  case "readInt32":
-                  case "readFixed32":
-                  case "readUint32": {
-                    parser = "protoscript.parseNumber";
-                    break;
-                  }
-                  case "readInt64String":
-                  case "readFixed64String":
-                  case "readUint64String": {
-                    parser = "BigInt";
-                    break;
-                  }
-                  case "readFloat":
-                  case "readDouble": {
-                    parser = "protoscript.parseDouble";
-                    break;
-                  }
-                  case "readMessage": {
-                    switch (field.tsType) {
-                      case TIMESTAMP: {
-                        parser = "protoscript.parseTimestamp";
-                        break;
-                      }
-                      case DURATION: {
-                        parser = "protoscript.parseDuration";
-                        break;
-                      }
-                      default: {
-                        parser = "identity";
-                        break;
-                      }
-                    }
-                    break;
-                  }
-                  default: {
-                    parser = "identity";
-                    break;
-                  }
-                }
-                if (parser === "identity") {
+                if (field.jsonParser === "identity") {
                   res += `msg.${field.name} = ${name};`;
                 } else {
                   if (field.repeated) {
-                    res += `msg.${field.name} = ${name}.map(${parser});`;
+                    res += `msg.${field.name} = ${name}.map(${field.jsonParser});`;
                   } else {
-                    res += `msg.${field.name} = ${parser}(${name});`;
+                    res += `msg.${field.name} = ${field.jsonParser}(${name});`;
                   }
                 }
               }

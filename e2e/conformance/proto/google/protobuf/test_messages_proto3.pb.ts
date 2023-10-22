@@ -3970,7 +3970,7 @@ export const TestAllTypesProto3JSON = {
       json["optionalSint32"] = msg.optionalSint32;
     }
     if (msg.optionalSint64) {
-      json["optionalSint64"] = msg.optionalSint64;
+      json["optionalSint64"] = String(msg.optionalSint64);
     }
     if (msg.optionalFixed32) {
       json["optionalFixed32"] = msg.optionalFixed32;
@@ -3982,7 +3982,7 @@ export const TestAllTypesProto3JSON = {
       json["optionalSfixed32"] = msg.optionalSfixed32;
     }
     if (msg.optionalSfixed64) {
-      json["optionalSfixed64"] = msg.optionalSfixed64;
+      json["optionalSfixed64"] = String(msg.optionalSfixed64);
     }
     if (msg.optionalFloat) {
       json["optionalFloat"] = msg.optionalFloat;
@@ -4064,7 +4064,7 @@ export const TestAllTypesProto3JSON = {
       json["repeatedSint32"] = msg.repeatedSint32;
     }
     if (msg.repeatedSint64?.length) {
-      json["repeatedSint64"] = msg.repeatedSint64;
+      json["repeatedSint64"] = msg.repeatedSint64.map(String);
     }
     if (msg.repeatedFixed32?.length) {
       json["repeatedFixed32"] = msg.repeatedFixed32;
@@ -4076,7 +4076,7 @@ export const TestAllTypesProto3JSON = {
       json["repeatedSfixed32"] = msg.repeatedSfixed32;
     }
     if (msg.repeatedSfixed64?.length) {
-      json["repeatedSfixed64"] = msg.repeatedSfixed64;
+      json["repeatedSfixed64"] = msg.repeatedSfixed64.map(String);
     }
     if (msg.repeatedFloat?.length) {
       json["repeatedFloat"] = msg.repeatedFloat;
@@ -4131,7 +4131,7 @@ export const TestAllTypesProto3JSON = {
       json["packedSint32"] = msg.packedSint32;
     }
     if (msg.packedSint64?.length) {
-      json["packedSint64"] = msg.packedSint64;
+      json["packedSint64"] = msg.packedSint64.map(String);
     }
     if (msg.packedFixed32?.length) {
       json["packedFixed32"] = msg.packedFixed32;
@@ -4143,7 +4143,7 @@ export const TestAllTypesProto3JSON = {
       json["packedSfixed32"] = msg.packedSfixed32;
     }
     if (msg.packedSfixed64?.length) {
-      json["packedSfixed64"] = msg.packedSfixed64;
+      json["packedSfixed64"] = msg.packedSfixed64.map(String);
     }
     if (msg.packedFloat?.length) {
       json["packedFloat"] = msg.packedFloat;
@@ -4173,7 +4173,7 @@ export const TestAllTypesProto3JSON = {
       json["unpackedSint32"] = msg.unpackedSint32;
     }
     if (msg.unpackedSint64?.length) {
-      json["unpackedSint64"] = msg.unpackedSint64;
+      json["unpackedSint64"] = msg.unpackedSint64.map(String);
     }
     if (msg.unpackedFixed32?.length) {
       json["unpackedFixed32"] = msg.unpackedFixed32;
@@ -4185,7 +4185,7 @@ export const TestAllTypesProto3JSON = {
       json["unpackedSfixed32"] = msg.unpackedSfixed32;
     }
     if (msg.unpackedSfixed64?.length) {
-      json["unpackedSfixed64"] = msg.unpackedSfixed64;
+      json["unpackedSfixed64"] = msg.unpackedSfixed64.map(String);
     }
     if (msg.unpackedFloat?.length) {
       json["unpackedFloat"] = msg.unpackedFloat;
@@ -4730,11 +4730,11 @@ export const TestAllTypesProto3JSON = {
     }
     const _optionalSint32_ = json["optionalSint32"] ?? json["optional_sint32"];
     if (_optionalSint32_) {
-      msg.optionalSint32 = _optionalSint32_;
+      msg.optionalSint32 = protoscript.parseNumber(_optionalSint32_);
     }
     const _optionalSint64_ = json["optionalSint64"] ?? json["optional_sint64"];
     if (_optionalSint64_) {
-      msg.optionalSint64 = _optionalSint64_;
+      msg.optionalSint64 = BigInt(_optionalSint64_);
     }
     const _optionalFixed32_ =
       json["optionalFixed32"] ?? json["optional_fixed32"];
@@ -4749,12 +4749,12 @@ export const TestAllTypesProto3JSON = {
     const _optionalSfixed32_ =
       json["optionalSfixed32"] ?? json["optional_sfixed32"];
     if (_optionalSfixed32_) {
-      msg.optionalSfixed32 = _optionalSfixed32_;
+      msg.optionalSfixed32 = protoscript.parseNumber(_optionalSfixed32_);
     }
     const _optionalSfixed64_ =
       json["optionalSfixed64"] ?? json["optional_sfixed64"];
     if (_optionalSfixed64_) {
-      msg.optionalSfixed64 = _optionalSfixed64_;
+      msg.optionalSfixed64 = BigInt(_optionalSfixed64_);
     }
     const _optionalFloat_ = json["optionalFloat"] ?? json["optional_float"];
     if (_optionalFloat_) {
@@ -4846,11 +4846,11 @@ export const TestAllTypesProto3JSON = {
     }
     const _repeatedSint32_ = json["repeatedSint32"] ?? json["repeated_sint32"];
     if (_repeatedSint32_) {
-      msg.repeatedSint32 = _repeatedSint32_;
+      msg.repeatedSint32 = _repeatedSint32_.map(protoscript.parseNumber);
     }
     const _repeatedSint64_ = json["repeatedSint64"] ?? json["repeated_sint64"];
     if (_repeatedSint64_) {
-      msg.repeatedSint64 = _repeatedSint64_;
+      msg.repeatedSint64 = _repeatedSint64_.map(BigInt);
     }
     const _repeatedFixed32_ =
       json["repeatedFixed32"] ?? json["repeated_fixed32"];
@@ -4865,12 +4865,12 @@ export const TestAllTypesProto3JSON = {
     const _repeatedSfixed32_ =
       json["repeatedSfixed32"] ?? json["repeated_sfixed32"];
     if (_repeatedSfixed32_) {
-      msg.repeatedSfixed32 = _repeatedSfixed32_;
+      msg.repeatedSfixed32 = _repeatedSfixed32_.map(protoscript.parseNumber);
     }
     const _repeatedSfixed64_ =
       json["repeatedSfixed64"] ?? json["repeated_sfixed64"];
     if (_repeatedSfixed64_) {
-      msg.repeatedSfixed64 = _repeatedSfixed64_;
+      msg.repeatedSfixed64 = _repeatedSfixed64_.map(BigInt);
     }
     const _repeatedFloat_ = json["repeatedFloat"] ?? json["repeated_float"];
     if (_repeatedFloat_) {
@@ -4949,11 +4949,11 @@ export const TestAllTypesProto3JSON = {
     }
     const _packedSint32_ = json["packedSint32"] ?? json["packed_sint32"];
     if (_packedSint32_) {
-      msg.packedSint32 = _packedSint32_;
+      msg.packedSint32 = _packedSint32_.map(protoscript.parseNumber);
     }
     const _packedSint64_ = json["packedSint64"] ?? json["packed_sint64"];
     if (_packedSint64_) {
-      msg.packedSint64 = _packedSint64_;
+      msg.packedSint64 = _packedSint64_.map(BigInt);
     }
     const _packedFixed32_ = json["packedFixed32"] ?? json["packed_fixed32"];
     if (_packedFixed32_) {
@@ -4965,11 +4965,11 @@ export const TestAllTypesProto3JSON = {
     }
     const _packedSfixed32_ = json["packedSfixed32"] ?? json["packed_sfixed32"];
     if (_packedSfixed32_) {
-      msg.packedSfixed32 = _packedSfixed32_;
+      msg.packedSfixed32 = _packedSfixed32_.map(protoscript.parseNumber);
     }
     const _packedSfixed64_ = json["packedSfixed64"] ?? json["packed_sfixed64"];
     if (_packedSfixed64_) {
-      msg.packedSfixed64 = _packedSfixed64_;
+      msg.packedSfixed64 = _packedSfixed64_.map(BigInt);
     }
     const _packedFloat_ = json["packedFloat"] ?? json["packed_float"];
     if (_packedFloat_) {
@@ -5008,11 +5008,11 @@ export const TestAllTypesProto3JSON = {
     }
     const _unpackedSint32_ = json["unpackedSint32"] ?? json["unpacked_sint32"];
     if (_unpackedSint32_) {
-      msg.unpackedSint32 = _unpackedSint32_;
+      msg.unpackedSint32 = _unpackedSint32_.map(protoscript.parseNumber);
     }
     const _unpackedSint64_ = json["unpackedSint64"] ?? json["unpacked_sint64"];
     if (_unpackedSint64_) {
-      msg.unpackedSint64 = _unpackedSint64_;
+      msg.unpackedSint64 = _unpackedSint64_.map(BigInt);
     }
     const _unpackedFixed32_ =
       json["unpackedFixed32"] ?? json["unpacked_fixed32"];
@@ -5027,12 +5027,12 @@ export const TestAllTypesProto3JSON = {
     const _unpackedSfixed32_ =
       json["unpackedSfixed32"] ?? json["unpacked_sfixed32"];
     if (_unpackedSfixed32_) {
-      msg.unpackedSfixed32 = _unpackedSfixed32_;
+      msg.unpackedSfixed32 = _unpackedSfixed32_.map(protoscript.parseNumber);
     }
     const _unpackedSfixed64_ =
       json["unpackedSfixed64"] ?? json["unpacked_sfixed64"];
     if (_unpackedSfixed64_) {
-      msg.unpackedSfixed64 = _unpackedSfixed64_;
+      msg.unpackedSfixed64 = _unpackedSfixed64_.map(BigInt);
     }
     const _unpackedFloat_ = json["unpackedFloat"] ?? json["unpacked_float"];
     if (_unpackedFloat_) {
@@ -5957,11 +5957,11 @@ export const TestAllTypesProto3JSON = {
     ): TestAllTypesProto3.MapSint32Sint32 {
       const _key_ = json["key"];
       if (_key_) {
-        msg.key = _key_;
+        msg.key = protoscript.parseNumber(_key_);
       }
       const _value_ = json["value"];
       if (_value_) {
-        msg.value = _value_;
+        msg.value = protoscript.parseNumber(_value_);
       }
       return msg;
     },
@@ -5976,10 +5976,10 @@ export const TestAllTypesProto3JSON = {
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
-        json["key"] = msg.key;
+        json["key"] = String(msg.key);
       }
       if (msg.value) {
-        json["value"] = msg.value;
+        json["value"] = String(msg.value);
       }
       return json;
     },
@@ -5993,11 +5993,11 @@ export const TestAllTypesProto3JSON = {
     ): TestAllTypesProto3.MapSint64Sint64 {
       const _key_ = json["key"];
       if (_key_) {
-        msg.key = _key_;
+        msg.key = BigInt(_key_);
       }
       const _value_ = json["value"];
       if (_value_) {
-        msg.value = _value_;
+        msg.value = BigInt(_value_);
       }
       return msg;
     },
@@ -6101,11 +6101,11 @@ export const TestAllTypesProto3JSON = {
     ): TestAllTypesProto3.MapSfixed32Sfixed32 {
       const _key_ = json["key"];
       if (_key_) {
-        msg.key = _key_;
+        msg.key = protoscript.parseNumber(_key_);
       }
       const _value_ = json["value"];
       if (_value_) {
-        msg.value = _value_;
+        msg.value = protoscript.parseNumber(_value_);
       }
       return msg;
     },
@@ -6120,10 +6120,10 @@ export const TestAllTypesProto3JSON = {
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
-        json["key"] = msg.key;
+        json["key"] = String(msg.key);
       }
       if (msg.value) {
-        json["value"] = msg.value;
+        json["value"] = String(msg.value);
       }
       return json;
     },
@@ -6137,11 +6137,11 @@ export const TestAllTypesProto3JSON = {
     ): TestAllTypesProto3.MapSfixed64Sfixed64 {
       const _key_ = json["key"];
       if (_key_) {
-        msg.key = _key_;
+        msg.key = BigInt(_key_);
       }
       const _value_ = json["value"];
       if (_value_) {
-        msg.value = _value_;
+        msg.value = BigInt(_value_);
       }
       return msg;
     },

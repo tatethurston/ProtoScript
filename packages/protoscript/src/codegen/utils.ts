@@ -62,6 +62,8 @@ type WriterMethod = keyof BinaryWriter | "map";
 
 interface Descriptor {
   defaultValue: string;
+  jsonParser: string;
+  jsonSerializer: string;
   map: boolean;
   optional: boolean;
   read: ReaderMethod;
@@ -91,6 +93,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_DOUBLE: {
       return {
         defaultValue: "0",
+        jsonSerializer: "identity",
+        jsonParser: "protoscript.parseDouble",
         map: false,
         optional,
         read: "readDouble",
@@ -104,6 +108,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_FLOAT: {
       return {
         defaultValue: "0",
+        jsonSerializer: "identity",
+        jsonParser: "protoscript.parseDouble",
         map: false,
         optional,
         read: "readFloat",
@@ -117,6 +123,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_INT64: {
       return {
         defaultValue: "0n",
+        jsonSerializer: "String",
+        jsonParser: "BigInt",
         map: false,
         optional,
         read: "readInt64String",
@@ -130,6 +138,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_UINT64: {
       return {
         defaultValue: "0n",
+        jsonSerializer: "String",
+        jsonParser: "BigInt",
         map: false,
         optional,
         read: "readUint64String",
@@ -143,6 +153,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_INT32: {
       return {
         defaultValue: "0",
+        jsonSerializer: "identity",
+        jsonParser: "protoscript.parseNumber",
         map: false,
         optional,
         read: "readInt32",
@@ -156,6 +168,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_FIXED64: {
       return {
         defaultValue: "0n",
+        jsonSerializer: "String",
+        jsonParser: "BigInt",
         map: false,
         optional,
         read: "readFixed64String",
@@ -189,6 +203,8 @@ export function getDescriptor(
 
       return {
         defaultValue: `${name}._fromInt(0)`,
+        jsonSerializer: "identity",
+        jsonParser: `${name}._fromInt`,
         map: false,
         optional,
         read: "readEnum",
@@ -202,6 +218,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_FIXED32: {
       return {
         defaultValue: "0",
+        jsonSerializer: "identity",
+        jsonParser: "protoscript.parseNumber",
         map: false,
         optional,
         read: "readFixed32",
@@ -215,6 +233,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_BOOL: {
       return {
         defaultValue: "false",
+        jsonSerializer: "identity",
+        jsonParser: "identity",
         map: false,
         optional,
         read: "readBool",
@@ -267,6 +287,8 @@ export function getDescriptor(
       if (isMap) {
         return {
           defaultValue: "{}",
+          jsonSerializer: "identity",
+          jsonParser: "identity",
           map: true,
           optional,
           read: "readMessage",
@@ -278,8 +300,21 @@ export function getDescriptor(
         };
       }
 
+      let jsonParser = "identity";
+      let jsonSerializer = "identity";
+      if (name === "protoscript.Timestamp") {
+        jsonParser = "protoscript.parseTimestamp";
+        jsonSerializer = "protoscript.serializeTimestamp";
+      }
+      if (name === "protoscript.Duration") {
+        jsonParser = "protoscript.parseDuration";
+        jsonSerializer = "protoscript.serializeDuration";
+      }
+
       return {
         defaultValue: "undefined",
+        jsonSerializer,
+        jsonParser,
         map: false,
         optional,
         read: "readMessage",
@@ -293,6 +328,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_STRING: {
       return {
         defaultValue: "''",
+        jsonSerializer: "identity",
+        jsonParser: "identity",
         map: false,
         optional,
         read: "readString",
@@ -306,6 +343,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_BYTES: {
       return {
         defaultValue: "new Uint8Array()",
+        jsonSerializer: "protoscript.serializeBytes",
+        jsonParser: "protoscript.parseBytes",
         map: false,
         optional,
         read: "readBytes",
@@ -319,6 +358,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_UINT32: {
       return {
         defaultValue: "0",
+        jsonSerializer: "identity",
+        jsonParser: "protoscript.parseNumber",
         map: false,
         optional,
         read: "readUint32",
@@ -332,6 +373,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_SFIXED32: {
       return {
         defaultValue: "0",
+        jsonSerializer: "identity",
+        jsonParser: "protoscript.parseNumber",
         map: false,
         optional,
         read: "readSfixed32",
@@ -345,6 +388,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_SFIXED64: {
       return {
         defaultValue: "0n",
+        jsonSerializer: "String",
+        jsonParser: "BigInt",
         map: false,
         optional,
         read: "readSfixed64String",
@@ -358,6 +403,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_SINT32: {
       return {
         defaultValue: "0",
+        jsonSerializer: "identity",
+        jsonParser: "protoscript.parseNumber",
         map: false,
         optional,
         read: "readSint32",
@@ -371,6 +418,8 @@ export function getDescriptor(
     case FieldDescriptorProto.Type.TYPE_SINT64: {
       return {
         defaultValue: "0n",
+        jsonSerializer: "String",
+        jsonParser: "BigInt",
         map: false,
         optional,
         read: "readSint64String",
