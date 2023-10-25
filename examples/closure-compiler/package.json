@@ -11,6 +11,6 @@
     "protoscript": "workspace:*"
   },
   "devDependencies": {
-    "google-closure-compiler": "^20230502.0.0"
+    "google-closure-compiler": "^20230802.0.0"
   }
 }
