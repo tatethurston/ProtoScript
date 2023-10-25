@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.20
+
+- Preserve protoscript import when well known types are imported. This corrects a regression in 0.0.19.
+
 ## v0.0.19
 
 - Fix JSON serializtion for Timestamp and Duration well known types. See [#39](https://github.com/tatethurston/ProtoScript/issues/39).
