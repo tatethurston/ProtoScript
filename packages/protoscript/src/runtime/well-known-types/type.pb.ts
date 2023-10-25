@@ -283,7 +283,7 @@ export const Type = {
   /**
    * Initializes Type with all fields set to their default value.
    */
-  initialize: function (): Type {
+  initialize: function (msg?: Partial<Type>): Type {
     return {
       name: "",
       fields: [],
@@ -292,6 +292,7 @@ export const Type = {
       sourceContext: protoscript.SourceContext.initialize(),
       syntax: Syntax._fromInt(0),
       edition: "",
+      ...msg,
     };
   },
 
@@ -406,7 +407,7 @@ export const Field = {
   /**
    * Initializes Field with all fields set to their default value.
    */
-  initialize: function (): Field {
+  initialize: function (msg?: Partial<Field>): Field {
     return {
       kind: Field.Kind._fromInt(0),
       cardinality: Field.Cardinality._fromInt(0),
@@ -418,6 +419,7 @@ export const Field = {
       options: [],
       jsonName: "",
       defaultValue: "",
+      ...msg,
     };
   },
 
@@ -824,7 +826,7 @@ export const Enum = {
   /**
    * Initializes Enum with all fields set to their default value.
    */
-  initialize: function (): Enum {
+  initialize: function (msg?: Partial<Enum>): Enum {
     return {
       name: "",
       enumvalue: [],
@@ -832,6 +834,7 @@ export const Enum = {
       sourceContext: protoscript.SourceContext.initialize(),
       syntax: Syntax._fromInt(0),
       edition: "",
+      ...msg,
     };
   },
 
@@ -943,11 +946,12 @@ export const EnumValue = {
   /**
    * Initializes EnumValue with all fields set to their default value.
    */
-  initialize: function (): EnumValue {
+  initialize: function (msg?: Partial<EnumValue>): EnumValue {
     return {
       name: "",
       number: 0,
       options: [],
+      ...msg,
     };
   },
 
@@ -1028,10 +1032,11 @@ export const Option = {
   /**
    * Initializes Option with all fields set to their default value.
    */
-  initialize: function (): Option {
+  initialize: function (msg?: Partial<Option>): Option {
     return {
       name: "",
       value: protoscript.Any.initialize(),
+      ...msg,
     };
   },
 
@@ -1156,7 +1161,7 @@ export const TypeJSON = {
   /**
    * Initializes Type with all fields set to their default value.
    */
-  initialize: function (): Type {
+  initialize: function (msg?: Partial<Type>): Type {
     return {
       name: "",
       fields: [],
@@ -1165,6 +1170,7 @@ export const TypeJSON = {
       sourceContext: protoscript.SourceContextJSON.initialize(),
       syntax: Syntax._fromInt(0),
       edition: "",
+      ...msg,
     };
   },
 
@@ -1267,7 +1273,7 @@ export const FieldJSON = {
   /**
    * Initializes Field with all fields set to their default value.
    */
-  initialize: function (): Field {
+  initialize: function (msg?: Partial<Field>): Field {
     return {
       kind: Field.Kind._fromInt(0),
       cardinality: Field.Cardinality._fromInt(0),
@@ -1279,6 +1285,7 @@ export const FieldJSON = {
       options: [],
       jsonName: "",
       defaultValue: "",
+      ...msg,
     };
   },
 
@@ -1670,7 +1677,7 @@ export const EnumJSON = {
   /**
    * Initializes Enum with all fields set to their default value.
    */
-  initialize: function (): Enum {
+  initialize: function (msg?: Partial<Enum>): Enum {
     return {
       name: "",
       enumvalue: [],
@@ -1678,6 +1685,7 @@ export const EnumJSON = {
       sourceContext: protoscript.SourceContextJSON.initialize(),
       syntax: Syntax._fromInt(0),
       edition: "",
+      ...msg,
     };
   },
 
@@ -1776,11 +1784,12 @@ export const EnumValueJSON = {
   /**
    * Initializes EnumValue with all fields set to their default value.
    */
-  initialize: function (): EnumValue {
+  initialize: function (msg?: Partial<EnumValue>): EnumValue {
     return {
       name: "",
       number: 0,
       options: [],
+      ...msg,
     };
   },
 
@@ -1845,10 +1854,11 @@ export const OptionJSON = {
   /**
    * Initializes Option with all fields set to their default value.
    */
-  initialize: function (): Option {
+  initialize: function (msg?: Partial<Option>): Option {
     return {
       name: "",
       value: protoscript.AnyJSON.initialize(),
+      ...msg,
     };
   },
 

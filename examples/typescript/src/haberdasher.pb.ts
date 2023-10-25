@@ -54,11 +54,12 @@ export const Hat = {
   /**
    * Initializes Hat with all fields set to their default value.
    */
-  initialize: function (): Hat {
+  initialize: function (msg?: Partial<Hat>): Hat {
     return {
       size: srcSize.Size.initialize(),
       color: "",
       name: "",
+      ...msg,
     };
   },
 
@@ -132,11 +133,12 @@ export const HatJSON = {
   /**
    * Initializes Hat with all fields set to their default value.
    */
-  initialize: function (): Hat {
+  initialize: function (msg?: Partial<Hat>): Hat {
     return {
       size: srcSize.SizeJSON.initialize(),
       color: "",
       name: "",
+      ...msg,
     };
   },
 

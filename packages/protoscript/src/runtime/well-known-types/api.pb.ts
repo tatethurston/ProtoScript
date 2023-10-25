@@ -226,7 +226,7 @@ export const Api = {
   /**
    * Initializes Api with all fields set to their default value.
    */
-  initialize: function (): Api {
+  initialize: function (msg?: Partial<Api>): Api {
     return {
       name: "",
       methods: [],
@@ -235,6 +235,7 @@ export const Api = {
       sourceContext: protoscript.SourceContext.initialize(),
       mixins: [],
       syntax: protoscript.Syntax._fromInt(0),
+      ...msg,
     };
   },
 
@@ -355,7 +356,7 @@ export const Method = {
   /**
    * Initializes Method with all fields set to their default value.
    */
-  initialize: function (): Method {
+  initialize: function (msg?: Partial<Method>): Method {
     return {
       name: "",
       requestTypeUrl: "",
@@ -364,6 +365,7 @@ export const Method = {
       responseStreaming: false,
       options: [],
       syntax: protoscript.Syntax._fromInt(0),
+      ...msg,
     };
   },
 
@@ -476,10 +478,11 @@ export const Mixin = {
   /**
    * Initializes Mixin with all fields set to their default value.
    */
-  initialize: function (): Mixin {
+  initialize: function (msg?: Partial<Mixin>): Mixin {
     return {
       name: "",
       root: "",
+      ...msg,
     };
   },
 
@@ -546,7 +549,7 @@ export const ApiJSON = {
   /**
    * Initializes Api with all fields set to their default value.
    */
-  initialize: function (): Api {
+  initialize: function (msg?: Partial<Api>): Api {
     return {
       name: "",
       methods: [],
@@ -555,6 +558,7 @@ export const ApiJSON = {
       sourceContext: protoscript.SourceContextJSON.initialize(),
       mixins: [],
       syntax: protoscript.Syntax._fromInt(0),
+      ...msg,
     };
   },
 
@@ -661,7 +665,7 @@ export const MethodJSON = {
   /**
    * Initializes Method with all fields set to their default value.
    */
-  initialize: function (): Method {
+  initialize: function (msg?: Partial<Method>): Method {
     return {
       name: "",
       requestTypeUrl: "",
@@ -670,6 +674,7 @@ export const MethodJSON = {
       responseStreaming: false,
       options: [],
       syntax: protoscript.Syntax._fromInt(0),
+      ...msg,
     };
   },
 
@@ -763,10 +768,11 @@ export const MixinJSON = {
   /**
    * Initializes Mixin with all fields set to their default value.
    */
-  initialize: function (): Mixin {
+  initialize: function (msg?: Partial<Mixin>): Mixin {
     return {
       name: "",
       root: "",
+      ...msg,
     };
   },
 

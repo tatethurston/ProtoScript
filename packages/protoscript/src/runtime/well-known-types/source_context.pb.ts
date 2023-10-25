@@ -49,9 +49,10 @@ export const SourceContext = {
   /**
    * Initializes SourceContext with all fields set to their default value.
    */
-  initialize: function (): SourceContext {
+  initialize: function (msg?: Partial<SourceContext>): SourceContext {
     return {
       fileName: "",
+      ...msg,
     };
   },
 
@@ -117,9 +118,10 @@ export const SourceContextJSON = {
   /**
    * Initializes SourceContext with all fields set to their default value.
    */
-  initialize: function (): SourceContext {
+  initialize: function (msg?: Partial<SourceContext>): SourceContext {
     return {
       fileName: "",
+      ...msg,
     };
   },
 

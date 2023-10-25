@@ -58,7 +58,7 @@ export const TreeshakingTest = {
   /**
    * Initializes TreeshakingTest with all fields set to their default value.
    */
-  initialize: function (): TreeshakingTest {
+  initialize: function (msg?: Partial<TreeshakingTest>): TreeshakingTest {
     return {
       stringField: "",
       repeatedStringField: [],
@@ -67,6 +67,7 @@ export const TreeshakingTest = {
       optionalMessageField: undefined,
       timestampField: protoscript.Timestamp.initialize(),
       mapField: {},
+      ...msg,
     };
   },
 
@@ -248,9 +249,10 @@ export const NestedMessage = {
   /**
    * Initializes NestedMessage with all fields set to their default value.
    */
-  initialize: function (): NestedMessage {
+  initialize: function (msg?: Partial<NestedMessage>): NestedMessage {
     return {
       stringField: undefined,
+      ...msg,
     };
   },
 
@@ -316,7 +318,7 @@ export const TreeshakingTestJSON = {
   /**
    * Initializes TreeshakingTest with all fields set to their default value.
    */
-  initialize: function (): TreeshakingTest {
+  initialize: function (msg?: Partial<TreeshakingTest>): TreeshakingTest {
     return {
       stringField: "",
       repeatedStringField: [],
@@ -325,6 +327,7 @@ export const TreeshakingTestJSON = {
       optionalMessageField: undefined,
       timestampField: protoscript.TimestampJSON.initialize(),
       mapField: {},
+      ...msg,
     };
   },
 
@@ -487,9 +490,10 @@ export const NestedMessageJSON = {
   /**
    * Initializes NestedMessage with all fields set to their default value.
    */
-  initialize: function (): NestedMessage {
+  initialize: function (msg?: Partial<NestedMessage>): NestedMessage {
     return {
       stringField: undefined,
+      ...msg,
     };
   },
 

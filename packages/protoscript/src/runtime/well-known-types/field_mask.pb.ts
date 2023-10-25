@@ -245,9 +245,10 @@ export const FieldMask = {
   /**
    * Initializes FieldMask with all fields set to their default value.
    */
-  initialize: function (): FieldMask {
+  initialize: function (msg?: Partial<FieldMask>): FieldMask {
     return {
       paths: [],
+      ...msg,
     };
   },
 
@@ -313,9 +314,10 @@ export const FieldMaskJSON = {
   /**
    * Initializes FieldMask with all fields set to their default value.
    */
-  initialize: function (): FieldMask {
+  initialize: function (msg?: Partial<FieldMask>): FieldMask {
     return {
       paths: [],
+      ...msg,
     };
   },
 

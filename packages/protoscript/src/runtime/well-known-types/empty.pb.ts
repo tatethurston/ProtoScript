@@ -43,8 +43,10 @@ export const Empty = {
   /**
    * Initializes Empty with all fields set to their default value.
    */
-  initialize: function (): Empty {
-    return {};
+  initialize: function (msg?: Partial<Empty>): Empty {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -90,8 +92,10 @@ export const EmptyJSON = {
   /**
    * Initializes Empty with all fields set to their default value.
    */
-  initialize: function (): Empty {
-    return {};
+  initialize: function (msg?: Partial<Empty>): Empty {
+    return {
+      ...msg,
+    };
   },
 
   /**

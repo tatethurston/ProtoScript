@@ -164,10 +164,11 @@ export const Any = {
   /**
    * Initializes Any with all fields set to their default value.
    */
-  initialize: function (): Any {
+  initialize: function (msg?: Partial<Any>): Any {
     return {
       typeUrl: "",
       value: new Uint8Array(),
+      ...msg,
     };
   },
 
@@ -234,10 +235,11 @@ export const AnyJSON = {
   /**
    * Initializes Any with all fields set to their default value.
    */
-  initialize: function (): Any {
+  initialize: function (msg?: Partial<Any>): Any {
     return {
       typeUrl: "",
       value: new Uint8Array(),
+      ...msg,
     };
   },
 

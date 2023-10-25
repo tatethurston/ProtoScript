@@ -116,10 +116,11 @@ export const Duration = {
   /**
    * Initializes Duration with all fields set to their default value.
    */
-  initialize: function (): Duration {
+  initialize: function (msg?: Partial<Duration>): Duration {
     return {
       seconds: 0n,
       nanos: 0,
+      ...msg,
     };
   },
 
@@ -192,10 +193,11 @@ export const DurationJSON = {
   /**
    * Initializes Duration with all fields set to their default value.
    */
-  initialize: function (): Duration {
+  initialize: function (msg?: Partial<Duration>): Duration {
     return {
       seconds: 0n,
       nanos: 0,
+      ...msg,
     };
   },
 

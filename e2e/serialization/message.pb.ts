@@ -129,7 +129,7 @@ export const Foo = {
   /**
    * Initializes Foo with all fields set to their default value.
    */
-  initialize: function (): Foo {
+  initialize: function (msg?: Partial<Foo>): Foo {
     return {
       fieldOne: undefined,
       fieldTwo: {},
@@ -146,6 +146,7 @@ export const Foo = {
       fieldThirteen: undefined,
       fieldFourteen: undefined,
       fieldFifteen: [],
+      ...msg,
     };
   },
 
@@ -336,11 +337,12 @@ export const Foo = {
     /**
      * Initializes Foo.FooBar with all fields set to their default value.
      */
-    initialize: function (): Foo.FooBar {
+    initialize: function (msg?: Partial<Foo.FooBar>): Foo.FooBar {
       return {
         fieldOne: "",
         fieldTwo: {},
         fieldThree: [],
+        ...msg,
       };
     },
 
@@ -524,11 +526,12 @@ export const Bar = {
   /**
    * Initializes Bar with all fields set to their default value.
    */
-  initialize: function (): Bar {
+  initialize: function (msg?: Partial<Bar>): Bar {
     return {
       fieldOne: "",
       fieldTwo: {},
       fieldThree: [],
+      ...msg,
     };
   },
 
@@ -699,7 +702,7 @@ export const FooJSON = {
   /**
    * Initializes Foo with all fields set to their default value.
    */
-  initialize: function (): Foo {
+  initialize: function (msg?: Partial<Foo>): Foo {
     return {
       fieldOne: undefined,
       fieldTwo: {},
@@ -716,6 +719,7 @@ export const FooJSON = {
       fieldThirteen: undefined,
       fieldFourteen: undefined,
       fieldFifteen: [],
+      ...msg,
     };
   },
 
@@ -895,11 +899,12 @@ export const FooJSON = {
     /**
      * Initializes Foo.FooBar with all fields set to their default value.
      */
-    initialize: function (): Foo.FooBar {
+    initialize: function (msg?: Partial<Foo.FooBar>): Foo.FooBar {
       return {
         fieldOne: "",
         fieldTwo: {},
         fieldThree: [],
+        ...msg,
       };
     },
 
@@ -1046,11 +1051,12 @@ export const BarJSON = {
   /**
    * Initializes Bar with all fields set to their default value.
    */
-  initialize: function (): Bar {
+  initialize: function (msg?: Partial<Bar>): Bar {
     return {
       fieldOne: "",
       fieldTwo: {},
       fieldThree: [],
+      ...msg,
     };
   },
 
