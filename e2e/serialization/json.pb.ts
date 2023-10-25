@@ -147,10 +147,11 @@ export const Message = {
   /**
    * Initializes Message with all fields set to their default value.
    */
-  initialize: function (): Message {
+  initialize: function (msg?: Partial<Message>): Message {
     return {
       fooBar: "",
       g: 0n,
+      ...msg,
     };
   },
 
@@ -222,7 +223,7 @@ export const SampleMessage = {
   /**
    * Initializes SampleMessage with all fields set to their default value.
    */
-  initialize: function (): SampleMessage {
+  initialize: function (msg?: Partial<SampleMessage>): SampleMessage {
     return {
       sampleMessage: Message.initialize(),
       sampleEnum: Enum._fromInt(0),
@@ -242,6 +243,7 @@ export const SampleMessage = {
       sampleTimestamp: protoscript.Timestamp.initialize(),
       sampleDuration: protoscript.Duration.initialize(),
       sampleStruct: protoscript.Struct.initialize(),
+      ...msg,
     };
   },
 
@@ -497,10 +499,11 @@ export const OptionalMessage = {
   /**
    * Initializes OptionalMessage with all fields set to their default value.
    */
-  initialize: function (): OptionalMessage {
+  initialize: function (msg?: Partial<OptionalMessage>): OptionalMessage {
     return {
       fooBar: undefined,
       g: undefined,
+      ...msg,
     };
   },
 
@@ -572,7 +575,9 @@ export const OptionalSampleMessage = {
   /**
    * Initializes OptionalSampleMessage with all fields set to their default value.
    */
-  initialize: function (): OptionalSampleMessage {
+  initialize: function (
+    msg?: Partial<OptionalSampleMessage>,
+  ): OptionalSampleMessage {
     return {
       sampleMessage: undefined,
       sampleEnum: undefined,
@@ -592,6 +597,7 @@ export const OptionalSampleMessage = {
       sampleTimestamp: undefined,
       sampleDuration: undefined,
       sampleStruct: undefined,
+      ...msg,
     };
   },
 
@@ -888,10 +894,11 @@ export const MessageJSON = {
   /**
    * Initializes Message with all fields set to their default value.
    */
-  initialize: function (): Message {
+  initialize: function (msg?: Partial<Message>): Message {
     return {
       fooBar: "",
       g: 0n,
+      ...msg,
     };
   },
 
@@ -946,7 +953,7 @@ export const SampleMessageJSON = {
   /**
    * Initializes SampleMessage with all fields set to their default value.
    */
-  initialize: function (): SampleMessage {
+  initialize: function (msg?: Partial<SampleMessage>): SampleMessage {
     return {
       sampleMessage: MessageJSON.initialize(),
       sampleEnum: Enum._fromInt(0),
@@ -966,6 +973,7 @@ export const SampleMessageJSON = {
       sampleTimestamp: protoscript.TimestampJSON.initialize(),
       sampleDuration: protoscript.DurationJSON.initialize(),
       sampleStruct: protoscript.StructJSON.initialize(),
+      ...msg,
     };
   },
 
@@ -1204,10 +1212,11 @@ export const OptionalMessageJSON = {
   /**
    * Initializes OptionalMessage with all fields set to their default value.
    */
-  initialize: function (): OptionalMessage {
+  initialize: function (msg?: Partial<OptionalMessage>): OptionalMessage {
     return {
       fooBar: undefined,
       g: undefined,
+      ...msg,
     };
   },
 
@@ -1264,7 +1273,9 @@ export const OptionalSampleMessageJSON = {
   /**
    * Initializes OptionalSampleMessage with all fields set to their default value.
    */
-  initialize: function (): OptionalSampleMessage {
+  initialize: function (
+    msg?: Partial<OptionalSampleMessage>,
+  ): OptionalSampleMessage {
     return {
       sampleMessage: undefined,
       sampleEnum: undefined,
@@ -1284,6 +1295,7 @@ export const OptionalSampleMessageJSON = {
       sampleTimestamp: undefined,
       sampleDuration: undefined,
       sampleStruct: undefined,
+      ...msg,
     };
   },
 

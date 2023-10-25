@@ -47,9 +47,10 @@ export const Size = {
   /**
    * Initializes Size with all fields set to their default value.
    */
-  initialize: function (): Size {
+  initialize: function (msg?: Partial<Size>): Size {
     return {
       inches: 0,
+      ...msg,
     };
   },
 
@@ -109,9 +110,10 @@ export const SizeJSON = {
   /**
    * Initializes Size with all fields set to their default value.
    */
-  initialize: function (): Size {
+  initialize: function (msg?: Partial<Size>): Size {
     return {
       inches: 0,
+      ...msg,
     };
   },
 

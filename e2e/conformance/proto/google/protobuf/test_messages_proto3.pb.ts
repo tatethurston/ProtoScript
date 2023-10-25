@@ -451,7 +451,7 @@ export const TestAllTypesProto3 = {
   /**
    * Initializes TestAllTypesProto3 with all fields set to their default value.
    */
-  initialize: function (): TestAllTypesProto3 {
+  initialize: function (msg?: Partial<TestAllTypesProto3>): TestAllTypesProto3 {
     return {
       optionalInt32: 0,
       optionalInt64: 0n,
@@ -604,6 +604,7 @@ export const TestAllTypesProto3 = {
       fieldName16: 0,
       fieldName17: 0,
       FieldName18: 0,
+      ...msg,
     };
   },
 
@@ -2602,10 +2603,13 @@ export const TestAllTypesProto3 = {
     /**
      * Initializes TestAllTypesProto3.NestedMessage with all fields set to their default value.
      */
-    initialize: function (): TestAllTypesProto3.NestedMessage {
+    initialize: function (
+      msg?: Partial<TestAllTypesProto3.NestedMessage>,
+    ): TestAllTypesProto3.NestedMessage {
       return {
         a: 0,
         corecursive: undefined,
+        ...msg,
       };
     },
 
@@ -3552,9 +3556,10 @@ export const ForeignMessage = {
   /**
    * Initializes ForeignMessage with all fields set to their default value.
    */
-  initialize: function (): ForeignMessage {
+  initialize: function (msg?: Partial<ForeignMessage>): ForeignMessage {
     return {
       c: 0,
+      ...msg,
     };
   },
 
@@ -3613,8 +3618,12 @@ export const NullHypothesisProto3 = {
   /**
    * Initializes NullHypothesisProto3 with all fields set to their default value.
    */
-  initialize: function (): NullHypothesisProto3 {
-    return {};
+  initialize: function (
+    msg?: Partial<NullHypothesisProto3>,
+  ): NullHypothesisProto3 {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -3656,8 +3665,10 @@ export const EnumOnlyProto3 = {
   /**
    * Initializes EnumOnlyProto3 with all fields set to their default value.
    */
-  initialize: function (): EnumOnlyProto3 {
-    return {};
+  initialize: function (msg?: Partial<EnumOnlyProto3>): EnumOnlyProto3 {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -3791,7 +3802,7 @@ export const TestAllTypesProto3JSON = {
   /**
    * Initializes TestAllTypesProto3 with all fields set to their default value.
    */
-  initialize: function (): TestAllTypesProto3 {
+  initialize: function (msg?: Partial<TestAllTypesProto3>): TestAllTypesProto3 {
     return {
       optionalInt32: 0,
       optionalInt64: 0n,
@@ -3944,6 +3955,7 @@ export const TestAllTypesProto3JSON = {
       fieldName16: 0,
       fieldName17: 0,
       FieldName18: 0,
+      ...msg,
     };
   },
 
@@ -5739,10 +5751,13 @@ export const TestAllTypesProto3JSON = {
     /**
      * Initializes TestAllTypesProto3.NestedMessage with all fields set to their default value.
      */
-    initialize: function (): TestAllTypesProto3.NestedMessage {
+    initialize: function (
+      msg?: Partial<TestAllTypesProto3.NestedMessage>,
+    ): TestAllTypesProto3.NestedMessage {
       return {
         a: 0,
         corecursive: undefined,
+        ...msg,
       };
     },
 
@@ -6501,9 +6516,10 @@ export const ForeignMessageJSON = {
   /**
    * Initializes ForeignMessage with all fields set to their default value.
    */
-  initialize: function (): ForeignMessage {
+  initialize: function (msg?: Partial<ForeignMessage>): ForeignMessage {
     return {
       c: 0,
+      ...msg,
     };
   },
 
@@ -6550,8 +6566,12 @@ export const NullHypothesisProto3JSON = {
   /**
    * Initializes NullHypothesisProto3 with all fields set to their default value.
    */
-  initialize: function (): NullHypothesisProto3 {
-    return {};
+  initialize: function (
+    msg?: Partial<NullHypothesisProto3>,
+  ): NullHypothesisProto3 {
+    return {
+      ...msg,
+    };
   },
 
   /**
@@ -6592,8 +6612,10 @@ export const EnumOnlyProto3JSON = {
   /**
    * Initializes EnumOnlyProto3 with all fields set to their default value.
    */
-  initialize: function (): EnumOnlyProto3 {
-    return {};
+  initialize: function (msg?: Partial<EnumOnlyProto3>): EnumOnlyProto3 {
+    return {
+      ...msg,
+    };
   },
 
   /**

@@ -145,10 +145,11 @@ export const Timestamp = {
   /**
    * Initializes Timestamp with all fields set to their default value.
    */
-  initialize: function (): Timestamp {
+  initialize: function (msg?: Partial<Timestamp>): Timestamp {
     return {
       seconds: 0n,
       nanos: 0,
+      ...msg,
     };
   },
 
@@ -221,10 +222,11 @@ export const TimestampJSON = {
   /**
    * Initializes Timestamp with all fields set to their default value.
    */
-  initialize: function (): Timestamp {
+  initialize: function (msg?: Partial<Timestamp>): Timestamp {
     return {
       seconds: 0n,
       nanos: 0,
+      ...msg,
     };
   },
 

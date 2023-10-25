@@ -53,7 +53,7 @@ export const User = {
   /**
    * Initializes User with all fields set to their default value.
    */
-  initialize: function (): User {
+  initialize: function (msg?: Partial<User>): User {
     return {
       firstName: "",
       lastName: "",
@@ -61,6 +61,7 @@ export const User = {
       manager: undefined,
       locations: [],
       projects: {},
+      ...msg,
     };
   },
 
@@ -210,7 +211,7 @@ export const UserJSON = {
   /**
    * Initializes User with all fields set to their default value.
    */
-  initialize: function (): User {
+  initialize: function (msg?: Partial<User>): User {
     return {
       firstName: "",
       lastName: "",
@@ -218,6 +219,7 @@ export const UserJSON = {
       manager: undefined,
       locations: [],
       projects: {},
+      ...msg,
     };
   },
 

@@ -149,9 +149,9 @@ function writeProtobufSerializers(
              node.content.namespacedName
            } with all fields set to their default value.
            */
-          initialize: function()${printIfTypescript(
-            `: ${node.content.namespacedName}`,
-          )} {
+          initialize: function(msg${printIfTypescript(
+            `?: Partial<${node.content.namespacedName}>`,
+          )}) ${printIfTypescript(`:${node.content.namespacedName}`)} {
             return {
               ${node.content.fields
                 .map((field) => {
@@ -175,7 +175,8 @@ function writeProtobufSerializers(
                     return `${field.name}: ${field.defaultValue},`;
                   }
                 })
-                .join("")}
+                .join("\n")}
+                ...msg,
             };`;
           result += "},\n\n";
         }
@@ -488,9 +489,9 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
              node.content.namespacedName
            } with all fields set to their default value.
            */
-          initialize: function()${printIfTypescript(
-            `: ${node.content.namespacedName}`,
-          )} {
+          initialize: function(msg${printIfTypescript(
+            `?: Partial<${node.content.namespacedName}>`,
+          )}) ${printIfTypescript(`:${node.content.namespacedName}`)} {
             return {
               ${node.content.fields
                 .map((field) => {
@@ -514,7 +515,8 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
                     return `${field.name}: ${field.defaultValue},`;
                   }
                 })
-                .join("")}
+                .join("\n")}
+                ...msg
             };`;
           result += "},\n\n";
         }

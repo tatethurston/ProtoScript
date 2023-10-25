@@ -145,9 +145,10 @@ export const DoubleValue = {
   /**
    * Initializes DoubleValue with all fields set to their default value.
    */
-  initialize: function (): DoubleValue {
+  initialize: function (msg?: Partial<DoubleValue>): DoubleValue {
     return {
       value: 0,
+      ...msg,
     };
   },
 
@@ -212,9 +213,10 @@ export const FloatValue = {
   /**
    * Initializes FloatValue with all fields set to their default value.
    */
-  initialize: function (): FloatValue {
+  initialize: function (msg?: Partial<FloatValue>): FloatValue {
     return {
       value: 0,
+      ...msg,
     };
   },
 
@@ -279,9 +281,10 @@ export const Int64Value = {
   /**
    * Initializes Int64Value with all fields set to their default value.
    */
-  initialize: function (): Int64Value {
+  initialize: function (msg?: Partial<Int64Value>): Int64Value {
     return {
       value: 0n,
+      ...msg,
     };
   },
 
@@ -346,9 +349,10 @@ export const UInt64Value = {
   /**
    * Initializes UInt64Value with all fields set to their default value.
    */
-  initialize: function (): UInt64Value {
+  initialize: function (msg?: Partial<UInt64Value>): UInt64Value {
     return {
       value: 0n,
+      ...msg,
     };
   },
 
@@ -413,9 +417,10 @@ export const Int32Value = {
   /**
    * Initializes Int32Value with all fields set to their default value.
    */
-  initialize: function (): Int32Value {
+  initialize: function (msg?: Partial<Int32Value>): Int32Value {
     return {
       value: 0,
+      ...msg,
     };
   },
 
@@ -480,9 +485,10 @@ export const UInt32Value = {
   /**
    * Initializes UInt32Value with all fields set to their default value.
    */
-  initialize: function (): UInt32Value {
+  initialize: function (msg?: Partial<UInt32Value>): UInt32Value {
     return {
       value: 0,
+      ...msg,
     };
   },
 
@@ -547,9 +553,10 @@ export const BoolValue = {
   /**
    * Initializes BoolValue with all fields set to their default value.
    */
-  initialize: function (): BoolValue {
+  initialize: function (msg?: Partial<BoolValue>): BoolValue {
     return {
       value: false,
+      ...msg,
     };
   },
 
@@ -614,9 +621,10 @@ export const StringValue = {
   /**
    * Initializes StringValue with all fields set to their default value.
    */
-  initialize: function (): StringValue {
+  initialize: function (msg?: Partial<StringValue>): StringValue {
     return {
       value: "",
+      ...msg,
     };
   },
 
@@ -681,9 +689,10 @@ export const BytesValue = {
   /**
    * Initializes BytesValue with all fields set to their default value.
    */
-  initialize: function (): BytesValue {
+  initialize: function (msg?: Partial<BytesValue>): BytesValue {
     return {
       value: new Uint8Array(),
+      ...msg,
     };
   },
 
@@ -749,9 +758,10 @@ export const DoubleValueJSON = {
   /**
    * Initializes DoubleValue with all fields set to their default value.
    */
-  initialize: function (): DoubleValue {
+  initialize: function (msg?: Partial<DoubleValue>): DoubleValue {
     return {
       value: 0,
+      ...msg,
     };
   },
 
@@ -801,9 +811,10 @@ export const FloatValueJSON = {
   /**
    * Initializes FloatValue with all fields set to their default value.
    */
-  initialize: function (): FloatValue {
+  initialize: function (msg?: Partial<FloatValue>): FloatValue {
     return {
       value: 0,
+      ...msg,
     };
   },
 
@@ -853,9 +864,10 @@ export const Int64ValueJSON = {
   /**
    * Initializes Int64Value with all fields set to their default value.
    */
-  initialize: function (): Int64Value {
+  initialize: function (msg?: Partial<Int64Value>): Int64Value {
     return {
       value: 0n,
+      ...msg,
     };
   },
 
@@ -905,9 +917,10 @@ export const UInt64ValueJSON = {
   /**
    * Initializes UInt64Value with all fields set to their default value.
    */
-  initialize: function (): UInt64Value {
+  initialize: function (msg?: Partial<UInt64Value>): UInt64Value {
     return {
       value: 0n,
+      ...msg,
     };
   },
 
@@ -957,9 +970,10 @@ export const Int32ValueJSON = {
   /**
    * Initializes Int32Value with all fields set to their default value.
    */
-  initialize: function (): Int32Value {
+  initialize: function (msg?: Partial<Int32Value>): Int32Value {
     return {
       value: 0,
+      ...msg,
     };
   },
 
@@ -1009,9 +1023,10 @@ export const UInt32ValueJSON = {
   /**
    * Initializes UInt32Value with all fields set to their default value.
    */
-  initialize: function (): UInt32Value {
+  initialize: function (msg?: Partial<UInt32Value>): UInt32Value {
     return {
       value: 0,
+      ...msg,
     };
   },
 
@@ -1061,9 +1076,10 @@ export const BoolValueJSON = {
   /**
    * Initializes BoolValue with all fields set to their default value.
    */
-  initialize: function (): BoolValue {
+  initialize: function (msg?: Partial<BoolValue>): BoolValue {
     return {
       value: false,
+      ...msg,
     };
   },
 
@@ -1113,9 +1129,10 @@ export const StringValueJSON = {
   /**
    * Initializes StringValue with all fields set to their default value.
    */
-  initialize: function (): StringValue {
+  initialize: function (msg?: Partial<StringValue>): StringValue {
     return {
       value: "",
+      ...msg,
     };
   },
 
@@ -1165,9 +1182,10 @@ export const BytesValueJSON = {
   /**
    * Initializes BytesValue with all fields set to their default value.
    */
-  initialize: function (): BytesValue {
+  initialize: function (msg?: Partial<BytesValue>): BytesValue {
     return {
       value: new Uint8Array(),
+      ...msg,
     };
   },
 

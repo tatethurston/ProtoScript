@@ -4,6 +4,10 @@
 
 - Fix JSON serializtion for Timestamp and Duration well known types. See [#39](https://github.com/tatethurston/ProtoScript/issues/39).
 - Accept all value permutations as described by the Proto3 JSON spec when parsing JSON messages.
+- #initialize now accepts partial messages. This enables you to create a full message with select fields set to a user-provided value:
+  ```ts
+  const ron = User.initialize({ firstName: "Ron" });
+  ```
 
 ## v0.0.18
 

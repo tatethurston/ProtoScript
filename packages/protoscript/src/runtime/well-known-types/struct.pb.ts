@@ -151,9 +151,10 @@ export const Struct = {
   /**
    * Initializes Struct with all fields set to their default value.
    */
-  initialize: function (): Struct {
+  initialize: function (msg?: Partial<Struct>): Struct {
     return {
       fields: {},
+      ...msg,
     };
   },
 
@@ -273,7 +274,7 @@ export const Value = {
   /**
    * Initializes Value with all fields set to their default value.
    */
-  initialize: function (): Value {
+  initialize: function (msg?: Partial<Value>): Value {
     return {
       nullValue: undefined,
       numberValue: undefined,
@@ -281,6 +282,7 @@ export const Value = {
       boolValue: undefined,
       structValue: undefined,
       listValue: undefined,
+      ...msg,
     };
   },
 
@@ -379,9 +381,10 @@ export const ListValue = {
   /**
    * Initializes ListValue with all fields set to their default value.
    */
-  initialize: function (): ListValue {
+  initialize: function (msg?: Partial<ListValue>): ListValue {
     return {
       values: [],
+      ...msg,
     };
   },
 
@@ -481,9 +484,10 @@ export const StructJSON = {
   /**
    * Initializes Struct with all fields set to their default value.
    */
-  initialize: function (): Struct {
+  initialize: function (msg?: Partial<Struct>): Struct {
     return {
       fields: {},
+      ...msg,
     };
   },
 
@@ -577,7 +581,7 @@ export const ValueJSON = {
   /**
    * Initializes Value with all fields set to their default value.
    */
-  initialize: function (): Value {
+  initialize: function (msg?: Partial<Value>): Value {
     return {
       nullValue: undefined,
       numberValue: undefined,
@@ -585,6 +589,7 @@ export const ValueJSON = {
       boolValue: undefined,
       structValue: undefined,
       listValue: undefined,
+      ...msg,
     };
   },
 
@@ -671,9 +676,10 @@ export const ListValueJSON = {
   /**
    * Initializes ListValue with all fields set to their default value.
    */
-  initialize: function (): ListValue {
+  initialize: function (msg?: Partial<ListValue>): ListValue {
     return {
       values: [],
+      ...msg,
     };
   },
 

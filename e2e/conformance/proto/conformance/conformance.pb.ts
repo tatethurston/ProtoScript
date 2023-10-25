@@ -313,9 +313,10 @@ export const FailureSet = {
   /**
    * Initializes FailureSet with all fields set to their default value.
    */
-  initialize: function (): FailureSet {
+  initialize: function (msg?: Partial<FailureSet>): FailureSet {
     return {
       failure: [],
+      ...msg,
     };
   },
 
@@ -380,7 +381,7 @@ export const ConformanceRequest = {
   /**
    * Initializes ConformanceRequest with all fields set to their default value.
    */
-  initialize: function (): ConformanceRequest {
+  initialize: function (msg?: Partial<ConformanceRequest>): ConformanceRequest {
     return {
       protobufPayload: undefined,
       jsonPayload: undefined,
@@ -391,6 +392,7 @@ export const ConformanceRequest = {
       testCategory: TestCategory._fromInt(0),
       jspbEncodingOptions: JspbEncodingConfig.initialize(),
       printUnknownFields: false,
+      ...msg,
     };
   },
 
@@ -521,7 +523,9 @@ export const ConformanceResponse = {
   /**
    * Initializes ConformanceResponse with all fields set to their default value.
    */
-  initialize: function (): ConformanceResponse {
+  initialize: function (
+    msg?: Partial<ConformanceResponse>,
+  ): ConformanceResponse {
     return {
       parseError: undefined,
       serializeError: undefined,
@@ -532,6 +536,7 @@ export const ConformanceResponse = {
       skipped: undefined,
       jspbPayload: undefined,
       textPayload: undefined,
+      ...msg,
     };
   },
 
@@ -652,9 +657,10 @@ export const JspbEncodingConfig = {
   /**
    * Initializes JspbEncodingConfig with all fields set to their default value.
    */
-  initialize: function (): JspbEncodingConfig {
+  initialize: function (msg?: Partial<JspbEncodingConfig>): JspbEncodingConfig {
     return {
       useJspbArrayAnyFormat: false,
+      ...msg,
     };
   },
 
@@ -862,9 +868,10 @@ export const FailureSetJSON = {
   /**
    * Initializes FailureSet with all fields set to their default value.
    */
-  initialize: function (): FailureSet {
+  initialize: function (msg?: Partial<FailureSet>): FailureSet {
     return {
       failure: [],
+      ...msg,
     };
   },
 
@@ -914,7 +921,7 @@ export const ConformanceRequestJSON = {
   /**
    * Initializes ConformanceRequest with all fields set to their default value.
    */
-  initialize: function (): ConformanceRequest {
+  initialize: function (msg?: Partial<ConformanceRequest>): ConformanceRequest {
     return {
       protobufPayload: undefined,
       jsonPayload: undefined,
@@ -925,6 +932,7 @@ export const ConformanceRequestJSON = {
       testCategory: TestCategory._fromInt(0),
       jspbEncodingOptions: JspbEncodingConfigJSON.initialize(),
       printUnknownFields: false,
+      ...msg,
     };
   },
 
@@ -1048,7 +1056,9 @@ export const ConformanceResponseJSON = {
   /**
    * Initializes ConformanceResponse with all fields set to their default value.
    */
-  initialize: function (): ConformanceResponse {
+  initialize: function (
+    msg?: Partial<ConformanceResponse>,
+  ): ConformanceResponse {
     return {
       parseError: undefined,
       serializeError: undefined,
@@ -1059,6 +1069,7 @@ export const ConformanceResponseJSON = {
       skipped: undefined,
       jspbPayload: undefined,
       textPayload: undefined,
+      ...msg,
     };
   },
 
@@ -1168,9 +1179,10 @@ export const JspbEncodingConfigJSON = {
   /**
    * Initializes JspbEncodingConfig with all fields set to their default value.
    */
-  initialize: function (): JspbEncodingConfig {
+  initialize: function (msg?: Partial<JspbEncodingConfig>): JspbEncodingConfig {
     return {
       useJspbArrayAnyFormat: false,
+      ...msg,
     };
   },
 

@@ -62,9 +62,10 @@ export const Size = {
   /**
    * Initializes Size with all fields set to their default value.
    */
-  initialize: function (): Size {
+  initialize: function (msg?: Partial<Size>): Size {
     return {
       inches: 0,
+      ...msg,
     };
   },
 
@@ -126,11 +127,12 @@ export const Hat = {
   /**
    * Initializes Hat with all fields set to their default value.
    */
-  initialize: function (): Hat {
+  initialize: function (msg?: Partial<Hat>): Hat {
     return {
       inches: 0,
       color: "",
       name: "",
+      ...msg,
     };
   },
 
@@ -204,9 +206,10 @@ export const SizeJSON = {
   /**
    * Initializes Size with all fields set to their default value.
    */
-  initialize: function (): Size {
+  initialize: function (msg?: Partial<Size>): Size {
     return {
       inches: 0,
+      ...msg,
     };
   },
 
@@ -251,11 +254,12 @@ export const HatJSON = {
   /**
    * Initializes Hat with all fields set to their default value.
    */
-  initialize: function (): Hat {
+  initialize: function (msg?: Partial<Hat>): Hat {
     return {
       inches: 0,
       color: "",
       name: "",
+      ...msg,
     };
   },
 
