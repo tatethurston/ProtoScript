@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.0.18
+## v0.0.19
 
 - Fix JSON serializtion for Timestamp and Duration well known types. See [#39](https://github.com/tatethurston/ProtoScript/issues/39).
 - Accept all value permutations as described by the Proto3 JSON spec when parsing JSON messages.
