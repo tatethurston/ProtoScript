@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.21
+
+- Fix compiler path on Windows.
+
 ## v0.0.20
 
 - Preserve protoscript import when well known types are imported. This corrects a regression in 0.0.19.
