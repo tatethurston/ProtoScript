@@ -1042,8 +1042,7 @@ export const SampleMessageJSON = {
     }
     if (
       msg.sampleTimestamp &&
-      msg.sampleTimestamp.seconds &&
-      msg.sampleTimestamp.nanos
+      (msg.sampleTimestamp.seconds || msg.sampleTimestamp.nanos)
     ) {
       json["sampleTimestamp"] = protoscript.serializeTimestamp(
         msg.sampleTimestamp,
@@ -1051,8 +1050,7 @@ export const SampleMessageJSON = {
     }
     if (
       msg.sampleDuration &&
-      msg.sampleDuration.seconds &&
-      msg.sampleDuration.nanos
+      (msg.sampleDuration.seconds || msg.sampleDuration.nanos)
     ) {
       json["sampleDuration"] = protoscript.serializeDuration(
         msg.sampleDuration,

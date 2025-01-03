@@ -553,7 +553,7 @@ function writeJSONSerializers(types: ProtoTypes[], parents: string[]): string {
                 } else if (field.read === "readEnum") {
                   res += `if (msg.${field.name} && ${field.tsTypeJSON}._toInt(msg.${field.name})) {`;
                 } else if ([DURATION, TIMESTAMP].includes(field.tsType)) {
-                  res += `if (msg.${field.name} && msg.${field.name}.seconds && msg.${field.name}.nanos) {`;
+                  res += `if (msg.${field.name} && (msg.${field.name}.seconds || msg.${field.name}.nanos)) {`;
                 } else {
                   res += `if (msg.${field.name}) {`;
                 }

@@ -3,3 +3,5 @@ coverage
 node_modules
 todo.txt
 packages/well-known-types/**/*.pb.ts
+packages/protoscript/LICENSE
+packages/protoscript/README.md
