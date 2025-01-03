@@ -25,7 +25,7 @@
     "lint:fix": "prettier --write . && prettier-package-json --write '{,e2e/*,examples/*,packages/*}package.json' && eslint --fix .",
     "package:copy:files": "cp ./LICENSE ./README.md packages/protoscript",
     "prepare": "husky install",
-    "regen": "pnpm build:wellknowntypes && pnpm examples:regen && pnpm e2e:protoscript",
+    "regen": "pnpm examples:regen && pnpm e2e:protoscript && pnpm build:wellknowntypes",
     "test": "jest",
     "test:ci": "pnpm install --frozen-lockfile && pnpm run e2e:setup && pnpm run test --coverage",
     "typecheck": "pnpm --recursive run typecheck"

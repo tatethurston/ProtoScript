@@ -360,8 +360,7 @@ export const TreeshakingTestJSON = {
     }
     if (
       msg.timestampField &&
-      msg.timestampField.seconds &&
-      msg.timestampField.nanos
+      (msg.timestampField.seconds || msg.timestampField.nanos)
     ) {
       json["timestampField"] = protoscript.serializeTimestamp(
         msg.timestampField,

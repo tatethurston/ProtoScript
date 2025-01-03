@@ -4573,8 +4573,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (
       msg.optionalDuration &&
-      msg.optionalDuration.seconds &&
-      msg.optionalDuration.nanos
+      (msg.optionalDuration.seconds || msg.optionalDuration.nanos)
     ) {
       json["optionalDuration"] = protoscript.serializeDuration(
         msg.optionalDuration,
@@ -4582,8 +4581,7 @@ export const TestAllTypesProto3JSON = {
     }
     if (
       msg.optionalTimestamp &&
-      msg.optionalTimestamp.seconds &&
-      msg.optionalTimestamp.nanos
+      (msg.optionalTimestamp.seconds || msg.optionalTimestamp.nanos)
     ) {
       json["optionalTimestamp"] = protoscript.serializeTimestamp(
         msg.optionalTimestamp,
