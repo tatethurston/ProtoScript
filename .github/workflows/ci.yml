@@ -25,7 +25,6 @@ jobs:
       - uses: tatethurston/github-actions/test@main
         with:
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
-      - uses: bufbuild/buf-setup-action@v1.25.0
       - uses: tatethurston/github-actions/check-generated-files@main
         with:
           cmd: pnpm regen
