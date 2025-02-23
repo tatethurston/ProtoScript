@@ -7,7 +7,7 @@ export type PartialDeep<T> = {
   [P in keyof T]?: NonNullable<T[P]> extends any[] | Uint8Array
     ? T[P]
     : NonNullable<T[P]> extends object
-    ? PartialDeep<T[P]>
-    : T[P];
+      ? PartialDeep<T[P]>
+      : T[P];
   /* eslint-enable @typescript-eslint/no-explicit-any */
 };

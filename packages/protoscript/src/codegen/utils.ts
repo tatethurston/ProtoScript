@@ -1046,8 +1046,7 @@ export function processTypes(
         return;
       }
 
-      const _enum = types.filter((t) => t.type === "enum")[idx]
-        .content as EnumOpts;
+      const _enum = types.filter((t) => t.type === "enum")[idx].content;
 
       // enum comment
       if (path.length === 0) {
@@ -1069,9 +1068,7 @@ export function processTypes(
         return;
       }
 
-      const message = types.filter((t) => t.type === "message")[
-        idx
-      ] as MessageType;
+      const message = types.filter((t) => t.type === "message")[idx];
 
       // message comment
       if (path.length === 0) {
