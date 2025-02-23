@@ -1,2 +1,2 @@
 @echo off
-node %~p0compiler.js %*
+node "%~dp0\compiler.js" %*
